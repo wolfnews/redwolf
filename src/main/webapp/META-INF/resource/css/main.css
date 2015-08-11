@@ -1,0 +1,19 @@
+@CHARSET "UTF-8";
+body,ul,li{margin:0; padding:0;}
+body { font-family: tahoma,Arial,"Microsoft YaHei",SimSun; font-size: 12px; line-height: 1.5em;color:#222}
+ul,li{list-style:none;}
+a{text-decoration:none; color:#222;}
+/* a:link{text-decoration:none;color:#052299;} */
+a:hover{text-decoration:none;color:#052299;}
+a:active{text-decoration:none;color:#ec3a15;}
+
+/* 正文 */
+.wraper{ width:100%; padding-top:1px; margin:0 auto}
+.img-content{ position:relative; float:left; width:100%;text-align:left; height:600px; }
+.logo{ position:relative; float:left; width:20%;text-align:right; height:50px; background:#B30000 }
+.logo a{ display:block; padding-left:300px; width:100px; height:50px; line-height:50px; color:#FFFFFF; font-size:18px; background:url(../images/logo.png) no-repeat center center;}
+.nav{ position:relative; float:right; width:80%; height:50px; background:#B30000; overflow:hidden}
+.nav-item{ position:relative; float:left; width:120px; height:50px; line-height:50px; text-align:center; font-size:18px; z-index:1}
+.nav-item a{ display:block; height:50px; color:#fff; }
+.nav-item a:hover{ color:#fff}
+.move-bg{ display:none;position:absolute;left:0;top:0; width:120px; height:50px; background:#850000; z-index:0}

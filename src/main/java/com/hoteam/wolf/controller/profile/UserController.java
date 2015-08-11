@@ -1,0 +1,142 @@
+package com.hoteam.wolf.controller.profile;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
+
+import com.alibaba.fastjson.JSONObject;
+import com.hoteam.wolf.common.Constants;
+import com.hoteam.wolf.common.EntityResult;
+import com.hoteam.wolf.common.Result;
+import com.hoteam.wolf.common.config.SystemConfig;
+import com.hoteam.wolf.domain.User;
+import com.hoteam.wolf.service.UserService;
+import com.hoteam.wolf.utils.DESUtil;
+
+@Controller
+@RequestMapping("/profile/user")
+public class UserController {
+	private static Logger logger = Logger.getLogger(UserController.class);
+
+	private static enum ResultMessage {
+		NO_ACCOUNT, LESS_ONE_DAY, NO_MORE_GRADE, SUCCESS
+	};
+
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private SystemConfig systemConfig;
+	
+	@RequestMapping("/identify.html")
+	public ModelAndView identify(String identify_key) {
+		ModelAndView mav = new ModelAndView("profile/identify");
+		Result result;
+		try {
+			result = this.userService.identify(identify_key);
+			mav.addObject("username",DESUtil.decrypt(identify_key, systemConfig.getAuthKey()));
+		} catch (Exception e) {
+			logger.error("Identify user Exception:", e);
+			result = new Result(false, "系统异常");
+		}
+		mav.addObject("result", JSONObject.toJSONString(result));
+		return mav;
+	}
+
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	@ResponseBody
+	public Result register(String username, String password, String mobile, String occupation, String email) {
+		User user = new User(username, password, mobile, "", email, 1, false);
+		try {
+			EntityResult result = this.userService.addUser(user);
+			return new Result(result.isSuccess(), result.getMessage());
+		} catch (Exception e) {
+			logger.error("user register error:" + e.getMessage());
+			return new Result(false, e.getMessage());
+		}
+	}
+	@RequestMapping(value = "/retrieve")
+	@ResponseBody
+	public Result retrievePassword(String email) {
+		logger.info("email="+email);
+		return this.userService.findUserPassword(email);
+	}
+	@RequestMapping("/login")
+	@ResponseBody
+	public Result login(String username, String password, String mobile, HttpSession session) {
+		try {
+			EntityResult result = this.userService.login(mobile, username, password);
+			if (result.isSuccess()) {
+				User user = (User) result.getData();
+				session.setAttribute(Constants.USER_TOKEN.toString(), user.getId());
+				session.setAttribute(Constants.USER_NAME.toString(), user.getUsername());
+				return new Result(true, "登录成功！");
+			} else {
+				return new Result(false, result.getMessage());
+			}
+		} catch (Exception e) {
+			logger.error("professor login error:", e);
+			return new Result(false, "服务器异常");
+		}
+	}
+
+	@RequestMapping("/logout.html")
+	public RedirectView logout(HttpSession session, HttpServletRequest request) {
+		session.removeAttribute(Constants.USER_NAME.toString());
+		session.removeAttribute(Constants.USER_TOKEN.toString());
+		return new RedirectView(request.getContextPath() + "/index.html");
+	}
+
+	@RequestMapping("/rssProf")
+	@ResponseBody
+	public Result rssProfessor(Long professorId, HttpSession session) {
+		Long userId = (Long) session.getAttribute(Constants.USER_TOKEN.toString());
+		try {
+			return this.userService.rssProfessor(userId, professorId);
+		} catch (Exception e) {
+			return new Result(false, "关注讲师失败！");
+		}
+	}
+
+	@RequestMapping("/subsProf")
+	@ResponseBody
+	public Result subscribeProfessor(Long professor, Long group, HttpSession session, int time) {
+		Long userId = (Long) session.getAttribute(Constants.USER_TOKEN.toString());
+		try {
+			Result result = this.userService.subscribeProfessor(userId, professor, group, time);
+			transferResult(result);
+			return result;
+		} catch (Exception e) {
+			return new Result(false, "订阅讲师失败！");
+		}
+	}
+
+	private void transferResult(Result result) {
+		String message = "";
+		switch (ResultMessage.valueOf(result.getMessage())) {
+		case LESS_ONE_DAY:
+			message = "订阅时间小于一天";
+			break;
+		case NO_ACCOUNT:
+			message = "用户账户缺失！找客服解决";
+			break;
+		case NO_MORE_GRADE:
+			message = "积分余额不足";
+			break;
+		case SUCCESS:
+			message = "订阅成功";
+			break;
+		default:
+			message = "未知信息";
+			break;
+		}
+		result.setMessage(message);
+	}
+}
