@@ -1,0 +1,75 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+	String loginUser = (String) session.getAttribute("USER_NAME");
+	loginUser = null == loginUser ? "" : loginUser;
+%>
+<div id="loginmodal" style="display: none;">
+	<form id="loginform" name="loginform" method="post" action="index.html">
+		<label for="username">用户账号:</label> <input type="text" name="username"
+			id="username" class="txtfield" tabindex="1"> <label
+			for="password">登录密码:</label> <input type="password" name="password"
+			id="password" class="txtfield" tabindex="2">
+		<div class="center">
+			<button id="loginbtn" style="height: 30px; font-size: 20px"
+				onclick="userLogin()" class="bottom_div" tabindex="3">登录</button>
+		</div>
+	</form>
+</div>
+<div class="nav_top">
+	<div class="box">
+		<div id="yztz_header" class="nav1">
+			<div style="float: left; padding-top: 2px;" id="activity"></div>
+			<ul class="clearfix fl">
+				<li><a href="index.html" class="red"><%=loginUser%>&nbsp;欢迎光临红狼军团-中国财经在线实战交流第一平台</a></li>
+				<li><a href="#loginmodal" id="user_login">登录</a></li>
+				<li><a href="<%=basePath %>profile/register.html">注册</a></li>
+				<li><a href="<%=basePath %>profile/index.html" >我的红狼</a></li>
+				<li class="clearfix fr">服务热线400-8888-400</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="wraper">
+	<div class="logo">
+		<a href="index.html" target="_parent">会投资&nbsp;&nbsp;才会赢</a>
+	</div>
+	<div class="nav">
+		<ul>
+			<li class="nav-item cur"><a href="index.html" target="_parent">首页</a></li>
+			<li class="nav-item"><a href="product.html" target="_parent">产品大全</a></li>
+			<li class="nav-item"><a href="download.html" target="_parent">下载中心</a></li>
+			<li class="nav-item"><a href="lesson.html" target="_parent">课件中心</a></li>
+			<li class="nav-item"><a href="summary.html" target="_parent">公司简介</a></li>
+			<li class="nav-item"><a href="contact.html" target="_parent">关于我们</a></li>
+		</ul>
+		<!--移动的滑动-->
+		<div class="move-bg"></div>
+		<!--移动的滑动 end-->
+	</div>
+</div>
+<div class="news">
+	<div class="new_left">
+		<div class="BreakingNewsController easing" id="golden_stock">
+			<div class="bn-title"></div>
+			<ul id="abc">
+				<li><a href="http://www.17sucai.com/">1.
+						jQuery时间轴/时光轴插件jqtimeline</a></li>
+				<li><a href="http://www.17sucai.com/">2. onepage-scroll –
+						jQuery单页/全屏滚动插件</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="new_right">
+		<div class="BreakingNewsController easing" id="month_click_top">
+			<div class="bn-title"></div>
+			<ul>
+				<li><a href="http://www.17sucai.com/">jqueryrotate制作百度红包大放送抽奖效果</a></li>
+				<li><a href="http://www.17sucai.com/">jQuery全屏滚动插件fullPage.js</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
