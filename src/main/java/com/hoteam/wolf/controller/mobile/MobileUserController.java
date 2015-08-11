@@ -3,7 +3,9 @@ package com.hoteam.wolf.controller.mobile;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hoteam.wolf.common.EntityResult;
@@ -36,6 +38,15 @@ public class MobileUserController {
 		}
 	}
 
+	@RequestMapping("exist/{category}")
+	@ResponseBody
+	public Result exist(@PathVariable String category,
+			@RequestParam(value="content",required = true)String content){
+		if(!category.equals("username")&& !category.equals("mobile")){
+			return new Result(false, "category not supported");
+		}
+		return this.userService.exist(category, content);
+	}
 	@RequestMapping("/audit")
 	@ResponseBody
 	public Result audit(String username, String password) {

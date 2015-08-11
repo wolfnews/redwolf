@@ -458,4 +458,33 @@ public class UserServiceImpl implements UserService {
 			return false;
 		}
 	}
+
+	@Override
+	public Result exist(String category, String content) {
+		Map<String,Object> param = new HashMap<String,Object>();
+		String sql = "select count(1) from user where ";
+		Long count =null;
+		try {
+			if("mobile".endsWith(category)){
+				param.put("mobile", content);
+				sql += "mobile=:mobile";
+				count = this.userDao.baseAccountQuery(sql, param);
+				
+			}else if("username".equals(category)){
+				param.clear();
+				param.put("username", content);
+				sql += "username=:username";
+				logger.info(sql);
+				count = this.userDao.baseAccountQuery(sql, param);
+			}
+		} catch (Exception e) {
+			logger.error("user info exist exception:",e);
+			count =  null;
+		}
+		if(null != count && count >0){
+			return new Result(true, "exist");
+		}else{
+			return new Result(false, "not exist");
+		}
+	}
 }

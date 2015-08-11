@@ -140,4 +140,10 @@ public interface UserService {
 	 */
 	public Result findUserPassword(String email);
 	
+	/**校验各个参数是否存在
+	 * @param category
+	 * @param content
+	 * @return
+	 */
+	public Result exist(String category,String content);
 }
