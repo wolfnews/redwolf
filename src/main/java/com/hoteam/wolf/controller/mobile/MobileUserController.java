@@ -42,7 +42,7 @@ public class MobileUserController {
 	@ResponseBody
 	public Result exist(@PathVariable String category,
 			@RequestParam(value="content",required = true)String content){
-		if(!category.equals("username")&& !category.equals("mobile")){
+		if(!category.equals("username")&& !category.equals("mobile") &&!category.equals("email")){
 			return new Result(false, "category not supported");
 		}
 		return this.userService.exist(category, content);

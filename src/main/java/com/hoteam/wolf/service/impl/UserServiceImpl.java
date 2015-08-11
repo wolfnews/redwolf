@@ -469,12 +469,15 @@ public class UserServiceImpl implements UserService {
 				param.put("mobile", content);
 				sql += "mobile=:mobile";
 				count = this.userDao.baseAccountQuery(sql, param);
-				
 			}else if("username".equals(category)){
 				param.clear();
 				param.put("username", content);
 				sql += "username=:username";
-				logger.info(sql);
+				count = this.userDao.baseAccountQuery(sql, param);
+			}else if("email".equals(category)){
+				param.clear();
+				param.put("email", content);
+				sql += "email=:email";
 				count = this.userDao.baseAccountQuery(sql, param);
 			}
 		} catch (Exception e) {
