@@ -16,7 +16,7 @@ public class UserAccount {
 	@JsonSerialize(using = DateSerializer.class)
 	private Date gmtModify;
 	private Long userId;
-	private Long grade;
+	private Long coin;
 
 	/**
 	 * 持久化前预处理
@@ -65,12 +65,12 @@ public class UserAccount {
 		this.userId = userId;
 	}
 
-	public Long getGrade() {
-		return grade;
+	public Long getCoin() {
+		return coin;
 	}
 
-	public void setGrade(Long grade) {
-		this.grade = grade;
+	public void setCoin(Long coin) {
+		this.coin = coin;
 	}
 
 	public UserAccount() {
@@ -78,16 +78,16 @@ public class UserAccount {
 		// TODO Auto-generated constructor stub
 	}
 
-	public UserAccount(Long userId, Long grade) {
+	public UserAccount(Long userId, Long coin) {
 		super();
 		this.userId = userId;
-		this.grade = grade;
+		this.coin = coin;
 	}
 
 	@Override
 	public String toString() {
 		return "UserAccount [id=" + id + ", gmtCreate=" + gmtCreate + ", gmtModify=" + gmtModify + ", userId=" + userId
-				+ ", grade=" + grade + "]";
+				+ ", coin=" + coin + "]";
 	}
 
 }

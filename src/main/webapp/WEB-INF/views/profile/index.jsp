@@ -104,9 +104,9 @@ String authUser = (String)request.getAttribute("user");
 													<strong>当前等级</strong>
 												</div>
 												<div class="grid3">
-													<span class="bigger-175 blue">${profile.grade }</span>
+													<span class="bigger-175 blue">${profile.coin }</span>
 													<br />
-													<strong>积分余额</strong>
+													<strong>牛币余额</strong>
 												</div>
 												<!-- 充值链接 -->
 												<div class="grid3">

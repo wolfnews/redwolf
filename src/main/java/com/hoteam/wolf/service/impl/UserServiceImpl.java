@@ -204,11 +204,11 @@ public class UserServiceImpl implements UserService {
 		SubscribeGroup group = this.subscribeGroupDao.load(groupId);
 		int grade = time * group.getPrice();
 		// 更新用户积分
-		Long userGrade = userAccount.getGrade();
-		if (userGrade.intValue() < grade) {
+		Long coin = userAccount.getCoin();
+		if (coin.intValue() < grade) {
 			return new Result(false, "NO_MORE_GRADE");// 用户积分余额不足
 		} else {
-			userAccount.setGrade(userGrade - grade);
+			userAccount.setCoin(coin - grade);
 			this.userAccountDao.update(userAccount);
 		}
 		UserSubscribe userSubscribe = null;
@@ -265,7 +265,7 @@ public class UserServiceImpl implements UserService {
 				grade = money;
 			}
 			// TODO 连接支付宝支付
-			account.setGrade(account.getGrade() + grade);
+			account.setCoin(account.getCoin() + grade);
 			this.userAccountDao.update(account);
 			RechargeRecord rechargeRecord = new RechargeRecord();
 			rechargeRecordDao.save(rechargeRecord);
@@ -294,7 +294,7 @@ public class UserServiceImpl implements UserService {
 			if (null == subAccount) {
 				subAccount = 0l;
 			}
-			profile = new UserProfile("" + user.getLevel(), user.getUsername(), account.getGrade(), rssAccount,
+			profile = new UserProfile("" + user.getLevel(), user.getUsername(), account.getCoin(), rssAccount,
 					subAccount);
 		} else {
 			profile = new UserProfile("", "", 0l, 0l, 0l);
