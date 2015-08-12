@@ -1,5 +1,9 @@
 package com.hoteam.wolf.controller.mobile;
 
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,12 +45,13 @@ public class MobileUserController {
 	@RequestMapping("exist/{category}")
 	@ResponseBody
 	public Result exist(@PathVariable String category,
-			@RequestParam(value="content",required = true)String content){
-		if(!category.equals("username")&& !category.equals("mobile") &&!category.equals("email")){
+			@RequestParam(value = "content", required = true) String content) {
+		if (!category.equals("username") && !category.equals("mobile") && !category.equals("email")) {
 			return new Result(false, "category not supported");
 		}
 		return this.userService.exist(category, content);
 	}
+
 	@RequestMapping("/audit")
 	@ResponseBody
 	public Result audit(String username, String password) {
@@ -60,6 +65,25 @@ public class MobileUserController {
 		} catch (Exception e) {
 			logger.error("user " + username + "login exception:", e);
 			return new Result(false, "登录异常");
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@RequestMapping("/identify/{mobile}/{code}")
+	@ResponseBody
+	public Result identify(HttpSession session, @PathVariable String mobile, @PathVariable String code) {
+		Map<String, String> codeMap = (Map<String, String>) session.getAttribute("codeMap");
+		if (null == codeMap || codeMap.isEmpty()) {
+			return new Result(false, "验证码错误！");
+		}
+		if (!codeMap.keySet().contains(mobile)) {
+			return new Result(false, "验证码错误！");
+		}
+		String real = codeMap.get(mobile);
+		if (real.equals(code)) {
+			return new Result(true, "验证成功！");
+		} else {
+			return new Result(false, "验证码错误！");
 		}
 	}
 }

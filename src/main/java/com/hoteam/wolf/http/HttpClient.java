@@ -76,6 +76,7 @@ public class HttpClient {
 			CloseableHttpResponse response = httpclient.execute(httpPost);
 			HttpEntity entity = response.getEntity();
 			String content = IOUtils.toString(entity.getContent());
+			content = new String(content.getBytes(),"UTF-8");
 			logger.info("RESPONSE:" + content);
 			try {
 				logger.debug("GET RESPONSE STATUS AND PARSE IT");
