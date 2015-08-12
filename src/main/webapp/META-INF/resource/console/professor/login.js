@@ -5,18 +5,6 @@ jQuery(function($) {
 		}
 	})
 });
-function showMessage(message,callbackFn){
-	bootbox.dialog({
-		message: '<b>'+message+'</b>', 
-		buttons: {
-			"success" : {
-				"label" : "<b>确定</b>",
-				"className" : "btn-sm btn-primary",
-				callback: callbackFn
-			}
-		}
-	});
-}
 function login(){
 	url = base+"professor/profile/login";
 	username=$('#professor_login_username').val().trim();

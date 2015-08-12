@@ -21,6 +21,7 @@ String authUser = (String)request.getAttribute("user");
 		<script src="<%=basePath%>static/ace/assets/js/bootbox.js"></script>
 		<script src="<%=basePath%>static/ace/assets/js/bootstrap.js"></script>
 		<script src="<%=basePath%>static/ace/assets/js/ace/ace.js"></script>
+		<script src="<%=basePath%>static/console/base.js"></script>
 		<script src="<%=basePath%>static/console/professor/login.js"></script>
 	</head>
 	<body class="login-layout blur-login">

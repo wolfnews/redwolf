@@ -21,6 +21,7 @@ String action = request.getParameter("action");
 		<script src="<%=basePath%>static/ace/assets/js/bootbox.js"></script>
 		<script src="<%=basePath%>static/ace/assets/js/bootstrap.js"></script>
 		<script src="<%=basePath%>static/ace/assets/js/ace/ace.js"></script>
+		<script src="<%=basePath%>static/console/base.js"></script>
 		<script src="<%=basePath%>static/console/profile/login.js"></script>
 		<script type="text/javascript">
 			var base='<%=basePath%>';
