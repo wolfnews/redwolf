@@ -3,8 +3,8 @@ function showMessage(message,callbackFn){
 		message: '<b>'+message+'</b>', 
 		buttons: {
 			"success" : {
-				"label" : "<b>确定</b>",
-				"className" : "btn-sm btn-primary",
+				"label" : "<b>我知道了</b>",
+				"className" : "btn-sm btn-danger",
 				callback: callbackFn
 			}
 		}

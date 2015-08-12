@@ -19,12 +19,14 @@ String authUser = (String)request.getAttribute("user");
 		<link rel="stylesheet" href="<%=basePath%>static/ace/assets/css/ace.css" class="ace-main-stylesheet" id="main-ace-style" />
 		<link rel="stylesheet" href="<%=basePath%>static/css/main.css" />
 		<script src="<%=basePath%>static/ace/assets/js/jquery.js"></script>
+		<script src="<%=basePath%>static/ace/assets/js/ace-extra.js"></script>
+		<script src="<%=basePath%>static/ace/assets/js/bootbox.js"></script>
 		<script src="<%=basePath%>static/ace/assets/js/bootstrap.js"></script>
 		<script src="<%=basePath%>static/ace/assets/js/ace/ace.js"></script>
+		<script src="<%=basePath%>static/console/base.js"></script>
+		<script src="<%=basePath%>static/console/site/register.js"></script>
 		<script src="<%=basePath%>static/js/nav.js"></script>
 		<script src="<%=basePath%>static/js/index.js"></script>
-		<script src="<%=basePath%>static/ace/assets/js/bootbox.js"></script>
-		<script src="<%=basePath%>static/console/site/register.js"></script>
 		<script type="text/javascript">
 			var base='<%=basePath%>';
 		</script>
@@ -51,9 +53,9 @@ String authUser = (String)request.getAttribute("user");
 									<div class="col-xs-1"></div>
 									<div class="col-xs-5">
 										<div class="form-group">
-											<label class="col-sm-2 control-label no-padding-right" for="form-field-1-1"><strong>用户名称</strong> </label>
+											<label class="col-sm-2 control-label no-padding-right" for="form-field-1-1"><strong>用户昵称</strong> </label>
 											<div class="col-sm-7">
-												<input type="text" id="profile_username" placeholder="请输入用户名称（6-30个字符）..." class="form-control" />
+												<input type="text" id="profile_username" maxlength="30" placeholder="请输入用户名称（3-30个字符）..." class="form-control" />
 											</div>
 											<label class="col-sm-3 control-label red no-padding-left" id="username_error"></label>
 										</div>
@@ -65,11 +67,14 @@ String authUser = (String)request.getAttribute("user");
 											<label class="col-sm-3 control-label red no-padding-left" id="password_error"></label>
 										</div>
 										<div class="form-group">
-											<label class="col-sm-2 control-label no-padding-right" for="form-field-1-1"><strong>个人职业</strong> </label>
-											<div class="col-sm-7">
-												<input type="text" id="profile_occupation" placeholder="请输入个人职业..." class="form-control" />
+											<label class="col-sm-2 control-label no-padding-right" for="form-field-1-1"><strong>短信验证码</strong> </label>
+											<div class="col-sm-4">
+												<input type="text" id="profile_code" placeholder="请输入短信验证码..." class="form-control" />
 											</div>
-											<label class="col-sm-3 control-label red no-padding-left" id="occup_error"></label>
+											<div class="col-sm-3">
+												<label class="btn btn-sm btn-danger control" onclick="javascript:sendCode()"><b>获取验证码</b></label>
+											</div>
+											<label class="col-sm-3 control-label red no-padding-left" id="code_error"></label>
 										</div>
 									</div>
 									<div class="col-xs-5">
@@ -103,14 +108,14 @@ String authUser = (String)request.getAttribute("user");
 							<div class="col-xs-10">
 								<div class="clearfix form-actions">
 									<div class="col-md-offset-5 col-md-7">
-										<button class="btn btn-danger" type="button" onclick="register()">
-											<i class="ace-icon fa fa-check bigger-110"></i>
-											<strong>提交注册</strong>
-										</button>
-										&nbsp; &nbsp; &nbsp;
 										<button class="btn" type="reset">
 											<i class="ace-icon fa fa-undo bigger-110"></i>
 											<strong>重新填写</strong>
+										</button>
+										&nbsp; &nbsp; &nbsp;
+										<button class="btn btn-danger" onclick="register()">
+											<i class="ace-icon fa fa-check bigger-110"></i>
+											<strong>提交注册</strong>
 										</button>
 									</div>
 								</div>

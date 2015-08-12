@@ -165,7 +165,7 @@
 			buttons: {
 				"success" : {
 					"label" : "OK",
-					"className" : "btn-sm btn-primary",
+					"className" : "btn-sm btn-danger",
 					callback: callbackFn
 				}
 			}

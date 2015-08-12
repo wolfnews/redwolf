@@ -1,5 +1,7 @@
 package com.hoteam.wolf.controller.profile;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -50,16 +52,29 @@ public class UserController {
 		return mav;
 	}
 
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	@ResponseBody
-	public Result register(String username, String password, String mobile, String occupation, String email) {
-		User user = new User(username, password, mobile, "", email, 1, false);
-		try {
-			EntityResult result = this.userService.addUser(user);
-			return new Result(result.isSuccess(), result.getMessage());
-		} catch (Exception e) {
-			logger.error("user register error:" + e.getMessage());
-			return new Result(false, e.getMessage());
+	public Result register(HttpSession session,String username, String password, String mobile, String code, String email) {
+		Map<String,String> codeMap = (Map<String, String>) session.getAttribute(Constants.CODE_MAP.name());
+		if(null == codeMap|| codeMap.isEmpty() || !codeMap.keySet().contains(mobile)){
+			logger.error("注册用户失败：短信验证码失效！");
+			return new Result(false, "验证码已经失效！");
+		}else{
+			if(code.equals(codeMap.get(mobile))){
+				logger.info("短信验证码验证成功！可以注册用户！");
+				User user = new User(username, password, mobile, "", email, 1, true);
+				try {
+					EntityResult result = this.userService.addUser(user);
+					logger.info("用户注册成功！");
+					return new Result(result.isSuccess(), result.getMessage());
+				} catch (Exception e) {
+					logger.error("user register error:" + e.getMessage());
+					return new Result(false, e.getMessage());
+				}
+			}else{
+				return new Result(false, "注册失败：短信验证码错误！");
+			}
 		}
 	}
 	@RequestMapping(value = "/retrieve")
