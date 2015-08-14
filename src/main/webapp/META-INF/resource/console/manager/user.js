@@ -31,7 +31,7 @@ jQuery(function($) {
 				sortable : false,
 				resize : false,
 				formatter : function(cellvalue, options,rowObject) {
-					return "<button class=\"btn btn-xs btn-danger\" onclick=\"jumpToDetail('"+rowObject.id+"','"+ rowObject.channelId+ "')\"><b>详细</b></button> &nbsp;"+
+					return "<button class=\"btn btn-xs btn-danger\" onclick=\"showRechargeWin('"+rowObject.id+ "')\"><b>充值</b></button> &nbsp;"+
 						   "<button class=\"btn btn-xs btn-danger\" onclick=\"removeUser('"+rowObject.id+ "')\"><b>删除</b></button> &nbsp;";
 				}
 		    }
@@ -128,4 +128,12 @@ function removeUser(id){
 			});
 		}
 	});
+}
+
+function showRechargeWin(user){
+	
+}
+
+function recharge(){
+	url = base+""
 }

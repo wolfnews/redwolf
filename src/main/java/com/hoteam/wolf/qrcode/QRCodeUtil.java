@@ -256,7 +256,7 @@ public class QRCodeUtil {
 	}
 
 	public static void main(String[] args) throws Exception {
-		String text = "http://101.200.189.179";
+		String text = "http://www.niuguhui.org/static/app/niubox.apk";
 		QRCodeUtil.encode(text, "d:/logo.jpg", "d:/a/", true);
 	}
 }
