@@ -52,13 +52,13 @@ String authUser = (String)request.getAttribute("user");
 								<img alt="" src="static/images/bg_img.png">
 							</div>
 							<div class="col-xs-3">
-								<div class="col-xs-10-offset-1" style="height: 300px;">
+								<div class="col-xs-12" style="height: 280px;">
 									这里显示通告
 								</div>
-								<div class="col-xs-10-offset-1" style="height: 300px;">
+								<div class="col-xs-12" style="height: 160px;">
 									这里显示android二维码
 								</div>
-								<div class="col-xs-10-offset-1" style="height: 300px;">
+								<div class="col-xs-12" style="height: 160px;">
 									这里显示IOS二维码
 								</div>
 							</div>

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hoteam.wolf.common.Constants;
 import com.hoteam.wolf.common.EntityResult;
 import com.hoteam.wolf.common.Result;
 import com.hoteam.wolf.domain.User;
@@ -72,7 +73,7 @@ public class MobileUserController {
 	@RequestMapping("/identify/{mobile}/{code}")
 	@ResponseBody
 	public Result identify(HttpSession session, @PathVariable String mobile, @PathVariable String code) {
-		Map<String, String> codeMap = (Map<String, String>) session.getAttribute("codeMap");
+		Map<String, String> codeMap = (Map<String, String>) session.getAttribute(Constants.CODE_MAP.name());
 		if (null == codeMap || codeMap.isEmpty()) {
 			return new Result(false, "验证码错误！");
 		}
