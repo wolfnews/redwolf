@@ -1,5 +1,7 @@
 package com.hoteam.wolf.service;
 
+import java.util.List;
+
 import com.hoteam.wolf.common.GridBean;
 import com.hoteam.wolf.domain.Activity;
 
@@ -47,4 +49,5 @@ public interface ActivityService {
 	 */
 	public GridBean pagination(Activity activity, int pageNum, int pageSize) throws Exception;
 
+	public List<Activity> hostActivity()throws Exception;
 }

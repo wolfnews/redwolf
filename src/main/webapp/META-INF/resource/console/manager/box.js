@@ -18,17 +18,30 @@ jQuery(function($) {
 		datatype : "json",
 		height : '100%',
 		autowidth: true,
-		colNames : ['标题', '关键字', '状态','浏览数量','生成日期','快捷操作'],
-		colModel : [ 
-			{name : 'title',index : 'title',width : 30},
-			{name : 'keyword',index : 'keyword',width : 20},
-			{name : 'status',index : 'status',width : 10,
-				formatter : function(cellvalue, options,rowObject) {
-					return cellvalue;
-				}
-			},
-			{name : 'browseNum',index : 'browseNum',width : 15},
-			{name : 'gmtCreate',index : 'gmtCreate',width : 15},
+		colNames : ['宝盒名称','制作人', '类型', '状态','浏览数量','生成日期','快捷操作'],
+        colModel : [
+                {name : 'title',index : 'title',width : 35},
+                {name : 'authorName',index : 'authorName',width : 10},
+                {name : 'category',index : 'category',width : 10,
+                    formatter:function(cellvalue,options,rowObject){
+                        switch(cellvalue){
+                            case 'CHARGE': return "<b>收费</b>";
+                            case 'FREE' : return "<b>免费</b>";
+                            default : return "<b>"+cellvalue+"</b>";
+                        }
+                    }
+                },
+                {name : 'status',index : 'status',width : 10,
+                        formatter : function(cellvalue, options,rowObject) {
+                                if("NORMAL" == cellvalue){
+                                        return "<b>正常</b>";
+                                }else{
+                                        return "<b>待审核</b>";
+                                }
+                        }
+                },
+                {name : 'browseNum',index : 'browseNum',width : 10},
+                {name : 'gmtCreate',index : 'gmtCreate',width : 15},
 			{
 		    	name : '',
 				index : '',

@@ -1,15 +1,20 @@
 package com.hoteam.wolf.controller.site;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.hoteam.wolf.common.GridBean;
 import com.hoteam.wolf.common.vo.ProfessorBean;
+import com.hoteam.wolf.domain.Activity;
 import com.hoteam.wolf.domain.News;
+import com.hoteam.wolf.service.ActivityService;
 import com.hoteam.wolf.service.BoxService;
 import com.hoteam.wolf.service.NewsService;
 import com.hoteam.wolf.service.ProfessorService;
@@ -24,16 +29,40 @@ public class IndexController {
 	private BoxService boxService;
 	@Autowired
 	private ProfessorService professorService;
+	@Autowired
+	private ActivityService activityService;
 
 	@RequestMapping("")
 	public ModelAndView defaultPage() {
 		ModelAndView mav = new ModelAndView("site/index");
+		try {
+			List<Activity> activitys = this.activityService.hostActivity();
+			if (activitys.isEmpty()) {
+				mav.addObject("hasAct", false);
+			} else {
+				mav.addObject("hasAct", true);
+				mav.addObject("acts", JSONArray.toJSONString(activitys, SerializerFeature.WriteDateUseDateFormat));
+			}
+		} catch (Exception e) {
+			mav.addObject("hasAct", false);
+		}
 		return mav;
 	}
 
 	@RequestMapping("/index.html")
 	public ModelAndView index() {
 		ModelAndView mav = new ModelAndView("site/index");
+		try {
+			List<Activity> activitys = this.activityService.hostActivity();
+			if(activitys.isEmpty()){
+				mav.addObject("hasAct", false);
+			}else{
+				mav.addObject("hasAct",true);
+				mav.addObject("acts", JSONArray.toJSONString(activitys, SerializerFeature.WriteDateUseDateFormat));
+			}
+		} catch (Exception e) {
+			mav.addObject("hasAct", false);
+		}
 		return mav;
 	}
 

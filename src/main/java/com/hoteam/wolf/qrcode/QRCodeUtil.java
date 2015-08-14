@@ -256,7 +256,9 @@ public class QRCodeUtil {
 	}
 
 	public static void main(String[] args) throws Exception {
-		String text = "http://www.niuguhui.org/static/app/niubox.apk";
-		QRCodeUtil.encode(text, "d:/logo.jpg", "d:/a/", true);
+		String text = "http://www.niuguhui.org/download/app/android/1.0.0";
+		QRCodeUtil.encode(text, "E:/logo.jpg", "E:/a/", true);
+		text = "http://www.niuguhui.org/download/app/ios/1.0.0";
+		QRCodeUtil.encode(text, "E:/logo.jpg", "E:/a/", true);
 	}
 }

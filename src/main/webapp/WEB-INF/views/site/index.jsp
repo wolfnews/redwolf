@@ -31,6 +31,19 @@ String authUser = (String)request.getAttribute("user");
 			<script type="text/javascript">
 				var base='<%=basePath%>';
 				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+				$(document).ready(function(){
+// 					var hasAct = ${hasAct};
+// 					var acts = [];
+// 					if{hasAct}{
+// 						acts = ${acts};
+// 					}
+// 					if(acts.length >0){
+// 						for(var i =0;i<acts.length;i++){
+// 							$("#notice_board").append("")
+// 						}
+// 					}				
+				});
+				
 			</script>
 			<div class="main-content">
 				<div class="main-content-inner">
@@ -48,18 +61,34 @@ String authUser = (String)request.getAttribute("user");
 					</div>
 					<div class="page-content" style="background-color: #ea3f2c">
 						<div class="row center">
-							<div class="col-xs-9">
+							<div class="col-xs-6">
 								<img alt="" src="static/images/bg_img.png">
 							</div>
-							<div class="col-xs-3">
-								<div class="col-xs-12" style="height: 280px;">
-									这里显示通告
+							<div class="col-xs-6">
+								<div class="col-xs-12 white" id="notice_board" style="height: 320px;">
+									<div class="space-15"></div>
+									<h2 class="left white"><b>热烈庆祝红狼军团旗下首款app综合资讯平台<br/>(牛股会) 震撼上市！</b></h2>	
+									<h4  class="left white" style="text-align: left;">
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									随着《红狼军团》近几年的快速发展，旗下粉丝也呈几何数字增长！应广大朋友的建议，为了能够及时方便的让投资者接收相关信息，
+									本公司首款app综合资讯平台（牛股会）震撼上市！专业的投资团队，成熟的操作系统，优越的战绩为您的投资保驾护航，
+									让股神做您的私人助理！&nbsp;<b>818不止有苏宁!牛股会将会以更大的力度回馈新老用户：</b>&nbsp;即日起凡注册登录即送188元现金大礼，
+									5000万红包大礼等你来拿！扫描下方二维码即可下载牛股宝盒客户端。小伙伴们赶紧行动吧! 
+									</h4>
+									<h3 class="center white"><b>活动期间：2015-08-13 15:12:00至2015-09-17 15:12:00</b></h3>	
 								</div>
-								<div class="col-xs-12" style="height: 160px;">
-									这里显示android二维码
-								</div>
-								<div class="col-xs-12" style="height: 160px;">
-									这里显示IOS二维码
+								<div class="col-xs-12" style="height: 180px;">
+									<div class="col-sm-5">
+										<img alt="Android版本下载" width="178px" height="178px" src="<%=basePath%>static/images/android.jpg">
+										<div class="space-4"></div>
+										<label class="center white"><b>Android版本</b></label>								
+									</div>
+									<div class="col-sm-1"></div>
+									<div class="col-sm-5">
+										<img alt="IOS版本下载" width="178px" height="178px" src="<%=basePath%>static/images/ios.jpg">
+										<div class="space-4"></div>
+										<label class="center white"><b>IOS版本</b></label>
+									</div>
 								</div>
 							</div>
 						</div>

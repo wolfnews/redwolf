@@ -1,10 +1,14 @@
 package com.hoteam.wolf.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hoteam.wolf.common.GridBean;
+import com.hoteam.wolf.common.enums.ActivityStatus;
 import com.hoteam.wolf.dao.ActivityDao;
 import com.hoteam.wolf.domain.Activity;
 import com.hoteam.wolf.service.ActivityService;
@@ -63,6 +67,19 @@ public class ActivityServiceImpl implements ActivityService {
 		} catch (Exception e) {
 			logger.error("list activity exception:",e);
 			return new GridBean(0, 0, 0, null);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Activity> hostActivity() throws Exception {
+		Activity act = new Activity();
+		act.setStatus(ActivityStatus.NORMAL.name());
+		GridBean gridBean = this.pagination(act, 1, 100);
+		if(null == gridBean.getRows() || gridBean.getRows().isEmpty()){
+			return new ArrayList<Activity>();
+		}else{
+			return (List<Activity>) gridBean.getRows();
 		}
 	}
 
