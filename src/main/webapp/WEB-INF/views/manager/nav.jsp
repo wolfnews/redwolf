@@ -40,7 +40,7 @@ pageIndex = null == pageIndex? "" : pageIndex;
 				</a>
 				<b class="arrow"></b>
 			</li>
-			<li id="manage_notice" class="">
+			<li id="manage_box" class="">
 				<a href="<%=basePath%>manage/box.html"> 
 					<i class="menu-icon fa fa-inbox"></i> 
 					<span class="menu-text"><strong>宝盒管理</strong> </span>
@@ -98,6 +98,7 @@ pageIndex = null == pageIndex? "" : pageIndex;
 			try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
 			$(document).ready(function(){
 				var page_index = "<%=pageIndex %>";
+				$("#manage_message").show();
 				if("" != page_index){
 					$("#"+page_index).addClass('active');
 				}

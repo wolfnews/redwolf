@@ -56,64 +56,65 @@ String authUser = (String)request.getAttribute("user");
 					                'echarts/chart/bar',  
 					                'echarts/chart/line'  
 					            ],  
-					            function (ec) {  
-					                var chart = document.getElementById('visit_chart');  
-					                var echart = ec.init(chart);  
+					        function (ec) {  
+					            var chart = document.getElementById('visit_chart');  
+					            var echart = ec.init(chart);  
 					                  
-					                echart.showLoading({  
-					                    text: '正在努力加载中...'  
-					                });  
+					            echart.showLoading({  
+					               text: '正在努力加载中...'  
+					            });  
 					                  
-					                var date = [];  
-					                var pv = [];  
-					                var uv = [];  
-					                // 同步执行  
-					                $.ajaxSettings.async = false;  
+					            var date = [];  
+					            var pv = [];  
+					            var uv = [];  
+					            // 同步执行  
+					            $.ajaxSettings.async = false;  
 					                  
-					                // 加载数据  
-					                $.getJSON(base+'dashboard/visitCount', function (json) {  
-					                    date = json.dates;  
-					                    pv = json.pvs;  
-					                    uv = json.uvs;  
-					                });  
+					            // 加载数据  
+					            $.getJSON(base+'dashboard/visitCount', function (json) {  
+					                date = json.dates;  
+					                pv = json.pvs;  
+					                uv = json.uvs;  
+					            });  
 					                  
-					                var option = {  
-					                    tooltip: {  
-					                        show: true  
-					                    },  
-					                    legend: {  
-					                        data: ['PV访问量','UV访问量']  
-					                    },  
-					                    xAxis: [  
-					                        {  
-					                            type: 'category',  
-					                            data: date  
-					                        }  
+					            var option = {  
+					                tooltip: {  
+					                    show: true  
+					                },  
+					                legend: {  
+					                    data: ['PV访问量','UV访问量']  
+					                },  
+					                xAxis: [  
+					                    {  
+					                        type: 'category',  
+					                        data: date  
+					                    }  
 					                    ],  
-					                    yAxis: [  
-					                        {  
-					                            type: 'value'  
-					                        }  
-					                    ],  
-					                    series: [  
-					                        {  
-					                            'name': 'PV',  
-					                            'type': 'line',  
-					                            'data': pv  
-					                        },
-					                        {  
-					                            'name': 'UV',  
-					                            'type': 'line',  
-					                            'data': uv  
-					                        }
-					                    ]  
-					                };  
-					                echart.setOption(option);  
-					                echart.hideLoading();  
-					            }  
-					        );
-						});
-							  
+					                yAxis: [  
+					                    {  
+					                        type: 'value'  
+					                    }  
+					                ],  
+					                series: [  
+					                    {  
+					                        'name': 'PV',  
+					                        'type': 'line',  
+					                        'data': pv,
+					                        'smooth':true
+					                    },
+					                    {  
+					                        'name': 'UV',  
+					                        'type': 'line',  
+					                        'data': uv,
+					                        'smooth':true
+					                    }
+					                ]  
+					            };  
+					            echart.setOption(option);  
+					            echart.hideLoading();  
+					        }  
+					    );
+					});
 						</script>
 						<ul class="breadcrumb">
 							<li>

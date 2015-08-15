@@ -18,11 +18,12 @@ jQuery(function($) {
 		datatype : "json",
 		height : '100%',
 		autowidth: true,
-		colNames : ['用户账号', '手机号码', '级别','快捷操作'],
+		colNames : ['用户账号', '手机号码', '级别','注册时间','快捷操作'],
 		colModel : [ 
-			{name : 'username',index : 'nickname',width : 30},
+			{name : 'username',index : 'nickname',width : 20},
 			{name : 'mobile',index : 'mobile',width : 20},
-			{name : 'level',index : 'level',width : 20},
+			{name : 'level',index : 'level',width : 10},
+			{name : 'gmtCreate',index : 'gmtCreate',width : 15},
 			{
 		    	name : '',
 				index : '',

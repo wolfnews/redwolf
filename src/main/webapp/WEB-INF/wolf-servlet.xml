@@ -17,60 +17,64 @@
 			expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
 	<mvc:interceptors>
-	    <mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/mobile/**" />
+			<bean class="com.hoteam.wolf.interceptor.MobileInterceptor"/>
+		</mvc:interceptor>
+		<mvc:interceptor>
 			<mvc:mapping path="/**/*.html" />
-			<bean class="com.hoteam.wolf.interceptor.AccessInterceptor" >
+			<bean class="com.hoteam.wolf.interceptor.AccessInterceptor">
 				<property name="ignoreUrls">
-				    <list>
-					<value>static</value>
-					<value>manage</value>
-					<value>nopermission</value>
-					<value>logout</value>
-				</list>
+					<list>
+						<value>static</value>
+						<value>manage</value>
+						<value>nopermission</value>
+						<value>logout</value>
+					</list>
 				</property>
 			</bean>
 		</mvc:interceptor>
 		<mvc:interceptor>
 			<mvc:mapping path="/professor/**" />
-			<bean class="com.hoteam.wolf.interceptor.ProfessorInterceptor" >
+			<bean class="com.hoteam.wolf.interceptor.ProfessorInterceptor">
 				<property name="ignoreUrls">
-				    <list>
-					<value>static</value>
-					<value>nopermission</value>
-					<value>login</value>
-					<value>logout</value>
-				</list>
+					<list>
+						<value>static</value>
+						<value>nopermission</value>
+						<value>login</value>
+						<value>logout</value>
+					</list>
 				</property>
 			</bean>
 		</mvc:interceptor>
 		<mvc:interceptor>
 			<mvc:mapping path="/profile/**" />
-			<mvc:mapping path="/alipay/**"/>
-			<bean class="com.hoteam.wolf.interceptor.ProfileInterceptor" >
+			<mvc:mapping path="/alipay/**" />
+			<bean class="com.hoteam.wolf.interceptor.ProfileInterceptor">
 				<property name="ignoreUrls">
-				    <list>
-					<value>static</value>
-					<value>nopermission</value>
-					<value>login</value>
-					<value>logout</value>
-					<value>register</value>
-					<value>identify</value>
-					<value>retrieve</value>
-				</list>
-				</property>			
+					<list>
+						<value>static</value>
+						<value>nopermission</value>
+						<value>login</value>
+						<value>logout</value>
+						<value>register</value>
+						<value>identify</value>
+						<value>retrieve</value>
+					</list>
+				</property>
 			</bean>
 		</mvc:interceptor>
 		<mvc:interceptor>
 			<mvc:mapping path="/manage/**" />
-			<bean class="com.hoteam.wolf.interceptor.ManagerInterceptor" >
+			<bean class="com.hoteam.wolf.interceptor.ManagerInterceptor">
 				<property name="ignoreUrls">
-				    <list>
-					<value>static</value>
-					<value>nopermission</value>
-					<value>login</value>
-					<value>logout</value>
-				</list>
-				</property>			
+					<list>
+						<value>static</value>
+						<value>nopermission</value>
+						<value>login</value>
+						<value>logout</value>
+					</list>
+				</property>
 			</bean>
 		</mvc:interceptor>
 	</mvc:interceptors>
