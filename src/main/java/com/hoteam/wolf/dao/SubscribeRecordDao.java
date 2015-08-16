@@ -7,12 +7,12 @@ import java.util.Map;
 import org.springframework.stereotype.Component;
 
 import com.hoteam.wolf.common.GridBean;
-import com.hoteam.wolf.common.Orders;
 import com.hoteam.wolf.domain.SubscribeRecord;
 import com.hoteam.wolf.jdbc.ConditionDef;
 import com.hoteam.wolf.jdbc.PagingUtils;
 import com.hoteam.wolf.jdbc.SQLUtils;
 import com.hoteam.wolf.jdbc.utils.ORDER;
+import com.hoteam.wolf.jdbc.utils.Orders;
 
 @Component("subscribeRecordDao")
 public class SubscribeRecordDao extends BaseDao {

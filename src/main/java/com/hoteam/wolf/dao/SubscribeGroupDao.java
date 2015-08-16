@@ -9,11 +9,11 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
-import com.hoteam.wolf.common.Orders;
 import com.hoteam.wolf.domain.SubscribeGroup;
 import com.hoteam.wolf.jdbc.Conditions;
 import com.hoteam.wolf.jdbc.SQLUtils;
 import com.hoteam.wolf.jdbc.utils.ORDER;
+import com.hoteam.wolf.jdbc.utils.Orders;
 
 @Component("subscribeGroupDao")
 public class SubscribeGroupDao extends BaseDao {

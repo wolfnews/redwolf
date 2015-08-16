@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.hoteam.wolf.common.GridBean;
-import com.hoteam.wolf.domain.News;
+import com.hoteam.wolf.domain.Order;
 import com.hoteam.wolf.jdbc.ConditionDef;
 import com.hoteam.wolf.jdbc.Conditions;
 import com.hoteam.wolf.jdbc.PagingUtils;
@@ -24,51 +24,51 @@ import com.hoteam.wolf.jdbc.utils.Orders;
  * @author mingwei.dmw
  *
  */
-@Component("newsDao")
-public class NewsDao extends BaseDao {
-	private static final Logger logger = LoggerFactory.getLogger(NewsDao.class);
+@Component("orderDao")
+public class OrderDao extends BaseDao {
+	private static final Logger logger = LoggerFactory.getLogger(OrderDao.class);
 
-	public News save(final News news) throws Exception {
-		news.prePersist();
-		saveWithPk(news);
-		return news;
+	public Order save(final Order order) throws Exception {
+		order.prePersist();
+		saveWithPk(order);
+		return order;
 	}
 
-	public News update(final News news) {
-		news.preUpdate();
-		baseSaveUpdate(news);
-		return news;
+	public Order update(final Order order) {
+		order.preUpdate();
+		baseSaveUpdate(order);
+		return order;
 	}
 
-	public News load(Long id) {
+	public Order load(Long id) {
 		Map<String, Object> paramMap = new HashMap<String, Object>(1);
 		paramMap.put("id", id);
 		try {
-			return (News) this.baseQueryForEntity(News.class, Conditions.loadConditiion, paramMap);
+			return (Order) this.baseQueryForEntity(Order.class, Conditions.loadConditiion, paramMap);
 		} catch (Exception e) {
-			logger.error("Load news by id exception:", e);
+			logger.error("Load order by id exception:", e);
 			return null;
 		}
 	}
 
-	public void delete(News news) {
-		this.baseDelete(news);
+	public void delete(Order order) {
+		this.baseDelete(order);
 	}
 
 	public void delete(Long id) {
-		News news = new News();
-		news.setId(id);
-		this.baseDelete(news);
+		Order order = new Order();
+		order.setId(id);
+		this.baseDelete(order);
 	}
 
-	public GridBean pagination(News news, int pageNum, int pageSize) throws Exception {
+	public GridBean pagination(Order order, int pageNum, int pageSize) throws Exception {
 		List<Object[]> conditionMetaList = new ArrayList<Object[]>();
 		Map<String, Object> paramMap = PagingUtils.initPage(pageNum, pageSize);
-		if (null != news) {
-			if (null != news.getCategory() && !news.getCategory().isEmpty()) {
-				Object[] item = { "CATEGORY = :category" };
+		if (null != order) {
+			if (null != order.getUser()) {
+				Object[] item = { "USER = :user" };
 				conditionMetaList.add(item);
-				paramMap.put("category", news.getCategory());
+				paramMap.put("user", order.getUser());
 			}
 
 		}
@@ -77,18 +77,17 @@ public class NewsDao extends BaseDao {
 			conMetaArray[i] = conditionMetaList.get(i);
 		}
 		ConditionDef pageConditiion = new ConditionDef(conMetaArray);
-		List<Map<String, Object>> metaList = baseQueryForList(News.class, pageConditiion, paramMap,
+		List<Map<String, Object>> metaList = baseQueryForList(Order.class, pageConditiion, paramMap,
 				Orders.simpleCreateOrder(ORDER.DESC));
-		List<News> list = new ArrayList<News>();
+		List<Order> list = new ArrayList<Order>();
 		if (null != metaList && !metaList.isEmpty()) {
 			for (Map<String, Object> meta : metaList) {
-				News newsBean = (News) SQLUtils.coverMapToBean(meta, News.class);
-				newsBean.setContent(null);
-				list.add(newsBean);
+				Order orderBean = (Order) SQLUtils.coverMapToBean(meta, Order.class);
+				list.add(orderBean);
 			}
 		}
 		paramMap.put(PagingUtils.IS_PAGING, false);
-		int records = baseQueryForList(News.class, pageConditiion, paramMap, Orders.simpleCreateOrder(ORDER.DESC))
+		int records = baseQueryForList(Order.class, pageConditiion, paramMap, Orders.simpleCreateOrder(ORDER.DESC))
 				.size();
 		int totalPages = records % pageSize == 0 ? records / pageSize : records / pageSize + 1;
 		return new GridBean(pageNum, totalPages, records, list);

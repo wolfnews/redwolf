@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.hoteam.wolf.common.GridBean;
-import com.hoteam.wolf.common.Orders;
 import com.hoteam.wolf.common.vo.VisitLineBean;
 import com.hoteam.wolf.domain.VisitBean;
 import com.hoteam.wolf.domain.VisitCount;
@@ -19,6 +18,7 @@ import com.hoteam.wolf.jdbc.Conditions;
 import com.hoteam.wolf.jdbc.PagingUtils;
 import com.hoteam.wolf.jdbc.SQLUtils;
 import com.hoteam.wolf.jdbc.utils.ORDER;
+import com.hoteam.wolf.jdbc.utils.Orders;
 import com.hoteam.wolf.utils.DateUtil;
 
 /**

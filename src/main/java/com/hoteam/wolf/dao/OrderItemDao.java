@@ -25,8 +25,8 @@ import com.hoteam.wolf.jdbc.utils.Orders;
  *
  */
 @Component("newsDao")
-public class NewsDao extends BaseDao {
-	private static final Logger logger = LoggerFactory.getLogger(NewsDao.class);
+public class OrderItemDao extends BaseDao {
+	private static final Logger logger = LoggerFactory.getLogger(OrderItemDao.class);
 
 	public News save(final News news) throws Exception {
 		news.prePersist();
