@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.hoteam.wolf.common.Constants;
 import com.hoteam.wolf.common.EntityResult;
 import com.hoteam.wolf.common.Result;
+import com.hoteam.wolf.common.vo.UserProfile;
 import com.hoteam.wolf.domain.User;
 import com.hoteam.wolf.service.UserService;
 
@@ -55,17 +56,18 @@ public class MobileUserController {
 
 	@RequestMapping("/audit")
 	@ResponseBody
-	public Result audit(String username, String password) {
+	public EntityResult audit(String username, String password) {
 		try {
 			User user = this.userService.load(username, password);
 			if (null == user) {
-				return new Result(false, "用户名或密码错误！");
+				return new EntityResult(false, "用户名或密码错误！",null);
 			} else {
-				return new Result(true, user.getId().toString());
+				UserProfile profile = this.userService.profile(user.getId());
+				return new EntityResult(true, user.getId().toString(),profile.getCoin());
 			}
 		} catch (Exception e) {
 			logger.error("user " + username + "login exception:", e);
-			return new Result(false, "登录异常");
+			return new EntityResult(false, "登录异常");
 		}
 	}
 

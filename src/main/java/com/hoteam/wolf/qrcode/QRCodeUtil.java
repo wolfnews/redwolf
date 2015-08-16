@@ -257,8 +257,8 @@ public class QRCodeUtil {
 
 	public static void main(String[] args) throws Exception {
 		String text = "http://www.niuguhui.org/download/app/android/1.0.0";
-		QRCodeUtil.encode(text, "E:/logo.jpg", "E:/a/", true);
+		QRCodeUtil.encode(text, "E:/logo.png", "E:/a1/", true);
 		text = "http://www.niuguhui.org/download/app/ios/1.0.0";
-		QRCodeUtil.encode(text, "E:/logo.jpg", "E:/a/", true);
+		QRCodeUtil.encode(text, "E:/logo.png", "E:/a2/", true);
 	}
 }
