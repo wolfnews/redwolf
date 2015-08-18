@@ -48,10 +48,10 @@ public class ProfessorInterceptor implements HandlerInterceptor {
 		Long professorId = (Long) request.getSession().getAttribute(Constants.PROFESSOR_TOKEN.toString());
 		if (null == professorId) {
 			response.sendRedirect(request.getContextPath()+"/professor/login.html");
+			return false;
 		} else {
 			return true;
 		}
-		return true;
 	}
 
 	@Override

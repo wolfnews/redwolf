@@ -45,7 +45,7 @@ public class RssServiceImpl implements RssService {
 				list.add(entity);
 			}
 		}
-		Long total = userRssDao.baseAccountQuery("select count(1) from user_rss", new HashMap<String, Object>());
+		Long total = userRssDao.baseCountQuery("select count(1) from user_rss", new HashMap<String, Object>());
 		int records = total.intValue();
 		int totalPages = records % pageSize == 0 ? records / pageSize : records / pageSize + 1;
 		return new GridBean(pageNum, totalPages, records, list);

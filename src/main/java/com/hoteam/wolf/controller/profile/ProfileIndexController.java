@@ -135,9 +135,9 @@ public class ProfileIndexController {
 		return mav;
 	}
 
-	@RequestMapping("/sr.html")
-	public ModelAndView message() {
-		return new ModelAndView("profile/subscribe_record");
+	@RequestMapping("/subRecord.html")
+	public ModelAndView subscribe() {
+		return new ModelAndView("profile/sub_record");
 	}
 
 	@RequestMapping("/box.html")
@@ -165,4 +165,7 @@ public class ProfileIndexController {
 		return new ModelAndView("profile/login");
 	}
 
+	public ModelAndView message(){
+		return new ModelAndView("profile/message");
+	}
 }

@@ -284,9 +284,9 @@ public class UserServiceImpl implements UserService {
 			UserAccount account = this.userAccountDao.load(user.getId());
 			Map<String, Object> param = new HashMap<String, Object>();
 			param.put("user", userId);
-			Long rssAccount = this.userDao.baseAccountQuery("select count(1) from user_rss where user_id = :user",
+			Long rssAccount = this.userDao.baseCountQuery("select count(1) from user_rss where user_id = :user",
 					param);
-			Long subAccount = this.userDao.baseAccountQuery(
+			Long subAccount = this.userDao.baseCountQuery(
 					"select count(1) from user_subscribe where  user_id = :user", param);
 			if (null == rssAccount) {
 				rssAccount = 0l;
@@ -468,17 +468,17 @@ public class UserServiceImpl implements UserService {
 			if("mobile".endsWith(category)){
 				param.put("mobile", content);
 				sql += "mobile=:mobile";
-				count = this.userDao.baseAccountQuery(sql, param);
+				count = this.userDao.baseCountQuery(sql, param);
 			}else if("username".equals(category)){
 				param.clear();
 				param.put("username", content);
 				sql += "username=:username";
-				count = this.userDao.baseAccountQuery(sql, param);
+				count = this.userDao.baseCountQuery(sql, param);
 			}else if("email".equals(category)){
 				param.clear();
 				param.put("email", content);
 				sql += "email=:email";
-				count = this.userDao.baseAccountQuery(sql, param);
+				count = this.userDao.baseCountQuery(sql, param);
 			}
 		} catch (Exception e) {
 			logger.error("user info exist exception:",e);

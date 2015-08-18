@@ -128,9 +128,8 @@ public class VisitCountDao extends BaseDao {
 				list.add((VisitCount) SQLUtils.coverMapToBean(meta, VisitCount.class));
 			}
 		}
-		paramMap.put(PagingUtils.IS_PAGING, false);
-		int records = baseQueryForList(VisitCount.class, pageConditiion, paramMap, Orders.simpleCreateOrder(ORDER.DESC))
-				.size();
+		paramMap.remove(PagingUtils.IS_PAGING);
+		int records = listCount(VisitCount.class, pageConditiion, paramMap).intValue();
 		int totalPages = records % pageSize == 0 ? records / pageSize : records / pageSize + 1;
 		return new GridBean(pageNum, totalPages, records, list);
 	}

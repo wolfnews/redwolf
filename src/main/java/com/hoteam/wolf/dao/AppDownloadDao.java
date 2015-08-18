@@ -73,9 +73,8 @@ public class AppDownloadDao extends BaseDao {
 				list.add((AppDownload) SQLUtils.coverMapToBean(meta, AppDownload.class));
 			}
 		}
-		paramMap.put(PagingUtils.IS_PAGING, false);
-		int records = baseQueryForList(AppDownload.class, pageConditiion, paramMap, Orders.simpleCreateOrder(ORDER.DESC))
-				.size();
+		paramMap.remove(PagingUtils.IS_PAGING);
+		int records = listCount(AppDownload.class, pageConditiion, paramMap).intValue();
 		int totalPages = records % pageSize == 0 ? records / pageSize : records / pageSize + 1;
 		return new GridBean(pageNum, totalPages, records, list);
 	}

@@ -96,11 +96,16 @@ public class ProfessorIndexController {
 		Long professorId = (Long) session.getAttribute(Constants.PROFESSOR_TOKEN.toString());
 		try {
 			List<SubscribeGroup> groups = this.professorService.listGroup(professorId);
-			mav.addObject("groups", JSONArray.toJSONString(groups,SerializerFeature.WriteDateUseDateFormat));
+			mav.addObject("groups", JSONArray.toJSONString(groups, SerializerFeature.WriteDateUseDateFormat));
 		} catch (Exception e) {
-			logger.error("get professor subscribe group error:",e);
+			logger.error("get professor subscribe group error:", e);
 			mav.addObject("groups", new ArrayList<SubscribeGroup>());
 		}
 		return mav;
+	}
+	
+	@RequestMapping("/message.html")
+	public ModelAndView message(){
+		return new ModelAndView("professor/message");
 	}
 }

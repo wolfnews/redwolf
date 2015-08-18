@@ -447,7 +447,7 @@ public class SQLUtils {
 	 * @param pojoClass
 	 * @return
 	 */
-	private static String loadTableName(Class<?> pojoClass) {
+	public static String loadTableName(Class<?> pojoClass) {
 		if (pojoClass.isAnnotationPresent(Table.class)) {
 			Table table = (Table) pojoClass.getAnnotation(Table.class);
 			return table.value();

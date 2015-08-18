@@ -150,7 +150,7 @@ if(null == account){
 					</ul>
 				</li>	
 				<li>
-					<a style="background: #AB1A08" href="<%=basePath%>profile/sr.html">
+					<a style="background: #AB1A08" href="<%=basePath%>profile/subRecord.html">
 						<i class="ace-icon fa fa-envelope"></i>
 						<span class="white"><b>订阅记录</b></span>
 					</a>

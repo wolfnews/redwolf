@@ -121,10 +121,16 @@ public class BaseDao {
 		return this.namedParameterJdbcTemplate.update(sql, sps) > 0 ? true : false;
 	}
 
-	public Long baseAccountQuery(String sql, Map<String, Object> param) throws Exception {
+	public Long baseCountQuery(String sql, Map<String, Object> param) throws Exception {
 		return this.namedParameterJdbcTemplate.queryForObject(sql, param, Long.class);
 	}
 
+	public Long listCount(Class<?> cs,ConditionDef conditionDef,Map<String, Object> paramMap) throws Exception{
+		String sql = "SELECT COUNT(1) FROM " + SQLUtils.loadTableName(cs)+" ";
+		Condition condition = new Condition(conditionDef, paramMap);
+		sql += condition.getConditionClauseWithWhere();
+		return this.baseCountQuery(sql, paramMap);
+	}
 	/**
 	 * 自动分页/不分页查询返回list
 	 * 

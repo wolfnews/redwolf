@@ -25,7 +25,7 @@ public class Order {
 	private String desp;
 	private String state;
 	private BigDecimal total;
-	private Long user;
+	private Long userId;
 
 	/**
 	 * 持久化前预处理
@@ -106,22 +106,22 @@ public class Order {
 		this.total = total;
 	}
 
-	public Long getUser() {
-		return user;
+	public Long getUserId() {
+		return userId;
 	}
 
-	public void setUser(Long user) {
-		this.user = user;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
-	public Order(String sn, String name, String desp, String state, BigDecimal total, Long user) {
+	public Order(String sn, String name, String desp, String state, BigDecimal total, Long userId) {
 		super();
 		this.sn = sn;
 		this.name = name;
 		this.desp = desp;
 		this.state = state;
 		this.total = total;
-		this.user = user;
+		this.userId = userId;
 	}
 
 	public Order() {
@@ -132,7 +132,7 @@ public class Order {
 	@Override
 	public String toString() {
 		return "Orders [id=" + id + ", gmtCreate=" + gmtCreate + ", gmtModify=" + gmtModify + ", sn=" + sn + ", name="
-				+ name + ", desp=" + desp + ", state=" + state + ", total=" + total + ", user=" + user + "]";
+				+ name + ", desp=" + desp + ", state=" + state + ", total=" + total + ", userId=" + userId + "]";
 	}
 
 }

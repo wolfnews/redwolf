@@ -71,7 +71,7 @@ public class SubscribeServiceImpl implements SubscribeService {
 				list.add(entity);
 			}
 		}
-		Long total = subscribeRecordDao.baseAccountQuery("select count(1) from subscribe_record", new HashMap<String, Object>()); 
+		Long total = subscribeRecordDao.baseCountQuery("select count(1) from subscribe_record", new HashMap<String, Object>()); 
 		int records = total.intValue();
 		int totalPages = records % pageSize == 0 ? records / pageSize : records / pageSize + 1;
 		return new GridBean(pageNum, totalPages, records, list);

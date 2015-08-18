@@ -65,10 +65,10 @@ public class OrderDao extends BaseDao {
 		List<Object[]> conditionMetaList = new ArrayList<Object[]>();
 		Map<String, Object> paramMap = PagingUtils.initPage(pageNum, pageSize);
 		if (null != order) {
-			if (null != order.getUser()) {
+			if (null != order.getUserId()) {
 				Object[] item = { "USER = :user" };
 				conditionMetaList.add(item);
-				paramMap.put("user", order.getUser());
+				paramMap.put("user", order.getUserId());
 			}
 
 		}
@@ -86,9 +86,8 @@ public class OrderDao extends BaseDao {
 				list.add(orderBean);
 			}
 		}
-		paramMap.put(PagingUtils.IS_PAGING, false);
-		int records = baseQueryForList(Order.class, pageConditiion, paramMap, Orders.simpleCreateOrder(ORDER.DESC))
-				.size();
+		paramMap.remove(PagingUtils.IS_PAGING);
+		int records = listCount(Order.class, pageConditiion, paramMap).intValue();
 		int totalPages = records % pageSize == 0 ? records / pageSize : records / pageSize + 1;
 		return new GridBean(pageNum, totalPages, records, list);
 	}

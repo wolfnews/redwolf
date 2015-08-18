@@ -134,12 +134,12 @@ public class ProfessorServiceImpl implements ProfessorService {
 	public ProfessorStatBean statisProfessor(Long professorId) throws Exception {
 		Map<String,Object> param = new HashMap<String, Object>();
 		param.put("author", professorId);
-		Long browseCount = this.professorDao.baseAccountQuery("select sum(browse_num) from box where author=:author",
+		Long browseCount = this.professorDao.baseCountQuery("select sum(browse_num) from box where author=:author",
 				param);
-		Long boxCount = this.professorDao.baseAccountQuery("select count(1) from box where author=:author", param);
-		Long rssCount = this.professorDao.baseAccountQuery("select count(1) from user_rss where professor_id=:author",
+		Long boxCount = this.professorDao.baseCountQuery("select count(1) from box where author=:author", param);
+		Long rssCount = this.professorDao.baseCountQuery("select count(1) from user_rss where professor_id=:author",
 				param);
-		Long subAccount = this.professorDao.baseAccountQuery(
+		Long subAccount = this.professorDao.baseCountQuery(
 				"select count(1) from subscribe_record where professor_id=:author", param);
 		if (null == browseCount) {
 			browseCount = 0l;

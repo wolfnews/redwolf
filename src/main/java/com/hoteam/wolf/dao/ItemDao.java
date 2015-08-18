@@ -86,9 +86,8 @@ public class ItemDao extends BaseDao {
 				list.add(itemBean);
 			}
 		}
-		paramMap.put(PagingUtils.IS_PAGING, false);
-		int records = baseQueryForList(Item.class, pageConditiion, paramMap, Orders.simpleCreateOrder(ORDER.DESC))
-				.size();
+		paramMap.remove(PagingUtils.IS_PAGING);
+		int records = listCount(Item.class, pageConditiion, paramMap).intValue();
 		int totalPages = records % pageSize == 0 ? records / pageSize : records / pageSize + 1;
 		return new GridBean(pageNum, totalPages, records, list);
 	}

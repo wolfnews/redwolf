@@ -35,17 +35,17 @@ public class UserBoxServieImpl implements UserBoxService {
 		Map<String, Object> param = new HashMap<String, Object>();
 		try {
 			if (null == userId || null == type) {
-				return this.boxDao.baseAccountQuery(sql, null);
+				return this.boxDao.baseCountQuery(sql, null);
 			} else if ("rss".equals(type) && null != userId) {
 				List<Long> professorIds = this.userService.getRssProfessorIds(userId);
 				param.put("ids", professorIds);
-				return this.boxDao.baseAccountQuery(sql + "AND author in (:ids)", param);
+				return this.boxDao.baseCountQuery(sql + "AND author in (:ids)", param);
 			} else if ("subs".equals(type) && null != userId) {
 				List<Long> professorIds = this.userService.getSubProfessorIds(userId);
 				param.put("ids", professorIds);
-				return this.boxDao.baseAccountQuery(sql + "AND author in (:ids)", param);
+				return this.boxDao.baseCountQuery(sql + "AND author in (:ids)", param);
 			} else {
-				return this.boxDao.baseAccountQuery(sql, null);
+				return this.boxDao.baseCountQuery(sql, null);
 			}
 		} catch (Exception e) {
 			logger.error("get box count exception:", e);

@@ -48,10 +48,10 @@ public class ManagerInterceptor implements HandlerInterceptor {
 		Long managerId = (Long) request.getSession().getAttribute(Constants.MANAGER_TOKEN.toString());
 		if (null == managerId) {
 			response.sendRedirect(request.getContextPath()+"/manage/login.html");
+			return false;
 		} else {
 			return true;
 		}
-		return true;
 	}
 
 	@Override
