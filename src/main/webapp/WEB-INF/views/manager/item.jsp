@@ -10,7 +10,7 @@ String authUser = (String)request.getAttribute("user");
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta charset="utf-8" />
-		<title>牛股会管理平台-新闻管理</title>
+		<title>牛股会管理平台-商品管理</title>
 		<meta name="description" content="overview &amp; stats" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 		<link rel="stylesheet" href="<%=basePath%>static/ace/assets/css/bootstrap.css" />
@@ -25,7 +25,7 @@ String authUser = (String)request.getAttribute("user");
 		<script src="<%=basePath%>static/ace/assets/js/ace/ace.js"></script>
 		<script	src="<%=basePath%>static/ace/assets/js/jqGrid/jquery.jqGrid.src.js"></script>
 		<script	src="<%=basePath%>static/ace/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
-		<script	src="<%=basePath%>static/console/manager/news.js"></script>
+		<script	src="<%=basePath%>static/console/manager/item.js"></script>
 	</head>
 	<body class="no-skin">
 		<jsp:include page="../header.jsp"></jsp:include>
@@ -37,8 +37,8 @@ String authUser = (String)request.getAttribute("user");
 					location.href=base+'manage/news/add.html';
 				}
 			</script>
-			<jsp:include page="../nav.jsp">
-				<jsp:param value="manage_content" name="page_index"/>
+			<jsp:include page="nav.jsp">
+				<jsp:param value="manage_store" name="page_index"/>
 			</jsp:include>			
 			<div class="main-content">
 				<div class="main-content-inner">
@@ -51,7 +51,11 @@ String authUser = (String)request.getAttribute("user");
 								<i class="ace-icon fa fa-home home-icon"></i>
 								<a href="<%=basePath%>manage/index.html"><strong>首页</strong></a>
 							</li>
-							<li class="active"><b>新闻管理</b></li>
+							<li>
+								<i class="ace-icon fa fa-home home-icon"></i>
+								<a href="#"><strong>库存管理</strong></a>
+							</li>
+							<li class="active"><b>商品管理</b></li>
 						</ul>
 					</div>
 					<div class="page-content">
@@ -60,19 +64,19 @@ String authUser = (String)request.getAttribute("user");
 								<div class="well well-sm">
 									<button class="btn btn-sm btn-danger" onclick="jump2addNotice()"> 
 										<i class="ace-icon fa fa-pencil-square-o bigger-125"></i>
-										<b>添加新闻</b>
+										<b>添加商品</b>
 									</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								</div>
 								<div>
-									<table id="news_list"></table>
-									<div id="news_page"></div>
+									<table id="item_list"></table>
+									<div id="item_page"></div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<jsp:include page="../../foot.jsp"></jsp:include>
+			<jsp:include page="../foot.jsp"></jsp:include>
 		</div>
 	</body>
 </html>

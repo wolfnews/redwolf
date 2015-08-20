@@ -37,7 +37,7 @@ String authUser = (String)request.getAttribute("user");
 				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
 			</script>
 			<jsp:include page="../nav.jsp">
-				<jsp:param value="manage_box" name="page_index"/>
+				<jsp:param value="manage_professor" name="page_index"/>
 			</jsp:include>
 			<div class="main-content">
 				<div class="main-content-inner">

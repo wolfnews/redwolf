@@ -18,24 +18,30 @@ jQuery(function($) {
 		datatype : "json",
 		height : '100%',
 		autowidth: true,
-		colNames : ['标题', '作者', '关键字', '状态','点赞数量','生成日期',''],
-		colModel : [ 
-			{name : 'title',index : 'title',width : 30},
-			{name : 'author',index : 'author',width : 20},
-			{name : 'keyword',index : 'keyword',width : 20},
-			{name : 'status',index : 'status',width : 10,
-				formatter : function(cellvalue, options,rowObject) {
-					return cellvalue;
-				}
-			},
-			{name : 'favorNum',index : 'favorNum',width : 15},
-			{name : 'gmtCreate',index : 'gmtCreate',width : 15},
-			{name : '',	index : '',	width : 60,fixed : true,sortable:false,
-				formatter : function(cellvalue, options,rowObject) {
-					return "<button class=\"btn btn-xs btn-danger\" onclick=\"showBox('"+rowObject.id+ "')\"><b>详细</b></button> &nbsp;";
-				}
-		    }
-		],
+		colNames : ['标题', '作者', '关键字', '状态','浏览次数','生成日期',''],
+        colModel : [
+                {name : 'title',index : 'title',width : 30},
+                {name : 'authorName',index : 'authorName',width : 20},
+                {name : 'keyword',index : 'keyword',width : 20},
+                {name : 'status',index : 'status',width : 10,
+                    formatter : function(cellvalue, options,rowObject) {
+                        if("NEW_CREATED" == cellvalue){
+                            return "<b>待审核</b>";
+                        }else if("NORMAL" == cellvalue){
+                            return "<b>正常</b>";
+                        }else{
+                            return "<b>"+cellvalue+"</b>";
+                        }
+                    }
+                },
+                {name : 'browseNum',index : 'browseNum',width : 15},
+                {name : 'gmtCreate',index : 'gmtCreate',width : 15},
+                {name : '',     index : '',     width : 60,fixed : true,sortable:false,
+                    formatter : function(cellvalue, options,rowObject) {
+                        return "<button class=\"btn btn-xs btn-danger\" onclick=\"showBox('"+rowObject.id+ "')\"><b>详细</b></button> &nbsp;";
+	                }
+	            }
+	        ],
 		viewrecords : true,
 		rowNum : 10,
 		rowList : [ 10,20,50,100,1000 ],

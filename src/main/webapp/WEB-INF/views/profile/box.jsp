@@ -48,7 +48,7 @@ String authUser = (String)request.getAttribute("user");
 									label = '查看订阅宝盒';
 								}
 								$('#active_label').text(label);
-	   						    $('#visible-pages-example').twbsPagination({
+	   						    $('#box_pager').twbsPagination({
 	   						    	startPage:1,
 								    totalPages: total,
 								    visiblePages: vpage,
@@ -102,7 +102,7 @@ String authUser = (String)request.getAttribute("user");
 							<div class="col-xs-10 col-xs-offset-1">
 								<div id="profile_lastest_box"></div>
 								<div class="text-right">
-					                <ul id="visible-pages-example"></ul>
+					                <ul id="box_pager"></ul>
 					            </div>
 								
 							</div><!-- /.col -->

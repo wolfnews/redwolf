@@ -10,6 +10,7 @@ import com.hoteam.wolf.utils.DateSerializer;
 
 /**
  * 商品表
+ * 
  * @author dmw
  *
  */
@@ -28,6 +29,7 @@ public class Item {
 	private BigDecimal price;
 	private int value;
 	private Long categoryId;
+	private Long extend;// 主要是讲师的ID
 
 	/**
 	 * 持久化前预处理
@@ -124,11 +126,20 @@ public class Item {
 		this.categoryId = categoryId;
 	}
 
+	public Long getExtend() {
+		return extend;
+	}
+
+	public void setExtend(Long extend) {
+		this.extend = extend;
+	}
+
+
 	@Override
 	public String toString() {
 		return "Item [id=" + id + ", gmtCreate=" + gmtCreate + ", gmtModify=" + gmtModify + ", name=" + name + ", desp="
 				+ desp + ", category=" + category + ", sku=" + sku + ", price=" + price + ", value=" + value
-				+ ", categoryId=" + categoryId + "]";
+				+ ", categoryId=" + categoryId + ", extend=" + extend + "]";
 	}
 
 	public Item(String name, String desp, String category, int sku, BigDecimal price, int value, Long categoryId) {

@@ -149,6 +149,38 @@ if(null == account){
 						</li>
 					</ul>
 				</li>	
+				<li >
+					<a style="background: #AB1A08" data-toggle="dropdown" class="dropdown-toggle" href="#">
+						<i class="ace-icon fa fa-credit-card"></i>
+						<span class="white"><b>我的留言</b></span>
+					</a>
+					<ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
+						<li class="dropdown-content">
+							<ul class="dropdown-menu dropdown-navbar">
+								<li>
+									<a href="<%=basePath%>profile/message.html?category=send">
+										<div class="clearfix">
+											<span class="pull-left">
+												<i class="btn btn-xs no-hover btn-danger fa fa-credit-card"></i>
+												<b>我发出的</b>
+											</span>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="<%=basePath%>profile/message.html?category=receive">
+										<div class="clearfix">
+											<span class="pull-left">
+												<i class="btn btn-xs no-hover btn-danger fa fa-credit-card"></i>
+												<b>我收到的</b>
+											</span>
+										</div>
+									</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</li>	
 				<li>
 					<a style="background: #AB1A08" href="<%=basePath%>profile/subRecord.html">
 						<i class="ace-icon fa fa-envelope"></i>

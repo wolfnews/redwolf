@@ -66,7 +66,7 @@ public class MessageDao extends BaseDao {
 				paramMap.put("sender", message.getSenderId());
 			}
 			if (null != message.getReceiverId()) {
-				Object[] itemObj = { "RECIVER_ID =:receiver" };
+				Object[] itemObj = { "RECEIVER_ID =:receiver" };
 				conditionMetaList.add(itemObj);
 				paramMap.put("receiver", message.getReceiverId());
 			}

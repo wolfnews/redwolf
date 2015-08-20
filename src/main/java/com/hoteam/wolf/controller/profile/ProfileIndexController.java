@@ -19,8 +19,10 @@ import com.hoteam.wolf.common.enums.BoxStatus;
 import com.hoteam.wolf.common.vo.ProfessorBean;
 import com.hoteam.wolf.common.vo.UserProfile;
 import com.hoteam.wolf.domain.Box;
+import com.hoteam.wolf.domain.Message;
 import com.hoteam.wolf.domain.SubscribeGroup;
 import com.hoteam.wolf.service.BoxService;
+import com.hoteam.wolf.service.MessageService;
 import com.hoteam.wolf.service.ProfessorService;
 import com.hoteam.wolf.service.UserBoxService;
 import com.hoteam.wolf.service.UserService;
@@ -39,6 +41,8 @@ public class ProfileIndexController {
 	private UserBoxService userBoxService;
 	@Autowired
 	private ProfessorService professorService;
+	@Autowired
+	private MessageService messageService;
 
 	@RequestMapping("")
 	public ModelAndView defaultHtml() {
@@ -165,7 +169,21 @@ public class ProfileIndexController {
 		return new ModelAndView("profile/login");
 	}
 
-	public ModelAndView message(){
-		return new ModelAndView("profile/message");
+	@RequestMapping("/message.html")
+	public ModelAndView message(HttpSession session,String category){
+		Long user = (Long)session.getAttribute(Constants.USER_TOKEN.name());
+		Message message = new Message();
+		if("send".equalsIgnoreCase(category)){
+			message.setSenderId(user);
+		}else if("receive".equalsIgnoreCase(category)){
+			message.setReceiverId(user);
+		}else{
+			category="all";
+		}
+		int total = this.messageService.list(message, 1, 10).getTotal();
+		ModelAndView mav = new ModelAndView("profile/message");
+		mav.addObject("total",total);
+		mav.addObject("type",category);
+		return mav;
 	}
 }

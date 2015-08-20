@@ -10,7 +10,7 @@ String authUser = (String)request.getAttribute("user");
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta charset="utf-8" />
-		<title>牛股会-个人中心</title>
+		<title>牛股会-讲师中心</title>
 		<meta name="description" content="overview &amp; stats" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 		<link rel="stylesheet" href="<%=basePath%>static/ace/assets/css/bootstrap.css" />
@@ -31,6 +31,9 @@ String authUser = (String)request.getAttribute("user");
 				var base='<%=basePath%>';
 				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
 			</script>
+			<jsp:include page="nav.jsp">
+				<jsp:param value="professor_message" name="page_index"/>
+			</jsp:include>			
 			<div class="main-content">
 				<div class="main-content-inner">
 					<div class="breadcrumbs" id="breadcrumbs">
@@ -54,9 +57,9 @@ String authUser = (String)request.getAttribute("user");
 								    visiblePages: vpage,
 								    version: '1.1',
 								    onPageClick: function (event, page) {
-										$('#profile_message_div').empty();
+										$('#message_div').empty();
 										data={page:page,rows:10};
-										url = base+'profile/message/list/'+type;
+										url = base+'professor/message/list/'+type;
 										$.post(url,data,function(response){
 												messages = response.rows;
 												for(var i=0;i<messages.length;i++){
@@ -71,7 +74,7 @@ String authUser = (String)request.getAttribute("user");
 																	"<div class=\"text-right\"><button class=\"btn btn-danger\" onclick=\"replyMessage("+message.id+",'"+message.senderId+"','"+message.sender+"')\">回复</button></div>"+
 																"</div>"+
 															"</div>";
-													 $('#profile_message_div').append(html);
+													 $('#message_div').append(html);
 												}
 										});
   							       	 }
@@ -96,7 +99,7 @@ String authUser = (String)request.getAttribute("user");
 											"callback" : function() {
 												content=$("#message_content").val();
 												data={receiver:receiver,receiverId:receiverId,content:content,last:id};
-												url=base+"profile/message/add";
+												url=base+"professor/message/add";
 												$.post(url,data,function(response){
 													alert(response.message);
 												});
@@ -114,11 +117,11 @@ String authUser = (String)request.getAttribute("user");
 						<ul class="breadcrumb">
 							<li>
 								<i class="ace-icon fa fa-home home-icon"></i>
-								<a href="../profile/index.html"><strong>首页</strong></a>
+								<a href="<%=basePath%>professor/index.html"><strong>首页</strong></a>
 							</li>
 							<li>
 								<i class="ace-icon fa fa-inbox inbox-icon"></i>
-								<a href="message.html"><strong>我的留言</strong></a>
+								<a href="<%=basePath%>professor/message.html"><strong>我的留言</strong></a>
 							</li>
 							<li class="active" id="active_label"><b></b></li>
 							
@@ -126,18 +129,17 @@ String authUser = (String)request.getAttribute("user");
 					</div>
 					<div class="page-content">
 						<div class="row">
-							<div class="col-xs-10 col-xs-offset-1">
-								<div id="profile_message_div"></div>
+							<div class="col-xs-12">
+								<div id="message_div"></div>
 								<div class="text-right">
 					                <ul id="message_pager"></ul>
 					            </div>
-								
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<jsp:include page="../foot.jsp"/>
+			<jsp:include page="../foot.jsp"></jsp:include>
 		</div>
 	</body>
 </html>

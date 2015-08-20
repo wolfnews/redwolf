@@ -1,6 +1,6 @@
+var grid_selector = "#message_list";
+var page_selector = "#message_page";
 jQuery(function($) {
-	var grid_selector = "#manage_notice_list";
-	var page_selector = "#manage_notice_page";
 	$(window).on('resize.jqGrid', function() {
 		$(grid_selector).jqGrid('setGridWidth', $(".page-content").width());
 		$(grid_selector).closest(".ui-jqgrid-bdiv").css({ 'overflow-x': 'hidden' });
@@ -14,31 +14,34 @@ jQuery(function($) {
 		}
     })
 	jQuery(grid_selector).jqGrid({
-		url : base+'manage/notice/pagination',
+		url : base+'manage/message/list',
 		datatype : "json",
 		height : '100%',
 		autowidth: true,
-		colNames : ['标题', '作者', '关键字', '状态','点赞数量','生成日期','快捷操作'],
+		colNames : ['发送者', '留言内容', '接收人', '是否已读','留言日期','操作'],
 		colModel : [ 
-			{name : 'title',index : 'title',width : 30},
-			{name : 'author',index : 'author',width : 20},
-			{name : 'keyword',index : 'keyword',width : 20},
-			{name : 'status',index : 'status',width : 10,
+			{name : 'sender',index : 'sender',width : 10},
+			{name : 'content',index : 'content',width : 40},
+			{name : 'receiver',index : 'receiver',width : 10},
+			{name : 'readed',index : 'readed',width : 10,
 				formatter : function(cellvalue, options,rowObject) {
-					return cellvalue;
+					if(cellvalue){
+						return '<b>已读</b>';
+					}else{
+						return '<b>未读</b>';
+					}
 				}
 			},
-			{name : 'favorNum',index : 'favorNum',width : 15},
 			{name : 'gmtCreate',index : 'gmtCreate',width : 15},
 			{
 		    	name : '',
 				index : '',
-				width : 120,
+				width : 60,
 				fixed : true,
 				sortable : false,
 				resize : false,
 				formatter : function(cellvalue, options,rowObject) {
-					return "<button class=\"btn btn-xs btn-danger\" onclick=\"jumpToDetail('"+rowObject.id+"','"+ rowObject.channelId+ "')\"><b>详细</b></button> &nbsp;"+"<button class=\"btn btn-xs btn-danger\" onclick=\"refresh('"+rowObject.id+ "')\"><b>刷新</b></button> &nbsp;";
+					return "<button class=\"btn btn-xs btn-danger\" onclick=\"removeMessage('"+rowObject.id+ "')\"><b>删除</b></button> &nbsp;";
 				}
 		    }
 		],
@@ -76,44 +79,13 @@ jQuery(function($) {
 				refreshstate :'current',
 				refreshicon : 'ace-icon fa fa-refresh red',
 				view : false
-			},{},{},{},
-			{
-				recreateForm : true,
-				afterShowSearch : function(e) {
-					var form = $(e[0]);
-					form.closest('.ui-jqdialog').find('.ui-jqdialog-title')
-							.wrap('<div class="widget-header" />')
-					style_search_form(form);
-				},
-				afterRedraw : function() {
-					style_search_filters($(this));
-				},
-				multipleSearch : false
-			},
-			{}
+			},{},{},{},	{},	{}
 	);
 
-	function style_search_filters(form) {
-		form.find('.delete-rule').val('X');
-	}
-	function style_search_form(form) {
-		var dialog = form.closest('.ui-jqdialog');
-		var buttons = dialog.find('.EditTable')
-		buttons.find('.EditButton a[id*="_query"]').addClass(
-				'btn btn-sm btn-inverse').find('.ui-icon').attr('class',
-				'ace-icon fa fa-comment-o');
-		buttons.find('.EditButton a[id*="_search"]').addClass(
-				'btn btn-sm btn-purple').find('.ui-icon').attr('class',
-				'ace-icon fa fa-search');
-	}
 	function styleCheckbox(table) {
 	}
-
-	// unlike navButtons icons, action icons in rows seem to be hard-coded
-	// you can change them like this in here if you want
 	function updateActionIcons(table) {
 	}
-	// replace icons with FontAwesome icons like above
 	function updatePagerIcons(table) {
 		var replacement = {
 			'ui-icon-seek-first' : 'ace-icon fa fa-angle-double-left bigger-140',
@@ -144,3 +116,19 @@ jQuery(function($) {
 		$('.ui-jqdialog').remove();
 	});
 });
+
+function removeMessage(id){
+	url = base+"manage/message/remove";
+	data = {boxId:id};
+	bootbox.confirm("<b>你确定要删除此消息?</b>", function(result) {
+		if(result) {
+			$.post(url,data,function(response){
+				if(response.success){
+					$(grid_selector).trigger("reloadGrid");
+				}else{
+					showMessage("删除消息失败！");
+				}
+			});
+		}
+	});
+}

@@ -10,13 +10,13 @@ String authUser = (String)request.getAttribute("user");
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta charset="utf-8" />
-		<title>牛股会讲师平台-我的文章</title>
+		<title>牛股会管理平台</title>
 		<meta name="description" content="overview &amp; stats" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 		<link rel="stylesheet" href="<%=basePath%>static/ace/assets/css/bootstrap.css" />
 		<link rel="stylesheet" href="<%=basePath%>static/ace/assets/css/font-awesome.css" />
-		<link rel="stylesheet" href="<%=basePath%>static/ace/assets/css/ace-fonts.css" />
 		<link rel="stylesheet" href="<%=basePath%>static/ace/assets/css/ui.jqgrid.css" />
+		<link rel="stylesheet" href="<%=basePath%>static/ace/assets/css/ace-fonts.css" />
 		<link rel="stylesheet" href="<%=basePath%>static/ace/assets/css/ace.css" class="ace-main-stylesheet" id="main-ace-style" />
 		<script src="<%=basePath%>static/ace/assets/js/jquery.js"></script>
 		<script src="<%=basePath%>static/ace/assets/js/ace-extra.js"></script>
@@ -25,18 +25,19 @@ String authUser = (String)request.getAttribute("user");
 		<script src="<%=basePath%>static/ace/assets/js/ace/ace.js"></script>
 		<script	src="<%=basePath%>static/ace/assets/js/jqGrid/jquery.jqGrid.src.js"></script>
 		<script	src="<%=basePath%>static/ace/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
-		<script	src="<%=basePath%>static/console/professor/article.js"></script>
+		<script src="<%=basePath%>static/console/base.js"></script>
+		<script src="<%=basePath%>static/console/manager/subscribe.js"></script>
 	</head>
 	<body class="no-skin">
-		<jsp:include page="../header.jsp"></jsp:include>
+		<jsp:include page="header.jsp"></jsp:include>
 		<div class="main-container" id="main-container">
 			<script type="text/javascript">
 				var base='<%=basePath%>';
 				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
 			</script>
-			<jsp:include page="../nav.jsp">
-				<jsp:param value="professor_article" name="page_index"/>
-			</jsp:include>			
+			<jsp:include page="nav.jsp">
+				<jsp:param value="manage_user" name="page_index"/>
+			</jsp:include>	
 			<div class="main-content">
 				<div class="main-content-inner">
 					<div class="breadcrumbs" id="breadcrumbs">
@@ -44,26 +45,26 @@ String authUser = (String)request.getAttribute("user");
 							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
 						</script>
 						<ul class="breadcrumb">
-							<li>
-								<i class="ace-icon fa fa-home home-icon"></i>
-								<a href="<%=basePath%>professor/index.html"><strong>首页</strong></a>
+							<li class="active bold">
+								<strong>当前位置：</strong>
+								<i class="ace-icon fa fa-user"></i>
+								<span id="current_label"><b>订阅记录</b></span>
 							</li>
-							<li class="active"><b>我的文章</b></li>
 						</ul>
 					</div>
 					<div class="page-content">
 						<div class="row">
 							<div class="col-xs-12">
 								<div>
-									<table id="professor_article_list"></table>
-									<div id="professor_article_page"></div>
+									<table id="sub_record_list"></table>
+									<div id="sub_record_page"></div>
 								</div>
-							</div>
-						</div>
-					</div>
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+						<jsp:include page="../foot.jsp"></jsp:include>
 				</div>
-			</div>
-			<jsp:include page="../../foot.jsp"></jsp:include>
-		</div>
+			</div><!-- /.main-content -->
+		</div><!-- /.main-container -->
 	</body>
 </html>

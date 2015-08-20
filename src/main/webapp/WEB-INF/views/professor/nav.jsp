@@ -52,6 +52,30 @@ pageIndex = null == pageIndex? "" : pageIndex;
 				</a>
 				<b class="arrow"></b>
 			</li>
+			<li id="professor_message" class="">
+				<a href="#" class="dropdown-toggle">
+					<i class="menu-icon fa fa-list"></i>
+					<span class="menu-text"> <b>留言管理</b> </span>
+					<b class="arrow fa fa-angle-down"></b>
+				</a>
+				<b class="arrow"></b>
+				<ul class="submenu">
+					<li class="">
+						<a href="message.html?category=receive">
+							<i class="menu-icon fa fa-caret-right"></i>
+							<b>我收到的</b>
+						</a>
+						<b class="arrow"></b>
+					</li>
+					<li class="">
+						<a href="message.html?category=send">
+							<i class="menu-icon fa fa-caret-right"></i>
+							<b>我发出的</b>
+						</a>
+						<b class="arrow"></b>
+					</li>
+				</ul>
+			</li>
 		</ul>
 		<!-- 菜单伸缩按钮 -->
 		<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">

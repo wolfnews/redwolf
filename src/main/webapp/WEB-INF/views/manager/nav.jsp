@@ -20,74 +20,155 @@ pageIndex = null == pageIndex? "" : pageIndex;
 				<b class="arrow"></b>
 			</li>
 			<li id="manage_user" class="">
-				<a href="<%=basePath%>manage/user.html"> 
-					<i class="menu-icon fa fa-users"></i> 
-					<span class="menu-text"><strong>用户管理</strong> </span>
+				<a href="#" class="dropdown-toggle">
+					<i class="menu-icon fa fa-users"></i>
+					<span class="menu-text"> <b>用户管理</b> </span>
+					<b class="arrow fa fa-angle-down"></b>
 				</a>
 				<b class="arrow"></b>
+				<ul class="submenu">
+					<li class="">
+						<a href="<%=basePath%>manage/user.html">
+							<i class="menu-icon fa fa-users"></i>
+							<b>会员管理</b>
+						</a>
+						<b class="arrow"></b>
+					</li>
+					<li class="">
+						<a href="<%=basePath%>manage/subscribe.html">
+							<i class="menu-icon fa fa-cogs"></i>
+							<b>会员订阅</b>
+						</a>
+						<b class="arrow"></b>
+					</li>
+					<li class="">
+						<a href="<%=basePath%>manage/rss.html">
+							<i class="menu-icon fa fa-bell"></i>
+							<b>会员关注</b>
+						</a>
+						<b class="arrow"></b>
+					</li>
+				</ul>
 			</li>
 			<li id="manage_professor" class="">
-				<a href="<%=basePath%>manage/professor.html"> 
+				<a href="#" class="dropdown-toggle"> 
 					<i class="menu-icon fa fa-user"></i> 
 					<span class="menu-text"><b>讲师管理</b> </span>
+					<b class="arrow fa fa-angle-down"></b>
 				</a>
 				<b class="arrow"></b>
+				<ul class="submenu">
+					<li class="">
+						<a href="<%=basePath%>manage/professor.html">
+							<i class="menu-icon fa fa-user"></i>
+							<b>讲师管理</b>
+						</a>
+						<b class="arrow"></b>
+					</li>
+					<li class="">
+						<a href="<%=basePath%>manage/box.html">
+							<i class="menu-icon fa fa-inbox"></i>
+							<b>宝盒管理</b>
+						</a>
+						<b class="arrow"></b>
+					</li>
+				</ul>
 			</li>
-			<li id="manage_manager" class="">
-				<a href='<%=basePath%>manage/manager.html'> 
-					<i class="menu-icon fa fa-user"></i> 
-					<span class="menu-text"><b>人员管理</b> </span>
+			<li id="manage_content" class="">
+				<a href="#" class="dropdown-toggle"> 
+					<i class="menu-icon fa fa-book"></i> 
+					<span class="menu-text"><b>内容管理</b> </span>
+					<b class="arrow fa fa-angle-down"></b>
 				</a>
 				<b class="arrow"></b>
+				<ul class="submenu">
+					<li class="">
+						<a href="<%=basePath%>manage/activity.html"> 
+							<i class="menu-icon fa fa-gift"></i> 
+							<span class="menu-text"><strong>活动管理</strong> </span>
+						</a>
+						<b class="arrow"></b>
+					</li>
+					<li class="">
+						<a href='<%=basePath%>manage/news.html'> 
+							<i class="menu-icon fa fa-newspaper-o"></i> 
+							<span class="menu-text"><b>新闻管理</b> </span>
+						</a>
+						<b class="arrow"></b>
+					</li>
+					<li class="">
+						<a href="<%=basePath%>manage/message.html"> 
+							<i class="menu-icon fa fa-comment"></i> 
+							<span class="menu-text"><b>留言管理</b> </span>
+						</a>
+						<b class="arrow"></b>
+					</li>
+				</ul>
 			</li>
-			<li id="manage_box" class="">
-				<a href="<%=basePath%>manage/box.html"> 
-					<i class="menu-icon fa fa-inbox"></i> 
-					<span class="menu-text"><strong>宝盒管理</strong> </span>
+			<li id="manage_store" class="">
+				<a href="#" class="dropdown-toggle"> 
+					<i class="menu-icon fa fa-home"></i> 
+					<span class="menu-text"><b>库存管理</b> </span>
+					<b class="arrow fa fa-angle-down"></b>
 				</a>
 				<b class="arrow"></b>
+				<ul class="submenu">
+					<li class="">
+						<a href='<%=basePath%>manage/item.html'> 
+							<i class="menu-icon fa fa-tag"></i> 
+							<span class="menu-text"><b>商品管理</b> </span>
+						</a>
+						<b class="arrow"></b>
+					</li>
+				</ul>
 			</li>
-			<li id="manage_activity" class="">
-				<a href="<%=basePath%>manage/activity.html"> 
-					<i class="menu-icon fa fa-gift"></i> 
-					<span class="menu-text"><strong>活动管理</strong> </span>
-				</a>
-				<b class="arrow"></b>
-			</li>
-			<li id="manage_article" class="">
-				<a href='<%=basePath%>manage/news.html'> 
-					<i class="menu-icon fa fa-newspaper-o"></i> 
-					<span class="menu-text"><b>新闻管理</b> </span>
-				</a>
-				<b class="arrow"></b>
-			</li>
-			<li id="manage_pay" class="">
-				<a href='<%=basePath%>manage/pay.html'> 
+			<li id="manage_sale" class="">
+				<a href="#" class="dropdown-toggle"> 
 					<i class="menu-icon fa fa-credit-card"></i> 
-					<span class="menu-text"><b>账单管理</b> </span>
+					<span class="menu-text"><b>销售管理</b> </span>
+					<b class="arrow fa fa-angle-down"></b>
 				</a>
 				<b class="arrow"></b>
+				<ul class="submenu">
+					<li class="">
+						<a href='<%=basePath%>manage/order.html'> 
+							<i class="menu-icon fa fa-file"></i> 
+							<span class="menu-text"><b>订单管理</b> </span>
+						</a>
+						<b class="arrow"></b>
+					</li>
+				</ul>
 			</li>
-			<li id="manage_rss" class="">
-				<a href='<%=basePath%>manage/rss.html'> 
-					<i class="menu-icon fa fa-bell"></i> 
-					<span class="menu-text"><b>用户关注</b> </span>
+			<li id="manage_power" class="">
+				<a href="#" class="dropdown-toggle"> 
+					<i class="menu-icon fa fa-lock"></i> 
+					<span class="menu-text"><b>权限管理</b> </span>
+					<b class="arrow fa fa-angle-down"></b>
 				</a>
 				<b class="arrow"></b>
-			</li>
-			<li id="manage_subscribe" class="">
-				<a href='<%=basePath%>manage/subscribe.html'> 
-					<i class="menu-icon fa fa-cogs"></i> 
-					<span class="menu-text"><b>用户订阅</b> </span>
-				</a>
-				<b class="arrow"></b>
-			</li>
-			<li id="manage_message" class="">
-				<a href="<%=basePath%>manage/message.html"> 
-					<i class="menu-icon fa fa-comment"></i> 
-					<span class="menu-text"><b>留言管理</b> </span>
-				</a>
-				<b class="arrow"></b>
+				<ul class="submenu">
+					<li class="">
+						<a href='<%=basePath%>manage/manager.html'> 
+							<i class="menu-icon fa fa-users"></i> 
+							<span class="menu-text"><b>员工管理</b> </span>
+						</a>
+						<b class="arrow"></b>
+					</li>
+					<li class="">
+						<a href='<%=basePath%>manage/manager.html'> 
+							<i class="menu-icon fa fa-flag"></i> 
+							<span class="menu-text"><b>角色管理</b> </span>
+						</a>
+						<b class="arrow"></b>
+					</li>
+					<li class="">
+						<a href='<%=basePath%>manage/manager.html'> 
+							<i class="menu-icon fa fa-key"></i> 
+							<span class="menu-text"><b>权限管理</b> </span>
+						</a>
+						<b class="arrow"></b>
+					</li>
+				</ul>
 			</li>
 		</ul>
 		<!-- 菜单伸缩按钮 -->

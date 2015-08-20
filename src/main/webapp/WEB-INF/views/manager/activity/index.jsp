@@ -38,7 +38,7 @@ String authUser = (String)request.getAttribute("user");
 				}
 			</script>
 			<jsp:include page="../nav.jsp">
-				<jsp:param value="manage_activity" name="page_index"/>
+				<jsp:param value="manage_content" name="page_index"/>
 			</jsp:include>
 			<div class="main-content">
 				<div class="main-content-inner">

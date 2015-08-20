@@ -16,8 +16,10 @@ public class Message {
 	private Long senderId;
 	private Long receiverId;
 	private Long lastMessage;
-	private String title;
 	private String content;
+	private String sender;
+	private String receiver;
+	private boolean readed;
 
 	/**
 	 * 持久化前预处理
@@ -73,28 +75,50 @@ public class Message {
 	public void setReceiverId(Long receiverId) {
 		this.receiverId = receiverId;
 	}
+	
 
-	public String getTitle() {
-		return title;
+
+	public String getSender() {
+		return sender;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setSender(String sender) {
+		this.sender = sender;
 	}
 
-	public Message(Long senderId, Long receiverId, Long lastMessage,String title, String content) {
-		super();
-		this.senderId = senderId;
-		this.receiverId = receiverId;
-		this.lastMessage = lastMessage;
-		this.title = title;
-		this.content = content;
+	public String getReceiver() {
+		return receiver;
+	}
+
+	public void setReceiver(String receiver) {
+		this.receiver = receiver;
+	}
+
+	public boolean isReaded() {
+		return readed;
+	}
+
+	public void setReaded(boolean readed) {
+		this.readed = readed;
 	}
 
 	@Override
 	public String toString() {
 		return "Message [id=" + id + ", gmtCreate=" + gmtCreate + ", senderId=" + senderId + ", receiverId="
-				+ receiverId + ", lastMessage=" + lastMessage + ", title="+title+", content=" + content + "]";
+				+ receiverId + ", lastMessage=" + lastMessage + ", content=" + content + ", sender=" + sender
+				+ ", receiver=" + receiver + ", readed=" + readed + "]";
+	}
+
+	public Message(Long senderId, Long receiverId, Long lastMessage, String content, String sender, String receiver,
+			boolean readed) {
+		super();
+		this.senderId = senderId;
+		this.receiverId = receiverId;
+		this.lastMessage = lastMessage;
+		this.content = content;
+		this.sender = sender;
+		this.receiver = receiver;
+		this.readed = readed;
 	}
 
 	public Message() {

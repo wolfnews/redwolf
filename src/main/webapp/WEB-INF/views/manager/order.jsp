@@ -10,7 +10,7 @@ String authUser = (String)request.getAttribute("user");
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta charset="utf-8" />
-		<title>牛股会管理平台</title>
+		<title>牛股会-个人中心</title>
 		<meta name="description" content="overview &amp; stats" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 		<link rel="stylesheet" href="<%=basePath%>static/ace/assets/css/bootstrap.css" />
@@ -26,17 +26,17 @@ String authUser = (String)request.getAttribute("user");
 		<script	src="<%=basePath%>static/ace/assets/js/jqGrid/jquery.jqGrid.src.js"></script>
 		<script	src="<%=basePath%>static/ace/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
 		<script src="<%=basePath%>static/console/base.js"></script>
-		<script src="<%=basePath%>static/console/manager/subscribe.js"></script>
+		<script src="<%=basePath%>static/console/manager/order.js"></script>
 	</head>
 	<body class="no-skin">
-		<jsp:include page="../../header.jsp"></jsp:include>
+		<jsp:include page="header.jsp"></jsp:include>
 		<div class="main-container" id="main-container">
 			<script type="text/javascript">
 				var base='<%=basePath%>';
 				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
 			</script>
-			<jsp:include page="../nav.jsp">
-				<jsp:param value="manage_subscribe" name="page_index"/>
+			<jsp:include page="nav.jsp">
+				<jsp:param value="manage_sale" name="page_index"/>
 			</jsp:include>	
 			<div class="main-content">
 				<div class="main-content-inner">
@@ -48,7 +48,7 @@ String authUser = (String)request.getAttribute("user");
 							<li class="active bold">
 								<strong>当前位置：</strong>
 								<i class="ace-icon fa fa-user"></i>
-								<span id="current_label"><b>订阅记录</b></span>
+								<span id="current_label"></span>
 							</li>
 						</ul>
 					</div>
@@ -56,14 +56,14 @@ String authUser = (String)request.getAttribute("user");
 						<div class="row">
 							<div class="col-xs-12">
 								<div>
-									<table id="sub_record_list"></table>
-									<div id="sub_record_page"></div>
+									<table id="manage_order_list"></table>
+									<div id="manage_order_page"></div>
 								</div>
 							</div><!-- /.col -->
 						</div><!-- /.row -->
 					</div><!-- /.page-content -->
-						<jsp:include page="../../foot.jsp"></jsp:include>
 				</div>
+				<jsp:include page="../foot.jsp"></jsp:include>
 			</div><!-- /.main-content -->
 		</div><!-- /.main-container -->
 	</body>

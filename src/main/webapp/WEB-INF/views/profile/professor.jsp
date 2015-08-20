@@ -133,6 +133,9 @@ String authUser = (String)request.getAttribute("user");
 															"<button class=\"btn btn-sm btn-danger\" onclick=\"subProfessor("+professor.id+")\">"+
 																"<i class=\"ace-icon fa fa-shopping-cart bigger-110\"></i>"+
 																"<span> <strong>"+subbutton+" </strong> </span>"+
+															"</button>"+
+															"<button class=\"btn btn-sm btn-danger\" onclick=\"leaveMessage("+professor.id+",'"+professor.username+"')\">"+
+																"<span> <strong>留言</strong> </span>"+
 															"</button><span>&nbsp;</span>"+
 														"</div>"+
 													"</div>"+
@@ -141,6 +144,39 @@ String authUser = (String)request.getAttribute("user");
 									 $('#professor_show_div').append(html);
 								}
 							});
+							function leaveMessage(id,receiver){
+								bootbox.dialog({
+									title : "<b>给【"+receiver+"】留言</b>",
+									message : "<div class='well ' style='margin-top:1px;'>"+
+													"<form class='form-horizontal' role='form'>"+
+											  			"<div class='form-group'>"+
+											  				"<div class='col-sm-12'>"+
+								    	      					"<textarea id=\"message_content\" class=\"form-control\" rows=\"5\"></textarea>"+
+								    	      				"</div>"+
+								    	      			"</div>"+
+								    	      		"</form>"+
+								    	      	"</div>",
+									buttons : {
+										"success" : {
+											"label" : "<i class='icon-ok'></i> 提交",
+											"className" : "btn-sm btn-success",
+											"callback" : function() {
+												content=$("#message_content").val();
+												data={receiverId:id,receiver:receiver,content:content,last:null};
+												url=base+"profile/message/add";
+												$.post(url,data,function(response){
+													alert(response.message);
+												});
+											}
+										},
+										"cancel" : {
+											"label" : "<i class='icon-info'></i> 取消",
+											"className" : "btn-sm btn-danger",
+											"callback" : function() { }
+										}
+									}
+								});
+							}
 						</script>
 						<ul class="breadcrumb">
 							<li>
@@ -156,9 +192,7 @@ String authUser = (String)request.getAttribute("user");
 					</div>
 					<div class="page-content">
 						<div class="row">
-<!-- 							<div class="hr dotted"></div> -->
-							<div class="col-xs-12" id="professor_show_div">
-							</div>
+							<div class="col-xs-12" id="professor_show_div"></div>
 						</div>
 					</div>
 					<jsp:include page="../foot.jsp"></jsp:include>

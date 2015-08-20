@@ -16,9 +16,11 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.hoteam.wolf.common.Constants;
 import com.hoteam.wolf.common.vo.ProfessorStatBean;
 import com.hoteam.wolf.domain.Box;
+import com.hoteam.wolf.domain.Message;
 import com.hoteam.wolf.domain.Professor;
 import com.hoteam.wolf.domain.SubscribeGroup;
 import com.hoteam.wolf.service.BoxService;
+import com.hoteam.wolf.service.MessageService;
 import com.hoteam.wolf.service.ProfessorService;
 
 @Controller
@@ -30,6 +32,9 @@ public class ProfessorIndexController {
 	private ProfessorService professorService;
 	@Autowired
 	private BoxService boxService;
+	@Autowired
+	private MessageService messageService;
+
 
 	@RequestMapping("")
 	public ModelAndView defaultHtml() {
@@ -105,7 +110,20 @@ public class ProfessorIndexController {
 	}
 	
 	@RequestMapping("/message.html")
-	public ModelAndView message(){
-		return new ModelAndView("professor/message");
+	public ModelAndView message(HttpSession session,String category){
+		Long user = (Long)session.getAttribute(Constants.PROFESSOR_TOKEN.name());
+		Message message = new Message();
+		if("send".equalsIgnoreCase(category)){
+			message.setSenderId(user);
+		}else if("receive".equalsIgnoreCase(category)){
+			message.setReceiverId(user);
+		}else{
+			category="all";
+		}
+		int total = this.messageService.list(message, 1, 10).getTotal();
+		ModelAndView mav = new ModelAndView("professor/message");
+		mav.addObject("total",total);
+		mav.addObject("type",category);
+		return mav;
 	}
 }

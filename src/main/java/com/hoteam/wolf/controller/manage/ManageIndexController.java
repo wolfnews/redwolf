@@ -45,7 +45,7 @@ public class ManageIndexController {
 
 	@RequestMapping("/message.html")
 	public ModelAndView message() {
-		return new ModelAndView("manager/message/index");
+		return new ModelAndView("manager/message");
 	}
 
 	@RequestMapping("/news.html")
@@ -60,19 +60,24 @@ public class ManageIndexController {
 
 	@RequestMapping("/rss.html")
 	public ModelAndView rss() {
-		return new ModelAndView("manager/rss/index");
+		return new ModelAndView("manager/rss");
 	}
 
 	@RequestMapping("/subscribe.html")
 	public ModelAndView subscribe() {
-		return new ModelAndView("manager/subscribe/index");
+		return new ModelAndView("manager/subscribe");
 	}
 
-	@RequestMapping("/pay.html")
+	@RequestMapping("/order.html")
 	public ModelAndView pay() {
-		return new ModelAndView("manager/pay/index");
+		return new ModelAndView("manager/order");
 	}
 
+	@RequestMapping("/item.html")
+	public ModelAndView item() {
+		return new ModelAndView("manager/item");
+	}
+	
 	@RequestMapping("/manager.html")
 	public ModelAndView manager() {
 		return new ModelAndView("manager/manager/index");

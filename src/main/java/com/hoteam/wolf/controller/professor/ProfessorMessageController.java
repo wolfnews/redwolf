@@ -40,7 +40,7 @@ public class ProfessorMessageController {
 	public Result remove(@PathVariable Long id){
 		boolean success = this.messageService.remove(id);
 		if(success){
-			return new Result(true, "success");
+			return new Result(true, "删除成功！");
 		}else{
 			return new Result(false, "删除失败！");
 		}
@@ -48,15 +48,16 @@ public class ProfessorMessageController {
 	@RequestMapping("/add")
 	@ResponseBody
 	public Result add(HttpSession session,
-			@RequestParam(value="receiver" ,required = true)Long receiver,
-			@RequestParam(value="title",required = true)String title,
+			@RequestParam(value="receiverId" ,required = true)Long receiverId,
 			@RequestParam(value="content",required = false)String content,
+			@RequestParam(value="receiver",required = false)String receiver,
 			@RequestParam(value="last",required=false)Long last){
-		Long sender = (Long) session.getAttribute(Constants.PROFESSOR_TOKEN.name());
-		Message message = new Message(sender, receiver, last, title, content);
+		Long senderId = (Long) session.getAttribute(Constants.PROFESSOR_TOKEN.name());
+		String sender = (String)session.getAttribute(Constants.PROFESSOR_NAME.name());
+		Message message =  new Message(senderId, receiverId, last, content, sender, receiver, true);
 		boolean success = this.messageService.saveMessage(message);
 		if(success){
-			return new Result(true, "success");
+			return new Result(true, "添加成功！");
 		}else{
 			return new Result(false, "添加失败！");
 		}
