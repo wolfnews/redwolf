@@ -51,10 +51,10 @@ String authUser = (String)request.getAttribute("user");
 					</div>
 					<div class="page-content">
 						<div class="row">
-							<div class="col-xs-12 ">
+							<div class="col-xs-10 col-xs-offset-1">
 								<div id="item_list"></div>
 							</div>
-							<div class="col-xs-10 col-xs-offset-1 ">
+							<div class="col-xs-10 col-xs-offset-1">
 								<div class="text-right">
 					                <ul id="item_pager"></ul>
 					            </div>

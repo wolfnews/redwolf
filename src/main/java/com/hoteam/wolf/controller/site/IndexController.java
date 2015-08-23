@@ -121,7 +121,7 @@ public class IndexController {
 	@RequestMapping("/mall.html")
 	public ModelAndView mall(){
 		ModelAndView mav = new ModelAndView("site/mall");
-		int total = itemService.list(null, 1, 1).getRecords();
+		int total = itemService.list(null, 1, 6).getTotal();
 		total = 0== total? 1: total;
 		mav.addObject("total",total);
 		return mav;

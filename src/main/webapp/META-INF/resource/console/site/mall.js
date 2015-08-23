@@ -10,7 +10,7 @@ jQuery(function($) {
 	    version: '1.1',
 	    onPageClick: function (event, page) {
 			$(grid_list).empty();
-			data={page:page,rows:20};
+			data={page:page,rows:6};
 			url = base+'item/list';
 			$.post(url,data,function(response){
 				$(grid_list).empty();
@@ -22,61 +22,34 @@ jQuery(function($) {
 	});
 });
 
-function inflateView(professors){
+function inflateView(items){
 	var html ="";
-	for(var i=0;i<professors.length;i++){
-		var professor = professors[i];
-		 html += "<div class=\"col-xs-3 pricing-box\">"+
-					"<div class=\"widget-box widget-color-red\">"+
-						"<div class=\"widget-header\">"+
-							"<h5 class=\"widget-title bigger lighter\"><strong>"+item.name+"</strong></h5>"+
+	for(var i=0;i<items.length;i++){
+		var item = items[i];
+		 html += "<div class='col-xs-4 pricing-box'>"+
+					"<div class='widget-box widget-color-red'>"+
+						"<div class='widget-header'>"+
+							"<h5 class='widget-title sm lighter'><strong>"+item.name+"</strong></h5>"+
 						"</div>"+
-						"<div class=\"widget-body\">"+
-							"<div class=\"widget-main\">"+
-								"<h5><strong>当前职业："+professor.occupation+"</strong></h5>"+
-								"<h5><strong>锦囊总数："+professor.boxCount+" 篇</strong></h5>"+
-								"<h5><strong>用户订阅："+professor.subCount+" 人</strong></h5>"+
-								"<h5><strong>用户关注："+professor.rssCount+" 人</strong></h5>"+
+						"<div class='widget-body'>"+
+							"<div class='widget-main'>"+
+								"<h5><strong>"+item.desp+"</strong></h5>"+
+								"<h5><strong>商品数量："+item.sku+" </strong></h5>"+
 								"<hr />"+
+								"<div class='price'>价格："+
+									item.price+
+									"<small>.00 （元）</small>"+
+								"</div>"+
 							"</div>"+
-							"<div class=\"btn-group text-center\">"+
-								"<button class=\"btn btn-sm btn-danger\" onclick=\"browseNotice("+professor.id+")\">"+
-									"<i class=\"ace-icon fa fa-inbox bigger-110\"></i>"+
-									"<span> <strong>宝盒</strong> </span>"+
-								"</button><span>&nbsp;</span>"+
-								"<button class=\"btn btn-sm btn-danger\" onclick=\"rssProfessor("+professor.id+")\">"+
-									"<i class=\"ace-icon fa fa-asterisk bigger-110\"></i>"+
-									"<span> <strong>关注</strong> </span>"+
-								"</button>"+
-								"<button class=\"btn btn-sm btn-danger\" onclick=\"subProfessor("+professor.id+")\">"+
-									"<i class=\"ace-icon fa fa-shopping-cart bigger-110\"></i>"+
-									"<span> <strong>订阅 </strong> </span>"+
-								"</button><span>&nbsp;</span>"+
+							"<div>"+
+								"<a href='#' class='btn btn-sm btn-block btn-danger'>"+
+									"<i class='ace-icon fa fa-shopping-cart bigger-110'></i>"+
+									"<span>购买</span>"+
+								"</a>"+
 							"</div>"+
 						"</div>"+
 					"</div>"+
 				"</div>";
 	}
 	return html;
-}
-//查看讲师宝盒
-function browseNotice(professor){
-	location.href='box.html?author='+professor;
-}
-//订阅讲师
-function subProfessor(professor){
-	location.href='profile/subscribe.html?notice=0&author='+professor;
-}
-
-//关注讲师
-function rssProfessor(professor){
-	$.post(base+'profile/user/rssProf',{professorId:professor},function(response){
-		if(response.success){
-			showMessage("关注成功！",function(){
-				location.href=base+'profile/professor.html';
-			});
-		}else{
-			showMessage("关注失败！");
-		}
-	});
 }
