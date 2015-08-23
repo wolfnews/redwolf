@@ -23,18 +23,19 @@ String authUser = (String)request.getAttribute("user");
 		<script src="<%=basePath%>static/ace/assets/js/bootstrap.js"></script>
 		<script src="<%=basePath%>static/ace/assets/js/bootbox.js"></script>
 		<script src="<%=basePath%>static/ace/assets/js/ace/ace.js"></script>
+		<script src="<%=basePath%>static/console/base.js"></script>
 		<script	src="<%=basePath%>static/ace/assets/js/jqGrid/jquery.jqGrid.src.js"></script>
 		<script	src="<%=basePath%>static/ace/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
 		<script	src="<%=basePath%>static/console/manager/item.js"></script>
 	</head>
 	<body class="no-skin">
-		<jsp:include page="../header.jsp"></jsp:include>
+		<jsp:include page="header.jsp"></jsp:include>
 		<div class="main-container" id="main-container">
 			<script type="text/javascript">
 				var base='<%=basePath%>';
 				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
-				function jump2addNotice(){
-					location.href=base+'manage/news/add.html';
+				function showCreate(){
+					showAddItemWin();
 				}
 			</script>
 			<jsp:include page="nav.jsp">
@@ -62,7 +63,7 @@ String authUser = (String)request.getAttribute("user");
 						<div class="row">
 							<div class="col-xs-12">
 								<div class="well well-sm">
-									<button class="btn btn-sm btn-danger" onclick="jump2addNotice()"> 
+									<button class="btn btn-sm btn-danger" onclick="showCreate()"> 
 										<i class="ace-icon fa fa-pencil-square-o bigger-125"></i>
 										<b>添加商品</b>
 									</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

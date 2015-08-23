@@ -18,23 +18,43 @@ jQuery(function($) {
 		datatype : "json",
 		height : '100%',
 		autowidth: true,
-		colNames : ['商品名称', '商品类型', '价格（￥）','商品库存','上架日期','快捷操作'],
+		colNames : ['商品名称', '商品类型', '价格（￥）','价值（金币，天）','商品库存','上架日期','快捷操作'],
 		colModel : [ 
 			{name : 'name',index : 'name',width : 30},
-			{name : 'category',index : 'category',width : 20},
+			{name : 'category',index : 'category',width : 10,
+				formatter:function(cell,option,object){
+					if('SERVICEBAG' == cell){
+						return '<b>服务包</b>';
+					}else{
+						return '<b>充值卡</b>';
+					}
+				}
+			},
 			{name : 'price',index : 'price',width : 10},
+			{name : 'value',index : 'value',width : 15,
+				formatter:function(cell,option,object){
+					category = object.category;
+					if('SERVICEBAG' == category){
+						return '<b>'+cell+'天</b>';
+					}else if('CREDITCARD' == category){
+						return '<b>'+cell+'金币</b>';
+					}else{
+						return '<b>'+cell+'</b>';
+					}
+				}	
+			},
 			{name : 'sku',index : 'sku',width : 15},
 			{name : 'gmtCreate',index : 'gmtCreate',width : 15},
 			{
 		    	name : '',
 				index : '',
-				width : 120,
+				width : 110,
 				fixed : true,
 				sortable : false,
 				resize : false,
 				formatter : function(cellvalue, options,rowObject) {
-					return "<button class=\"btn btn-xs btn-danger\" onclick=\"showNotice('"+rowObject.id+ "','"+rowObject.status+"')\"><b>编辑</b></button> &nbsp;"
-							+"<button class=\"btn btn-xs btn-danger\" onclick=\"removeNews('"+rowObject.id+ "')\"><b>删除</b></button> &nbsp;";
+					return "<button class=\"btn btn-xs btn-danger\" onclick=\"showItem('"+rowObject.id+"')\"><b>编辑</b></button> &nbsp;"
+							+"<button class=\"btn btn-xs btn-danger\" onclick=\"removeItem('"+rowObject.id+ "')\"><b>删除</b></button> &nbsp;";
 				}
 		    }
 		],
@@ -102,145 +122,221 @@ jQuery(function($) {
 		});
 	}
 });
-function showMessage(message,callbackFn){
+
+function showAddItemWin(){
 	bootbox.dialog({
-		message: '<b>'+message+'</b>', 
-		buttons: {
+		title : "<div class=\"danger\"><b>添加商品</b></div>",
+		message : "<div class='well ' style='margin-top:1px;'>"+
+						"<form class='form-horizontal' role='form' id='add_item_frm'>"+
+				  			"<div class='form-group'>"+
+				  				"<label class='col-sm-3'><b>商品名称：</b></label>"+
+				  				"<div class='col-sm-9'>"+
+	    	      					"<input id=\"item_name\" name='item_name' type='text' class=\"form-control\" />"+
+	    	      				"</div>"+
+	    	      			"</div>"+
+	    	      			"<div class='form-group'>"+
+				  				"<label class='col-sm-3'><b>商品类型：</b></label>"+
+				  				"<div class='col-sm-9'>"+
+				  					"<select id='item_category' class='form-control' onchange='showExtend()'>"+
+ 				  						"<option value='CREDITCARD'>充值卡</option>"+
+ 				  						"<option value='SERVICEBAG'>服务包</option>"+
+ 				  					"</select>"+
+				  				"</div>"+
+	    	      			"</div>"+
+	    	      			"<div class='form-group'>"+
+				  				"<label class='col-sm-3'><b>商品价格：</b></label>"+
+				  				"<div class='col-sm-9'>"+
+			      					"<input id=\"item_price\" name='item_price' type='text' class=\"form-control\" />"+
+			      				"</div>"+
+			      			"</div>"+
+			      			"<div class='form-group'>"+
+				  				"<label class='col-sm-3'><b>商品价值：</b></label>"+
+				  				"<div class='col-sm-9'>"+
+			      					"<input id=\"item_value\" name='item_value' type='text' class=\"form-control\" />"+
+			      				"</div>"+
+			      			"</div>"+
+			      			"<div class='form-group'>"+
+				  				"<label class='col-sm-3'><b>商品数量：</b></label>"+
+				  				"<div class='col-sm-9'>"+
+			      					"<input id=\"item_sku\" name='item_sku' type='text' class=\"form-control\" />"+
+			      				"</div>"+
+			      			"</div>"+
+			      			"<div class='form-group'>"+
+			      				"<label class='col-sm-3'><b>商品描述：</b></label>"+
+				  				"<div class='col-sm-9'>"+
+	    	      					"<textarea id=\"item_content\" class=\"form-control\" rows=\"3\"></textarea>"+
+	    	      				"</div>"+
+	    	      			"</div>"+
+	    	      			"<div id='service_prof_div' class='hide form-group'>"+
+	    	      				"<label class='col-sm-3'><b>服务讲师：</b></label>"+
+	    	      				"<div class='col-sm-9'>"+
+	    	      					"<select id='item_extend' class='form-control'>"+
+	    	      				"</div>"+
+	    	      			"</div>"+
+	    	      		"</form>"+
+	    	      	"</div>",
+		buttons : {
 			"success" : {
-				"label" : "<b>确定</b>",
-				"className" : "btn-sm btn-primary",
-				callback: callbackFn
+				"label" : "<i class='icon-ok'></i> <b>保存</b>",
+				"className" : "btn-sm btn-danger",
+				"callback" : function() {
+					name=$('#item_name').val();
+					category = $('#item_category').val();
+					price = $('#item_price').val();
+					sku = $('#item_sku').val();
+					desc = $('#item_content').val();
+					extend=$('#item_extend').val();
+					value=$('#item_value').val();
+					data={name:name,category:category,price:price,sku:sku,desc:desc,value:value,extend:extend};
+					console.log(data);
+					url=base+"manage/item/add";
+					$.post(url,data,function(response){
+						showMessage(response.message,function(){
+							$(grid_selector).trigger("reloadGrid");
+						});
+					});
+				}
+			},
+			"cancel" : {
+				"label" : "<i class='icon-info'></i> <b>取消</b>",
+				"className" : "btn-sm btn-warning",
+				"callback" : function() {}
 			}
 		}
 	});
 }
-function removeNews(id){
-	url = base+"manage/news/remove";
-	data = {id:id};
-	bootbox.confirm("<b>你确定要删除此新闻?</b>", function(result) {
+
+function showExtend(id){
+	var category = $('#item_category').val();
+	if("SERVICEBAG"==category){
+		$('#service_prof_div').removeClass("hide");
+		data = {};
+		url=base+'manage/professor/loadAll';
+		$.post(url,data,function(response){
+			if(response.success){
+				profs = response.data;
+				$('#item_extend').empty();
+				for(var i=0;i<profs.length;i++){
+					prof = profs[i];
+					if(null != id && id == prof.id){
+						$('#item_extend').append("<option value='"+prof.id+"' selected='true'>"+prof.username+"</option>");
+ 					}else{
+						$('#item_extend').append("<option value='"+prof.id+"'>"+prof.username+"</option>");
+					}
+				}
+			}else{
+				showMessage(response.message);
+			}
+		});
+	}else{
+		$('#item_extend').empty();
+		$('#service_prof_div').addClass("hide");                  
+	}
+}
+function removeItem(id){
+	url = base+"manage/item/remove/"+id;
+	data = {};
+	bootbox.confirm("<b>你确定要删除此商品?</b>", function(result) {
 		if(result) {
 			$.post(url,data,function(response){
-				if(response.success){
+				showMessage("删除商品失败！",function(){
 					$(grid_selector).trigger("reloadGrid");
-				}else{
-					showMessage("删除新闻失败！");
-				}
+				});
 			});
 		}
 	});
 }
-function showNotice(id,status){
-	url = base+"manage/notice/detail";
-	data = {noticeId:id};
+function showItem(id){
+	url = base+'manage/item/detail/'+id;
+	data = {};
 	$.post(url,data,function(response){
-		console.log(response);
 		if(response.success){
-			message = '<div class="row" style=\"padding:10 10 10 10\">  ' +
-						 '<div><b>标题：'+response.data.title+'</b></div><hr/>'+
-						 '<div><b>作者：'+response.data.authorName+'</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>发布时间：'+response.data.gmtCreate+'</span></div><hr/>'+
-			             '<div><b>免费内容：</b>'+
-							response.data.publicContent+
-						 '<hr><b>收费内容：</b>'+	
-						 	response.data.privateContent+
-						 '</div>'+
-			    	  '</div>';
-			if("NEW_CREATED" == status){
-				title="<b>宝盒审核</b>";
-				verifyUrl = base+"manage/notice/verify";
-				bootbox.dialog({
-					size:'large',
-					title : title,
-	                message: message,
-	                buttons: {
-	    				success: {
-	  				        label: "<b>通过</b>",
-	  				        className: "btn-success",
-	  				        callback: function() {
-	  				        	bootbox.confirm("<b>你确定通过该宝盒?</b>", function(result) {
-		  				      		if(result) {
-		  				      			verifyData = {noticeId:id,passed:result,reason:""};
-		  				      			$.post(verifyUrl,verifyData,function(response){
-		  				      				tempmessage="操作失败！";
-		  				      				if(response.success){
-		  				      					tempmessage="操作成功！";
-		  				      				}
-			  				      			showMessage(tempmessage,function(){
-	  				      						$(grid_selector).trigger("reloadGrid");
-	  				      					});
-		  				      			});
-		  				      		}
-	  				      		});
-	  				        }
-	  				     },
-	  				     danger: {
-	  				         label: "<b>否决</b>",
-	  				         className: "btn-danger",
-	  				         callback: function() {
-	  				        	bootbox.prompt({
-	  				        	  title: "请输入否决原因",
-	  				        	  callback: function(result) {
-	  				        	    if (result === null ||""==result.trim()) {
-	  				        	    	showMessage("请输入否决原因！");
-	  				        	    } else {
-	  				        	    	verifyData = {noticeId:id,passed:false,reason:result};
-	  				        	    	$.post(verifyUrl,verifyData,function(response){
-		  				      				tempmessage="操作失败！";
-		  				      				if(response.success){
-		  				      					tempmessage="操作成功！";
-		  				      				}
-			  				      			showMessage(tempmessage,function(){
-	  				      						$(grid_selector).trigger("reloadGrid");
-	  				      					});
-		  				      			});
-	  				        	    }
-	  				        	  }
-	  				        	});
-	  				         }
-	  				     },
-	  				     main: {
-					         label: "<b>关闭</b>",
-					         className: "btn-primary",
-					         callback: function() {
-					        	 bootbox.hideAll();
-					         }
-					     }
-	                }
-	            });
-			}else{
-				title="<b>宝盒详情</b>";
-				bootbox.dialog({
-					size:'large',
-					title : title,
-	                message: message,
-	                buttons: {
-	  				     main: {
-					         label: "关闭",
-					         className: "btn-primary",
-					         callback: function() {
-					        	 bootbox.hideAll();
-					         }
-					     }
-	                }
-	            });
-			}
-			
-        }else{
-        	bootbox.dialog({
-				size:'normal',
-                title: title,
-                message: '<div class="row">  ' +
-                             '<div>获取宝盒详情失败！</div>'+
-                    	'</div>',
-                buttons: {
-                	main: {
-				         label: "关闭",
-				         className: "btn-primary",
-				         callback: function() {
-				        	 bootbox.hideAll();
-				         }
-				     }
-                }
-            });
-        }
+			item = response.data;
+			bootbox.dialog({
+				title : "<div class=\"danger\"><b>编辑商品</b></div>",
+				message : "<div class='well ' style='margin-top:1px;'>"+
+								"<form class='form-horizontal' role='form' id='add_item_frm'>"+
+						  			"<div class='form-group'>"+
+						  				"<label class='col-sm-3'><b>商品名称：</b></label>"+
+						  				"<div class='col-sm-9'>"+
+						  					"<input id='item_id' value='"+item.id+"' type='hidden' class='form-control' />"+
+			    	      					"<input id=\"item_name\" value='"+item.name+"' name='item_name' type='text' class=\"form-control\" />"+
+			    	      				"</div>"+
+			    	      			"</div>"+
+			    	      			"<div class='form-group'>"+
+						  				"<label class='col-sm-3'><b>商品类型：</b></label>"+
+						  				"<div class='col-sm-9'>"+
+						  					"<select id='item_category' class='form-control' onchange='showExtend()'>"+
+		 				  						"<option value='CREDITCARD'>充值卡</option>"+
+		 				  						"<option value='SERVICEBAG'>服务包</option>"+
+		 				  					"</select>"+
+						  				"</div>"+
+			    	      			"</div>"+
+			    	      			"<div class='form-group'>"+
+						  				"<label class='col-sm-3'><b>商品价格：</b></label>"+
+						  				"<div class='col-sm-9'>"+
+					      					"<input id=\"item_price\" value='"+item.price+"' name='item_price' type='text' class=\"form-control\" />"+
+					      				"</div>"+
+					      			"</div>"+
+					      			"<div class='form-group'>"+
+						  				"<label class='col-sm-3'><b>商品价值：</b></label>"+
+						  				"<div class='col-sm-9'>"+
+					      					"<input id=\"item_value\" value='"+item.value+"' name='item_value' type='text' class=\"form-control\" />"+
+					      				"</div>"+
+					      			"</div>"+
+					      			"<div class='form-group'>"+
+						  				"<label class='col-sm-3'><b>商品数量：</b></label>"+
+						  				"<div class='col-sm-9'>"+
+					      					"<input id=\"item_sku\" value='"+item.sku+"' name='item_sku' type='text' class=\"form-control\" />"+
+					      				"</div>"+
+					      			"</div>"+
+					      			"<div class='form-group'>"+
+					      				"<label class='col-sm-3'><b>商品描述：</b></label>"+
+						  				"<div class='col-sm-9'>"+
+			    	      					"<textarea id=\"item_content\" value='"+item.desp+"' class=\"form-control\" rows=\"3\"></textarea>"+
+			    	      				"</div>"+
+			    	      			"</div>"+
+			    	      			"<div id='service_prof_div' class='hide form-group'>"+
+						  				"<label class='col-sm-3'><b>服务讲师：</b></label>"+
+						  				"<div class='col-sm-9'>"+
+						  					"<select id='item_extend' class='form-control'>"+
+						  				"</div>"+
+						  			"</div>"+
+			    	      		"</form>"+
+			    	      	"</div>",
+				buttons : {
+					"success" : {
+						"label" : "<i class='icon-ok'></i> <b>保存</b>",
+						"className" : "btn-sm btn-danger",
+						"callback" : function() {
+							name=$('#item_name').val();
+							category = $('#item_category').val();
+							price = $('#item_price').val();
+							sku = $('#item_sku').val();
+							desc = $('#item_content').val();
+							extend=$('#item_extend').val();
+							value=$('#item_value').val();
+							id=$('#item_id').val();
+							data={id:id,name:name,category:category,price:price,sku:sku,desc:desc,value:value,extend:extend};
+							console.log(data);
+							url=base+"manage/item/update";
+							$.post(url,data,function(response){
+								showMessage(response.message,function(){
+									$(grid_selector).trigger("reloadGrid");
+								});
+							});
+						}
+					},
+					"cancel" : {
+						"label" : "<i class='icon-info'></i> <b>取消</b>",
+						"className" : "btn-sm btn-warning",
+						"callback" : function() {}
+					}
+				}
+			});
+			$('#item_content').text(item.desp);
+			$('#item_category').val(item.category);
+			showExtend(item.extend);
+		}
 	});
 }

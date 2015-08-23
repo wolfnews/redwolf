@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hoteam.wolf.common.GridBean;
 import com.hoteam.wolf.common.Result;
-import com.hoteam.wolf.domain.RechargeRecord;
+import com.hoteam.wolf.domain.Order;
+import com.hoteam.wolf.service.OrderService;
 import com.hoteam.wolf.service.RechargeService;
 
 @Controller
@@ -23,17 +24,21 @@ public class ManageOrderController {
 	private static Logger logger = Logger.getLogger(ManageOrderController.class);
 	@Autowired
 	private RechargeService rechargeService;
+	@Autowired
+	private OrderService orderService;
 
 	@RequestMapping("/list")
 	@ResponseBody
 	public GridBean pagination(@RequestParam(value = "page", required = true) int page,
 			@RequestParam(value = "rows", required = true) int rows, String type, HttpSession session) {
 		try {
-			RechargeRecord record = new RechargeRecord();
-			return rechargeService.pagination(record, page, rows);
+//			RechargeRecord record = new RechargeRecord();
+//			return rechargeService.pagination(record, page, rows);
+			Order order = new Order();
+			return orderService.list(order, page, rows);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
-			return new GridBean(0, 0, 0, new ArrayList<RechargeRecord>());
+			return new GridBean(0, 0, 0, new ArrayList<Order>());
 		}
 	}
 	@RequestMapping("/remove")

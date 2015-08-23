@@ -28,7 +28,7 @@ String authUser = (String)request.getAttribute("user");
 		<script src="<%=basePath%>static/console/base.js"></script>
 	</head>
 	<body class="no-skin">
-		<jsp:include page="header.jsp"></jsp:include>
+		<jsp:include page="../header.jsp"></jsp:include>
 		<div class="main-container" id="main-container">
 			<script type="text/javascript">
 				var base='<%=basePath%>';
@@ -43,16 +43,8 @@ String authUser = (String)request.getAttribute("user");
 							function fastRecharge(money){
 								$('#charge_account').val(money)
 							}
-							function submitOrder(){
-								category=$('input[name="pay_category"]:checked').val();
-								switch(category){
-								case 'ALIPAY':
-									location.href=base+'alipay/index.html?way=ALIPAY&amount='+$('#charge_account').val();
-									break;
-								default:
-									showMessage("暂时支持该支付方式！");
-									break;
-								}
+							function nextStep(){
+								location.href=base+'profile/recharge/confirm.html?amount='+$('#charge_account').val();
 							}
 						</script>
 						<ul class="breadcrumb">
@@ -122,19 +114,19 @@ String authUser = (String)request.getAttribute("user");
 										<div class="space-10"></div>
 									</div>
 									<br><br>
-									<div class="col-sm-10 col-sm-offset-1 well">
-										<label class="red" style="font-size: 17px"><strong>请选择支付方式 :</strong></label>
-										<input id="pay_category" name="pay_category" type="radio" value="ALIPAY" class="ace" checked="checked" />
-										<span class="lbl"> <b>&nbsp;</b></span>
-										<img alt="支付宝" src="<%=basePath%>static/images/alipay.png">
-<!-- 										<input id="pay_category" name="pay_category" type="radio" value="TENPAY" class="ace"/> -->
+<!-- 									<div class="col-sm-10 col-sm-offset-1 well"> -->
+<!-- 										<label class="red" style="font-size: 17px"><strong>请选择支付方式 :</strong></label> -->
+<!-- 										<input id="pay_category" name="pay_category" type="radio" value="ALIPAY" class="ace" checked="checked" /> -->
+<!-- 										<span class="lbl"> <b>&nbsp;</b></span> -->
+<%-- 										<img alt="支付宝" src="<%=basePath%>static/images/alipay.png"> --%>
+<!-- 										<input id="pay_category" name="pay_category" type="radio" value="TENPAY" class="ace" /> -->
 <!-- 										<span class="lbl"> <b>&nbsp;</b></span> -->
 <%-- 										<img alt="财付通" src="<%=basePath%>static/images/tenpay.png"> --%>
-									</div>
+<!-- 									</div> -->
 									<div class="col-sm-10 col-sm-offset-1">
 										<div class="hr hr12 dotted"></div>
 										<div align="right">
-											<button class="btn btn-danger" onclick="submitOrder()"><strong> 提交订单 </strong></button>
+											<button class="btn btn-danger" onclick="nextStep()"><strong> 下一步 </strong></button>
 										</div>
 									</div>
 								</div>

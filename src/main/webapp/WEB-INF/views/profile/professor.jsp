@@ -31,7 +31,6 @@ String authUser = (String)request.getAttribute("user");
 				var base='<%=basePath%>';
 				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
 			</script>
-<!-- 			<div id="sidebar" class="sidebar responsive"></div> -->
 			<div class="main-content">
 				<div class="main-content-inner">
 					<div class="breadcrumbs" id="breadcrumbs">
@@ -165,7 +164,7 @@ String authUser = (String)request.getAttribute("user");
 												data={receiverId:id,receiver:receiver,content:content,last:null};
 												url=base+"profile/message/add";
 												$.post(url,data,function(response){
-													alert(response.message);
+													showMessage(response.message);
 												});
 											}
 										},

@@ -8,7 +8,9 @@ import com.hoteam.wolf.jdbc.annotations.PK;
 import com.hoteam.wolf.jdbc.annotations.Table;
 import com.hoteam.wolf.utils.DateSerializer;
 
-/**订单表
+/**
+ * 订单表
+ * 
  * @author dmw
  *
  */
@@ -20,12 +22,15 @@ public class Order {
 	private Date gmtCreate;
 	@JsonSerialize(using = DateSerializer.class)
 	private Date gmtModify;
+	@JsonSerialize(using = DateSerializer.class)
+	private Date payTime;
 	private String sn;
 	private String name;
 	private String desp;
 	private String state;
 	private BigDecimal total;
 	private Long userId;
+	private String payWay;
 
 	/**
 	 * 持久化前预处理
@@ -114,7 +119,24 @@ public class Order {
 		this.userId = userId;
 	}
 
-	public Order(String sn, String name, String desp, String state, BigDecimal total, Long userId) {
+	public Date getPayTime() {
+		return payTime;
+	}
+
+	public void setPayTime(Date payTime) {
+		this.payTime = payTime;
+	}
+
+	public String getPayWay() {
+		return payWay;
+	}
+
+	public void setPayWay(String payWay) {
+		this.payWay = payWay;
+	}
+
+	public Order(String sn, String name, String desp, String state, BigDecimal total, Long userId, String payWay,
+			Date payTime) {
 		super();
 		this.sn = sn;
 		this.name = name;
@@ -122,6 +144,8 @@ public class Order {
 		this.state = state;
 		this.total = total;
 		this.userId = userId;
+		this.payWay = payWay;
+		this.payTime = payTime;
 	}
 
 	public Order() {
@@ -131,8 +155,9 @@ public class Order {
 
 	@Override
 	public String toString() {
-		return "Orders [id=" + id + ", gmtCreate=" + gmtCreate + ", gmtModify=" + gmtModify + ", sn=" + sn + ", name="
-				+ name + ", desp=" + desp + ", state=" + state + ", total=" + total + ", userId=" + userId + "]";
+		return "Order [id=" + id + ", gmtCreate=" + gmtCreate + ", gmtModify=" + gmtModify + ", payTime=" + payTime
+				+ ", sn=" + sn + ", name=" + name + ", desp=" + desp + ", state=" + state + ", total=" + total
+				+ ", userId=" + userId + ", payWay=" + payWay + "]";
 	}
 
 }

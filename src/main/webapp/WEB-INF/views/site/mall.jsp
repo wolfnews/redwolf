@@ -10,7 +10,7 @@ String authUser = (String)request.getAttribute("user");
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta charset="utf-8" />
-		<title>牛股会-牛股讲师</title>
+		<title>牛股会-牛股商城</title>
 		<meta name="Keywords" content="牛股会">
 		<meta name="Description" content="牛股会">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
@@ -23,7 +23,7 @@ String authUser = (String)request.getAttribute("user");
 		<script src="<%=basePath%>static/ace/assets/js/bootstrap.js"></script>
 		<script src="<%=basePath%>static/ace/assets/js/ace/ace.js"></script>
 		<script src="<%=basePath%>static/ace/jquery.twbsPagination.js"></script>
-		<script src="<%=basePath%>static/console/site/professor.js"></script>
+		<script src="<%=basePath%>static/console/site/mall.js"></script>
 		<script type="text/javascript" src="<%=basePath%>static/js/nav.js"></script>
 		<script type="text/javascript" src="<%=basePath%>static/js/index.js"></script>
 	</head>
@@ -45,18 +45,18 @@ String authUser = (String)request.getAttribute("user");
 							<li class="active">
 								<strong>当前位置：</strong>
 								<i class="ace-icon fa fa-home home-icon"></i>
-								<a href="<%=basePath%>professor.html"><strong>牛股讲师</strong></a>
+								<a href="<%=basePath%>professor.html"><strong>牛股商城</strong></a>
 							</li>
 						</ul>
 					</div>
 					<div class="page-content">
 						<div class="row">
 							<div class="col-xs-12 ">
-								<div id="professor_list"></div>
+								<div id="item_list"></div>
 							</div>
 							<div class="col-xs-10 col-xs-offset-1 ">
 								<div class="text-right">
-					                <ul id="professor_pager"></ul>
+					                <ul id="item_pager"></ul>
 					            </div>
 							</div>
 							

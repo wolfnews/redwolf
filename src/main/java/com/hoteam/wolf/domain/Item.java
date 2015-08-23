@@ -142,7 +142,7 @@ public class Item {
 				+ ", categoryId=" + categoryId + ", extend=" + extend + "]";
 	}
 
-	public Item(String name, String desp, String category, int sku, BigDecimal price, int value, Long categoryId) {
+	public Item(String name, String desp, String category, int sku, BigDecimal price, int value, Long extend,Long categoryId) {
 		super();
 		this.name = name;
 		this.desp = desp;
@@ -150,6 +150,7 @@ public class Item {
 		this.sku = sku;
 		this.price = price;
 		this.value = value;
+		this.extend = extend;
 		this.categoryId = categoryId;
 	}
 

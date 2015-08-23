@@ -70,7 +70,11 @@ public class OrderDao extends BaseDao {
 				conditionMetaList.add(item);
 				paramMap.put("user", order.getUserId());
 			}
-
+			if(null != order.getState() && !order.getState().isEmpty()){
+				Object[] item = { "STATE = :state" };
+				conditionMetaList.add(item);
+				paramMap.put("state", order.getState());
+			}
 		}
 		Object[][] conMetaArray = new Object[conditionMetaList.size()][];
 		for (int i = 0; i < conditionMetaList.size(); i++) {

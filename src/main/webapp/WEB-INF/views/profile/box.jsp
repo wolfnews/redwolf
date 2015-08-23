@@ -65,11 +65,11 @@ String authUser = (String)request.getAttribute("user");
 													 var box = boxs[i];
 													 html = "<div class=\"profile-activity clearfix\">"+
 																"<div>"+
-																	"<span><strong>"+box.title+"</strong></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+																	"<span><strong>【"+box.authorName+"】："+box.title+"</strong></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
 																	"<i class=\"ace-icon fa fa-clock-o bigger-110\">"+box.gmtCreate+"</i>"+
 																"</div><hr>"+
 																"<div>"+
-																	"<span>"+box.publicContent+"...</span>"+
+																	"<span>"+box.publicContent+"</span>"+
 																	"<div class=\"text-right\"><button class=\"btn btn-danger\" onclick=\"boxDetail("+box.id+")\">查看宝盒</button></div>"+
 																"</div>"+
 															"</div>";

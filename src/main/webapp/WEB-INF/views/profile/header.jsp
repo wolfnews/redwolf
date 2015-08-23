@@ -110,7 +110,7 @@ if(null == account){
 				<li >
 					<a style="background: #AB1A08" data-toggle="dropdown" class="dropdown-toggle" href="#">
 						<i class="ace-icon fa fa-credit-card"></i>
-						<span class="white"><b>充值订单</b></span>
+						<span class="white"><b>我的订单</b></span>
 					</a>
 					<ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
 						<li class="dropdown-content">

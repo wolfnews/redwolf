@@ -52,4 +52,11 @@ public class OrderItemDao extends BaseDao {
 		news.setId(id);
 		this.baseDelete(news);
 	}
+	
+	public void deleteByOrder(Long order){
+		String sql="delete from order_item where order_id =:order";
+		Map<String,Object> param =  new HashMap<String,Object>();
+		param.put("order", order);
+		this.namedParameterJdbcTemplate.update(sql, param);
+	}
 }

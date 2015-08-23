@@ -1,4 +1,4 @@
-package com.hoteam.wolf.controller.alipay;
+package com.hoteam.wolf.controller.pay;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;

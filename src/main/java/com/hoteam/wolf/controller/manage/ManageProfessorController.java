@@ -1,6 +1,7 @@
 package com.hoteam.wolf.controller.manage;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,6 +83,23 @@ public class ManageProfessorController {
 			}
 		} catch (Exception e) {
 			return new EntityResult(false, e.getMessage(), null);
+		}
+	}
+	
+	@RequestMapping("/loadAll")
+	@ResponseBody
+	public EntityResult loadAll(){
+		try {
+			List<Professor> profs = new ArrayList<Professor>();
+			GridBean grid = this.professorService.pagination(null, 1, Integer.MAX_VALUE);
+			if(null ==grid.getRows()){
+			}else{
+				profs = (List<Professor>) grid.getRows();
+			}
+			return new EntityResult(true, "success", profs);
+		} catch (Exception e) {
+			logger.error("load all professor exception:",e);
+			return new EntityResult(false, "系统异常", null);
 		}
 	}
 }

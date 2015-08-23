@@ -16,6 +16,7 @@ import com.hoteam.wolf.domain.Activity;
 import com.hoteam.wolf.domain.News;
 import com.hoteam.wolf.service.ActivityService;
 import com.hoteam.wolf.service.BoxService;
+import com.hoteam.wolf.service.ItemService;
 import com.hoteam.wolf.service.NewsService;
 import com.hoteam.wolf.service.ProfessorService;
 
@@ -27,6 +28,8 @@ public class IndexController {
 	private NewsService newsService;
 	@Autowired
 	private BoxService boxService;
+	@Autowired
+	private ItemService itemService;
 	@Autowired
 	private ProfessorService professorService;
 	@Autowired
@@ -113,5 +116,14 @@ public class IndexController {
 	@RequestMapping("/register.html")
 	public ModelAndView registerHtml() {
 		return new ModelAndView("site/register");
+	}
+	
+	@RequestMapping("/mall.html")
+	public ModelAndView mall(){
+		ModelAndView mav = new ModelAndView("site/mall");
+		int total = itemService.list(null, 1, 1).getRecords();
+		total = 0== total? 1: total;
+		mav.addObject("total",total);
+		return mav;
 	}
 }

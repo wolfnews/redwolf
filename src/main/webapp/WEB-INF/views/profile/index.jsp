@@ -30,7 +30,6 @@ String authUser = (String)request.getAttribute("user");
 				var base='<%=basePath%>';
 				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
 			</script>
-<!-- 			<div id="sidebar" class="sidebar responsive"></div> -->
 			<div class="main-content">
 				<div class="main-content-inner">
 					<div class="breadcrumbs" id="breadcrumbs">
@@ -48,9 +47,8 @@ String authUser = (String)request.getAttribute("user");
 									 var box = boxs[i];
 									 html = "<div class=\"profile-activity clearfix\">"+
 												"<div>"+
-													"<span><strong>"+box.title+"</strong></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
-													box.gmtCreate+
-													//"<i class=\"ace-icon fa fa-clock-o bigger-110\">"+box.gmtCreate+"</i>"+
+													"<span><strong>【"+box.authorName+"】："+box.title+"</strong></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+													"<i class=\"ace-icon fa fa-clock-o bigger-110\">"+box.gmtCreate+"</i>"+
 												"</div><hr>"+
 												"<div>"+
 													"<span>"+box.publicContent+"...</span>"+
@@ -197,10 +195,9 @@ String authUser = (String)request.getAttribute("user");
 																		 var box = boxs[i];
 																		 html = "<div class=\"profile-activity clearfix\">"+
 																			"<div>"+
-																				"<span><strong>"+box.title+"</strong></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
-																				"| "+box.gmtCreate+
-																				//"<i class=\"ace-icon fa fa-clock-o bigger-110\">"+box.gmtCreate+"</i>"+
-																			"</div>"+
+																				"<span><strong>【"+box.authorName+"】："+box.title+"</strong></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+																				"<i class=\"ace-icon fa fa-clock-o bigger-110\">"+box.gmtCreate+"</i>"+
+																			"</div><hr>"+
 																			"<div>"+
 																				"<span>"+box.publicContent+"...</span>"+
 																			"</div>"+

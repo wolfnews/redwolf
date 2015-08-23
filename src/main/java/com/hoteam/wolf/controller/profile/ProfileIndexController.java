@@ -100,7 +100,7 @@ public class ProfileIndexController {
 
 	@RequestMapping("/recharge.html")
 	public ModelAndView recharge(HttpSession session) {
-		ModelAndView mav = new ModelAndView("profile/recharge");
+		ModelAndView mav = new ModelAndView("profile/recharge/index");
 		Long userId = (Long) session.getAttribute(Constants.USER_TOKEN.toString());
 		try {
 			mav.addObject("profile", this.userService.profile(userId));
