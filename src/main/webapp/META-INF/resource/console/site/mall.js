@@ -27,7 +27,7 @@ function inflateView(items){
 	for(var i=0;i<items.length;i++){
 		var item = items[i];
 		 html += "<div class='col-xs-4 pricing-box'>"+
-					"<div class='widget-box widget-color-red'>"+
+					"<div class='widget-box widget-color-orange'>"+
 						"<div class='widget-header'>"+
 							"<h5 class='widget-title sm lighter'><strong>"+item.name+"</strong></h5>"+
 						"</div>"+
@@ -42,7 +42,7 @@ function inflateView(items){
 								"</div>"+
 							"</div>"+
 							"<div>"+
-								"<a href='#' class='btn btn-sm btn-block btn-danger'>"+
+								"<a href='#' onclick=\"add2Cart('"+item.id+"','"+item.name+"')\" class='btn btn-sm btn-block btn-warning'>"+
 									"<i class='ace-icon fa fa-shopping-cart bigger-110'></i>"+
 									"<span>购买</span>"+
 								"</a>"+
@@ -52,4 +52,16 @@ function inflateView(items){
 				"</div>";
 	}
 	return html;
+}
+
+function add2Cart(id,name){
+	data={num:1,name:name};
+	url = base+'cart/item/add/'+id;
+	$.post(url,data,function(response){
+		if(response.success){
+			showMessage("商品已添加到购物车！");
+		}else{
+			showMessage("商品添加到购物车失败！");
+		}
+	})
 }

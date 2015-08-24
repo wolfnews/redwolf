@@ -14,6 +14,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<li class="nav-item"><a href="<%=basePath %>news.html" target="_parent">行业资讯</a></li>
 			<li class="nav-item"><a href="<%=basePath %>box.html" target="_parent">牛股宝盒</a></li>
 			<li class="nav-item"><a href="<%=basePath %>professor.html" target="_parent">牛股讲师</a></li>
+<%-- 			<li class="nav-item"><a href="<%=basePath %>mall.html" target="_parent">牛股商城</a></li> --%>
 			<li class="nav-item"><a href="<%=basePath %>profile/index.html" target="_parent">会员中心</a></li>
 			<li class="nav-item"><a href="<%=basePath %>register.html" target="_parent">会员注册</a></li>
 		</ul>

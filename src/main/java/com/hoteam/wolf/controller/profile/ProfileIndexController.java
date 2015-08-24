@@ -186,4 +186,9 @@ public class ProfileIndexController {
 		mav.addObject("type",category);
 		return mav;
 	}
+	@RequestMapping("/cart.html")
+	public ModelAndView carts(){
+		ModelAndView mav = new ModelAndView("profile/carts");
+		return mav;
+	}
 }

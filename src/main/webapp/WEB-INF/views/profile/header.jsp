@@ -188,17 +188,49 @@ if(null == account){
 					</a>
 				</li>
 				<li >
-					<a style="background: #AB1A08"  href="<%=basePath%>profile/index.html">
+					<a style="background: #AB1A08" data-toggle="dropdown" class="dropdown-toggle" href="#">
 						<i class="ace-icon fa fa-user"></i>
-						<span><strong> <%=account %> </strong></span>
+						<span class="white"><b><%=account %></b></span>
 					</a>
+					<ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
+						<li class="dropdown-content">
+							<ul class="dropdown-menu dropdown-navbar">
+								<li>
+									<a href="<%=basePath%>profile/index.html">
+										<div class="clearfix">
+											<span class="pull-left">
+												<i class="ace-icon fa fa-power-home"></i>
+												<b>返回首页</b>
+											</span>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="<%=basePath%>profile/user/logout.html">
+										<div class="clearfix">
+											<span class="pull-left">
+												<i class="ace-icon fa fa-power-off"></i>
+												<b>退出登录</b>
+											</span>
+										</div>
+									</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
 				</li>
-				<li>
-					<a style="background: #AB1A08" href="<%=basePath%>profile/user/logout.html">
-						<i class="ace-icon fa fa-key"></i>
-						<span><strong>退出</strong></span>
-					</a>
-				</li>
+<!-- 				<li > -->
+<!-- 					<a style="background: #AB1A08"  href=""> -->
+<!-- 						<i class="ace-icon fa fa-user"></i> -->
+<%-- 						<span><strong> <%=account %> </strong></span> --%>
+<!-- 					</a> -->
+<!-- 				</li> -->
+<!-- 				<li> -->
+<!-- 					<a style="background: #AB1A08" href=""> -->
+<!-- 						<i class="ace-icon fa fa-share"></i> -->
+<!-- 						<span><strong>退出</strong></span> -->
+<!-- 					</a> -->
+<!-- 				</li> -->
 			</ul>
 		</div>
 	</div>

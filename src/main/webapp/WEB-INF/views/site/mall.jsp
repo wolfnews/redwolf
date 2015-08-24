@@ -20,9 +20,11 @@ String authUser = (String)request.getAttribute("user");
 		<link rel="stylesheet" href="<%=basePath%>static/ace/assets/css/ace.css" class="ace-main-stylesheet" id="main-ace-style" />
 		<link rel="stylesheet" href="<%=basePath%>static/css/main.css" />
 		<script src="<%=basePath%>static/ace/assets/js/jquery.js"></script>
+		<script src="<%=basePath%>static/ace/assets/js/bootbox.js"></script>
 		<script src="<%=basePath%>static/ace/assets/js/bootstrap.js"></script>
 		<script src="<%=basePath%>static/ace/assets/js/ace/ace.js"></script>
 		<script src="<%=basePath%>static/ace/jquery.twbsPagination.js"></script>
+		<script src="<%=basePath%>static/console/base.js"></script>
 		<script src="<%=basePath%>static/console/site/mall.js"></script>
 		<script type="text/javascript" src="<%=basePath%>static/js/nav.js"></script>
 		<script type="text/javascript" src="<%=basePath%>static/js/index.js"></script>
@@ -48,6 +50,12 @@ String authUser = (String)request.getAttribute("user");
 								<a href="<%=basePath%>professor.html"><strong>牛股商城</strong></a>
 							</li>
 						</ul>
+						<div class="nav-search">
+							<span class="lbl" onclick="showMessage('aaa')">
+								<i class='ace-icon fa fa-shopping-cart bigger-128'></i>
+								<b>我的购物车</b>						
+							</span>
+						</div>
 					</div>
 					<div class="page-content">
 						<div class="row">
