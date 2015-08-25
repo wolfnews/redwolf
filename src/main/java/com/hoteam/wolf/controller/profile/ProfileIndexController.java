@@ -188,7 +188,14 @@ public class ProfileIndexController {
 	}
 	@RequestMapping("/cart.html")
 	public ModelAndView carts(){
-		ModelAndView mav = new ModelAndView("profile/carts");
+		ModelAndView mav = new ModelAndView("profile/cart");
 		return mav;
 	}
+	
+	@RequestMapping("/settle.html")
+	public ModelAndView settle(){
+		ModelAndView mav = new ModelAndView("profile/order/settle");
+		return mav;
+	}
+	
 }

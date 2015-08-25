@@ -36,7 +36,7 @@ public class CartServiceImpl implements CartService {
 
 	@Override
 	public Result delItem(Long user, Long id) {
-		String sql = "delete from carts where id=:id and user_is=:user";
+		String sql = "delete from carts where id=:id and user_id=:user";
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("user", user);
 		param.put("id", id);

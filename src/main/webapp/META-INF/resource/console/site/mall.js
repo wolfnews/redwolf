@@ -20,6 +20,9 @@ jQuery(function($) {
 			});
        	 }
 	});
+	$('#my_carts').on('click', function (event) {
+		location.href=base+'profile/cart.html';
+	});
 });
 
 function inflateView(items){
@@ -56,7 +59,7 @@ function inflateView(items){
 
 function add2Cart(id,name){
 	data={num:1,name:name};
-	url = base+'cart/item/add/'+id;
+	url = base+'profile/cart/item/add/'+id;
 	$.post(url,data,function(response){
 		if(response.success){
 			showMessage("商品已添加到购物车！");

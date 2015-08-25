@@ -14,8 +14,8 @@ import com.hoteam.wolf.common.Result;
 import com.hoteam.wolf.service.CartService;
 
 @Controller
-@RequestMapping("/cart")
-public class CartController {
+@RequestMapping("/profile/cart")
+public class ProfileCartController {
 
 	@Autowired
 	private CartService cartService;
