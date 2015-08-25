@@ -32,7 +32,6 @@ String authUser = (String)request.getAttribute("user");
 				var base='<%=basePath%>';
 				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
 			</script>
-			<div id="sidebar" class="sidebar responsive"></div>
 			<div class="main-content">
 				<div class="main-content-inner">
 					<div class="breadcrumbs" id="breadcrumbs">
@@ -59,7 +58,7 @@ String authUser = (String)request.getAttribute("user");
 					</div>
 					<div class="page-content">
 						<div class="row">
-							<div class="col-xs-12" >
+							<div class="col-xs-10 col-xs-offset-1" >
 								<div class="row">
 									<h3 class="widget-title red lighter">
 										<i class="ace-icon fa fa-leaf red"></i>
