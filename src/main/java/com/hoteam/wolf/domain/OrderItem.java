@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.hoteam.wolf.jdbc.annotations.NoInsert;
+import com.hoteam.wolf.jdbc.annotations.NoUpdate;
 import com.hoteam.wolf.jdbc.annotations.PK;
 import com.hoteam.wolf.jdbc.annotations.Table;
 import com.hoteam.wolf.utils.DateSerializer;
@@ -29,7 +31,9 @@ public class OrderItem {
 	private Boolean hasPref;
 	private int prefValue;
 	private String prefContent;
-
+	@NoInsert
+	@NoUpdate
+	private String name;
 	/**
 	 * 持久化前预处理
 	 */
@@ -123,6 +127,14 @@ public class OrderItem {
 
 	public void setPrefContent(String prefContent) {
 		this.prefContent = prefContent;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public OrderItem(Long orderId, Long itemId, int amount, BigDecimal price, Boolean hasPref, int prefValue) {

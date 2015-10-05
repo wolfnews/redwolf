@@ -10,6 +10,7 @@ String authUser = (String)request.getAttribute("user");
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta charset="utf-8" />
+<!-- 		<meta http-equiv="refresh" content="0;url=http://www.baidu.com"> -->
 		<title>欢迎来到牛股会</title>
 		<meta name="Keywords" content="牛股会">
 		<meta name="Description" content="牛股会">
@@ -32,16 +33,6 @@ String authUser = (String)request.getAttribute("user");
 				var base='<%=basePath%>';
 				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
 				$(document).ready(function(){
-// 					var hasAct = ${hasAct};
-// 					var acts = [];
-// 					if{hasAct}{
-// 						acts = ${acts};
-// 					}
-// 					if(acts.length >0){
-// 						for(var i =0;i<acts.length;i++){
-// 							$("#notice_board").append("")
-// 						}
-// 					}				
 				});
 				
 			</script>
@@ -53,16 +44,16 @@ String authUser = (String)request.getAttribute("user");
 					</script>
 						<ul class="breadcrumb">
 							<li class="active">
-								<strong>当前位置：</strong>
-								<i class="ace-icon fa fa-home home-icon"></i>
-								<a href="index.html"><strong>首页</strong></a>
+<!-- 								<strong>当前位置：</strong> -->
+<!-- 								<i class="ace-icon fa fa-home home-icon"></i> -->
+<!-- 								<a href="index.html"><strong>首页</strong></a> -->
 							</li>
 						</ul>
 					</div>
 					<div class="page-content" style="background-color: #ea3f2c">
 						<div class="row center">
 							<div class="col-xs-6">
-								<img alt="" src="static/images/bg_img.png">
+								 <img alt="" width="640" height="500" src="static/images/bg_img.jpg">
 							</div>
 							<div class="col-xs-6">
 								<div class="col-xs-12 white" id="notice_board" style="height: 320px;">
@@ -85,9 +76,9 @@ String authUser = (String)request.getAttribute("user");
 									</div>
 									<div class="col-sm-1"></div>
 									<div class="col-sm-5">
-										<img alt="IOS版本下载" width="178px" height="178px" src="<%=basePath%>static/images/ios.jpg">
-										<div class="space-4"></div>
-										<label class="center white"><b>IOS版本</b></label>
+<%-- 										<img alt="IOS版本下载" width="178px" height="178px" src="<%=basePath%>static/images/ios.jpg"> --%>
+<!-- 										<div class="space-4"></div> -->
+<!-- 										<label class="center white"><b>IOS版本</b></label> -->
 									</div>
 								</div>
 							</div>

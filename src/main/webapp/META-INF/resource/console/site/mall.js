@@ -47,7 +47,7 @@ function inflateView(items){
 							"<div>"+
 								"<a href='#' onclick=\"add2Cart('"+item.id+"','"+item.name+"')\" class='btn btn-sm btn-block btn-warning'>"+
 									"<i class='ace-icon fa fa-shopping-cart bigger-110'></i>"+
-									"<span>购买</span>"+
+									"<span>加入购物车</span>"+
 								"</a>"+
 							"</div>"+
 						"</div>"+
@@ -60,11 +60,19 @@ function inflateView(items){
 function add2Cart(id,name){
 	data={num:1,name:name};
 	url = base+'profile/cart/item/add/'+id;
-	$.post(url,data,function(response){
+	$.get(base+'profile/user/isLogin',{},function(response){
 		if(response.success){
-			showMessage("商品已添加到购物车！");
+			$.post(url,data,function(response){
+				if(response.success){
+					showMessage("商品已添加到购物车！");
+				}else{
+					showMessage("商品添加到购物车失败！");
+				}
+			})
 		}else{
-			showMessage("商品添加到购物车失败！");
+			showMessage("您还没有登录！请先登录",function(){
+				location.href=base+'profile/login.html';
+			});
 		}
-	})
+	});
 }

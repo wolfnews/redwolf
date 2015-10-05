@@ -1,9 +1,9 @@
 function showMessage(message,callbackFn){
 	bootbox.dialog({
-		message: '<b>'+message+'</b>', 
+		message: message, 
 		buttons: {
 			"success" : {
-				"label" : "<b>我知道了</b>",
+				"label" : "<b>确定</b>",
 				"className" : "btn-sm btn-danger",
 				callback: callbackFn
 			}

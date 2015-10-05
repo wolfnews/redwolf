@@ -61,6 +61,12 @@ public class CartDao extends BaseDao {
 		this.baseDelete(cart);
 	}
 
+	public void deleteAll(List<Long> ids){
+		String sql = "delete from carts where id in (:ids)";
+		Map<String,Object> param = new HashMap<String,Object>();
+		param.put("ids", ids);
+		this.namedParameterJdbcTemplate.update(sql, param);
+	}
 	public void deleteByUser(Long user){
 		Map<String,Object> param = new HashMap<String,Object>();
 		param.put("user", user);

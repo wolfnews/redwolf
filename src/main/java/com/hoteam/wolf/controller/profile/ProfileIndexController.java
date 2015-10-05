@@ -19,7 +19,7 @@ import com.hoteam.wolf.common.enums.BoxStatus;
 import com.hoteam.wolf.common.vo.ProfessorBean;
 import com.hoteam.wolf.common.vo.UserProfile;
 import com.hoteam.wolf.domain.Box;
-import com.hoteam.wolf.domain.Message;
+import com.hoteam.wolf.domain.Comment;
 import com.hoteam.wolf.domain.SubscribeGroup;
 import com.hoteam.wolf.service.BoxService;
 import com.hoteam.wolf.service.MessageService;
@@ -88,9 +88,9 @@ public class ProfileIndexController {
 		return mav;
 	}
 
-	@RequestMapping("/payOrder.html")
+	@RequestMapping("/order.html")
 	public ModelAndView pay(HttpSession session,String type) {
-		ModelAndView mav = new ModelAndView("profile/payOrder");
+		ModelAndView mav = new ModelAndView("profile/order/index");
 		if(null == type||type.isEmpty()){
 			type="all";
 		}
@@ -172,7 +172,7 @@ public class ProfileIndexController {
 	@RequestMapping("/message.html")
 	public ModelAndView message(HttpSession session,String category){
 		Long user = (Long)session.getAttribute(Constants.USER_TOKEN.name());
-		Message message = new Message();
+		Comment message = new Comment();
 		if("send".equalsIgnoreCase(category)){
 			message.setSenderId(user);
 		}else if("receive".equalsIgnoreCase(category)){
@@ -189,12 +189,6 @@ public class ProfileIndexController {
 	@RequestMapping("/cart.html")
 	public ModelAndView carts(){
 		ModelAndView mav = new ModelAndView("profile/cart");
-		return mav;
-	}
-	
-	@RequestMapping("/settle.html")
-	public ModelAndView settle(){
-		ModelAndView mav = new ModelAndView("profile/order/settle");
 		return mav;
 	}
 	

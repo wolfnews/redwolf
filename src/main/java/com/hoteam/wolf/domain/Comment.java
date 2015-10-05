@@ -8,7 +8,8 @@ import com.hoteam.wolf.jdbc.annotations.Table;
 import com.hoteam.wolf.utils.DateSerializer;
 
 @Table("message")
-public class Message {
+public class Comment {
+	//TODO 将数据表改成comment
 	@PK
 	private Long id;
 	@JsonSerialize(using = DateSerializer.class)
@@ -109,7 +110,7 @@ public class Message {
 				+ ", receiver=" + receiver + ", readed=" + readed + "]";
 	}
 
-	public Message(Long senderId, Long receiverId, Long lastMessage, String content, String sender, String receiver,
+	public Comment(Long senderId, Long receiverId, Long lastMessage, String content, String sender, String receiver,
 			boolean readed) {
 		super();
 		this.senderId = senderId;
@@ -121,7 +122,7 @@ public class Message {
 		this.readed = readed;
 	}
 
-	public Message() {
+	public Comment() {
 		super();
 		// TODO Auto-generated constructor stub
 	}

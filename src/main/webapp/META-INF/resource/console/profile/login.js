@@ -12,7 +12,7 @@ function login(){
 	data = {username:username,password:password};
 	$.post(url,data,function(response){
 		if(response.success){
-			location.href=base+'profile/index.html';
+			location.href=base+'index.html';
 		}else{
         	showMessage(response.message,function(){
         		$('#profile_login_username').val("");

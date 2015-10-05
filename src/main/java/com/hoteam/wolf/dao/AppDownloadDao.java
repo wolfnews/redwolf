@@ -29,6 +29,7 @@ public class AppDownloadDao extends BaseDao {
 	public AppDownload save(final AppDownload appDownload) throws Exception {
 		appDownload.prePersist();
 		saveWithPk(appDownload);
+		logger.info("savesuccess");
 		return appDownload;
 	}
 

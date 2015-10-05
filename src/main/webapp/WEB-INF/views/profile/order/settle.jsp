@@ -16,14 +16,16 @@ String authUser = (String)request.getAttribute("user");
 		<link rel="stylesheet" href="<%=basePath%>static/ace/assets/css/bootstrap.css" />
 		<link rel="stylesheet" href="<%=basePath%>static/ace/assets/css/font-awesome.css" />
 		<link rel="stylesheet" href="<%=basePath%>static/ace/assets/css/ace-fonts.css" />
+		<link rel="stylesheet" href="<%=basePath%>static/ace/assets/css/ui.jqgrid.css" />
 		<link rel="stylesheet" href="<%=basePath%>static/css/alipay.css" />
 		<link rel="stylesheet" href="<%=basePath%>static/ace/assets/css/ace.css" class="ace-main-stylesheet" id="main-ace-style" />
 		<script src="<%=basePath%>static/ace/assets/js/jquery.js"></script>
 		<script src="<%=basePath%>static/ace/assets/js/ace-extra.js"></script>
-		<script src="<%=basePath%>static/ace/assets/js/bootbox.js"></script>
 		<script src="<%=basePath%>static/ace/assets/js/bootstrap.js"></script>
 		<script src="<%=basePath%>static/ace/assets/js/ace/ace.js"></script>
-		<script src="<%=basePath%>static/console/base.js"></script>
+		<script	src="<%=basePath%>static/ace/assets/js/jqGrid/jquery.jqGrid.src.js"></script>
+		<script	src="<%=basePath%>static/ace/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
+		<script src="<%=basePath%>static/console/profile/settle.js"></script>
 	</head>
 	<body class="no-skin">
 		<jsp:include page="../header.jsp"></jsp:include>
@@ -31,24 +33,22 @@ String authUser = (String)request.getAttribute("user");
 			<script type="text/javascript">
 				var base='<%=basePath%>';
 				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+				var continues = '${continues}';
+				var reason = '${reason}';
+				var order = '${order}';
+				var items = ${items};
 			</script>
 			<div class="main-content">
 				<div class="main-content-inner">
 					<div class="breadcrumbs" id="breadcrumbs">
 						<script type="text/javascript">
 							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
-							function fastRecharge(money){
-								$('#charge_account').val(money)
-							}
-							function gotoRecharge(){
-								location.href=base+'alipay/index.html?amount='+$('#charge_account').val();
-							}
 						</script>
 						<ul class="breadcrumb">
 							<li>
 								<strong>当前位置：</strong>
 								<i class="ace-icon fa fa-home home-icon"></i>
-								<a href="../profile/index.html"><strong>个人中心</strong></a>
+								<a href="<%=basePath %>profile/index.html"><strong>个人中心</strong></a>
 							</li>
 							<li class="active">
 								<i class="ace-icon fa fa-cash"></i>
@@ -99,39 +99,52 @@ String authUser = (String)request.getAttribute("user");
 							</div>
 							<div class="col-xs-12">
 								<div class="row"  id="step-2-div" style="display: block;">
-									<form id="user_pay_form" action="<%=basePath%>alipay/pay.html" method="get">
+									<form id="user_pay_form" action="<%=basePath%>profile/order/pay.html" method="get">
 									<div class="col-sm-10 col-sm-offset-1">
 										<div id="head">
 											<div class="hr hr12 dotted"></div>
 										</div>
 										<div class="form-group">
-											<label class="col-sm-2 control-label no-padding-right" for="form-input-readonly"><b>充值订单号：</b> </label>
+											<label class="col-sm-2 control-label no-padding-right" for="form-input-readonly"><b>订单编号：</b> </label>
 											<div class="col-sm-9">
-												<input readonly="readonly" type="text" name="sn" class="col-xs-10 col-sm-5" id="order_sn" value="${orderSn }" />
+												<input readonly="readonly" type="text" name="sn" class="col-xs-10 col-sm-5" id="order_sn" value="${order.sn }" />
 											</div>
 											<br><br>
 										</div>
 										<div class="form-group">
 											<label class="col-sm-2 control-label no-padding-right" for="form-input-readonly"><b>订单名称：</b> </label>
 											<div class="col-sm-9">
-												<input readonly="readonly" type="text" name="subject" class="col-xs-10 col-sm-5" id="order_subject" value="${orderName }" />
+												<input readonly="readonly" type="text" name="subject" class="col-xs-10 col-sm-5" id="order_subject" value="${order.name }" />
 											</div>
 											<br><br>
 										</div>
 										<div class="form-group">
 											<label class="col-sm-2 control-label no-padding-right" for="form-input-readonly"><b>付款金额： </b></label>
 											<div class="col-sm-9">
-												<input readonly="readonly" type="text" name="money" class="col-xs-10 col-sm-5" id="order_fee" value="${orderMoney }" />
+												<input readonly="readonly" type="text" name="money" class="col-xs-10 col-sm-5" id="order_fee" value="${order.total }" />
 											</div>
 										<br><br>
 										</div>
 										<div class="form-group">
 											<label class="col-sm-2 control-label no-padding-right" for="form-input-readonly"><b>订单描述：</b> </label>
 											<div class="col-sm-9">
-												<input readonly="readonly" type="text" name="body" class="col-xs-10 col-sm-5" id="order_desc" value="牛股会用户充值订单" />
+												<input readonly="readonly" type="text" name="body" class="col-xs-10 col-sm-5" id="order_desc" value="${order.desp}" />
 											</div>
+										</div><br>
+										<div class="space-10"></div>
+										<div>
+											<table id="item_list"></table>
 										</div>
 										<div class="space-10"></div>
+										<div >
+											<label class="red" style="font-size: 17px"><strong>请选择支付方式 :</strong></label>
+											<input id="pay_category" name="pay_category" type="radio" value="TENPAY" class="ace" checked="checked" />
+											<span class="lbl"> <b>&nbsp;</b></span>
+											<img alt="财付通" src="<%=basePath%>static/images/tenpay.png">
+<!-- 											<input id="pay_category" name="pay_category" type="radio" value="ALIPAY" class="ace" /> -->
+<!-- 											<span class="lbl"> <b>&nbsp;</b></span> -->
+<%-- 											<img alt="支付宝" src="<%=basePath%>static/images/alipay.png"> --%>
+										</div>
 									</div>
 									</form>
 									<div class="space-10"></div>

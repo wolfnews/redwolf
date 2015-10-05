@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.hoteam.wolf.common.GridBean;
-import com.hoteam.wolf.domain.Message;
+import com.hoteam.wolf.domain.Comment;
 import com.hoteam.wolf.jdbc.ConditionDef;
 import com.hoteam.wolf.jdbc.Conditions;
 import com.hoteam.wolf.jdbc.PagingUtils;
@@ -28,17 +28,17 @@ import com.hoteam.wolf.jdbc.utils.Orders;
 public class MessageDao extends BaseDao {
 	private static final Logger logger = LoggerFactory.getLogger(MessageDao.class);
 
-	public Message save(final Message message) throws Exception {
+	public Comment save(final Comment message) throws Exception {
 		message.prePersist();
 		saveWithPk(message);
 		return message;
 	}
 
-	public Message load(Long id) {
+	public Comment load(Long id) {
 		Map<String, Object> paramMap = new HashMap<String, Object>(1);
 		paramMap.put("id", id);
 		try {
-			return (Message) this.baseQueryForEntity(Message.class, Conditions.loadConditiion, paramMap);
+			return (Comment) this.baseQueryForEntity(Comment.class, Conditions.loadConditiion, paramMap);
 		} catch (Exception e) {
 			logger.error("Load Message by id exception:", e);
 			return null;
@@ -46,17 +46,17 @@ public class MessageDao extends BaseDao {
 	}
 
 
-	public void delete(Message message) {
+	public void delete(Comment message) {
 		this.baseDelete(message);
 	}
 
 	public void delete(Long id) {
-		Message message = new Message();
+		Comment message = new Comment();
 		message.setId(id);
 		this.baseDelete(message);
 	}
 
-	public GridBean pagination(Message message, int pageNum, int pageSize) throws Exception {
+	public GridBean pagination(Comment message, int pageNum, int pageSize) throws Exception {
 		List<Object[]> conditionMetaList = new ArrayList<Object[]>();
 		Map<String, Object> paramMap = PagingUtils.initPage(pageNum, pageSize);
 		if (null != message) {
@@ -76,16 +76,16 @@ public class MessageDao extends BaseDao {
 			conMetaArray[i] = conditionMetaList.get(i);
 		}
 		ConditionDef pageConditiion = new ConditionDef(conMetaArray);
-		List<Map<String, Object>> metaList = baseQueryForList(Message.class, pageConditiion, paramMap,
+		List<Map<String, Object>> metaList = baseQueryForList(Comment.class, pageConditiion, paramMap,
 				Orders.simpleCreateOrder(ORDER.DESC));
-		List<Message> list = new ArrayList<Message>();
+		List<Comment> list = new ArrayList<Comment>();
 		if (null != metaList && !metaList.isEmpty()) {
 			for (Map<String, Object> meta : metaList) {
-				list.add((Message) SQLUtils.coverMapToBean(meta, Message.class));
+				list.add((Comment) SQLUtils.coverMapToBean(meta, Comment.class));
 			}
 		}
 		paramMap.remove(PagingUtils.IS_PAGING);
-		int records = listCount(Message.class, pageConditiion, paramMap).intValue();
+		int records = listCount(Comment.class, pageConditiion, paramMap).intValue();
 		int totalPages = records % pageSize == 0 ? records / pageSize : records / pageSize + 1;
 		return new GridBean(pageNum, totalPages, records, list);
 	}

@@ -51,6 +51,17 @@ public class OrderDao extends BaseDao {
 		}
 	}
 
+	public Order load(String sn){
+		Map<String, Object> paramMap = new HashMap<String, Object>(1);
+		paramMap.put("sn", sn);
+		try {
+			return (Order) this.baseQueryForEntity(Order.class,
+					Conditions.simpleCondition("SN", "sn"), paramMap);
+		} catch (Exception e) {
+			logger.error("load order by sn db exception:",e);
+			return null;
+		}
+	}
 	public void delete(Order order) {
 		this.baseDelete(order);
 	}
@@ -66,7 +77,7 @@ public class OrderDao extends BaseDao {
 		Map<String, Object> paramMap = PagingUtils.initPage(pageNum, pageSize);
 		if (null != order) {
 			if (null != order.getUserId()) {
-				Object[] item = { "USER = :user" };
+				Object[] item = { "USER_ID = :user" };
 				conditionMetaList.add(item);
 				paramMap.put("user", order.getUserId());
 			}

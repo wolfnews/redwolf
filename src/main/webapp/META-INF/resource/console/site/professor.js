@@ -70,13 +70,21 @@ function subProfessor(professor){
 
 //关注讲师
 function rssProfessor(professor){
-	$.post(base+'profile/user/rssProf',{professorId:professor},function(response){
+	$.get(base+'profile/user/isLogin',{},function(response){
 		if(response.success){
-			showMessage("关注成功！",function(){
-				location.href=base+'profile/professor.html';
+			$.post(base+'profile/user/rssProf',{professorId:professor},function(response){
+				if(response.success){
+					showMessage("关注成功！",function(){
+						location.href=base+'profile/professor.html';
+					});
+				}else{
+					showMessage("关注失败！");
+				}
 			});
 		}else{
-			showMessage("关注失败！");
+			showMessage("您还没有登录！请先登录",function(){
+				location.href=base+'profile/login.html';
+			});
 		}
 	});
 }

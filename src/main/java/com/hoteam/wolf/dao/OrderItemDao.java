@@ -1,17 +1,20 @@
 package com.hoteam.wolf.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.hoteam.wolf.domain.News;
+import com.hoteam.wolf.domain.OrderItem;
 import com.hoteam.wolf.jdbc.Conditions;
+import com.hoteam.wolf.jdbc.SQLUtils;
 
 /**
- * 文章数据处理层
+ * 订单商品关系数据处理层
  * 
  * @author mingwei.dmw
  *
@@ -20,37 +23,51 @@ import com.hoteam.wolf.jdbc.Conditions;
 public class OrderItemDao extends BaseDao {
 	private static final Logger logger = LoggerFactory.getLogger(OrderItemDao.class);
 
-	public News save(final News news) throws Exception {
-		news.prePersist();
-		saveWithPk(news);
-		return news;
+	public OrderItem save(final OrderItem orderItem) throws Exception {
+		orderItem.prePersist();
+		saveWithPk(orderItem);
+		return orderItem;
 	}
 
-	public News update(final News news) {
-		news.preUpdate();
-		baseSaveUpdate(news);
-		return news;
+	public OrderItem update(final OrderItem orderItem) {
+		orderItem.preUpdate();
+		baseSaveUpdate(orderItem);
+		return orderItem;
 	}
 
-	public News load(Long id) {
+	public OrderItem load(Long id) {
 		Map<String, Object> paramMap = new HashMap<String, Object>(1);
 		paramMap.put("id", id);
 		try {
-			return (News) this.baseQueryForEntity(News.class, Conditions.loadConditiion, paramMap);
+			return (OrderItem) this.baseQueryForEntity(OrderItem.class, Conditions.loadConditiion, paramMap);
 		} catch (Exception e) {
-			logger.error("Load news by id exception:", e);
+			logger.error("Load orderItem by id exception:", e);
 			return null;
 		}
 	}
 
-	public void delete(News news) {
-		this.baseDelete(news);
+	public List<OrderItem> loadByOrder(Long order) throws Exception{
+		String sql = "select order_item.id,item.name,order_item.price,order_item.amount from order_item inner join item on order_item.order_id=:order and order_item.item_id = item.id";
+		Map<String,Object> param = new HashMap<String,Object>();
+		param.put("order", order);
+		List<Map<String,Object>> metaList = this.namedParameterJdbcTemplate.queryForList(sql, param);
+		List<OrderItem> items = new ArrayList<OrderItem>();
+		if (null != metaList && !metaList.isEmpty()) {
+			for (Map<String, Object> meta : metaList) {
+				OrderItem entity = (OrderItem) SQLUtils.coverMapToBean(meta, OrderItem.class);
+				items.add(entity);
+			}
+		}
+		return items;
+	}
+	public void delete(OrderItem orderItem) {
+		this.baseDelete(orderItem);
 	}
 
 	public void delete(Long id) {
-		News news = new News();
-		news.setId(id);
-		this.baseDelete(news);
+		OrderItem orderItem = new OrderItem();
+		orderItem.setId(id);
+		this.baseDelete(orderItem);
 	}
 	
 	public void deleteByOrder(Long order){

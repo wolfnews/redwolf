@@ -80,7 +80,7 @@ jQuery(function($) {
 		data = {};
 		$.post(url,data,function(response){
 			if(response.rows.length>0){
-				location.href = base+'profile/settle.html'
+				location.href = base+'profile/order/settle.html'
 			}else{
 				showMessage("您的购物车是空的，再逛逛吧？",function(){
 					location.href=base+'mall.html';

@@ -79,7 +79,7 @@ public class SubscribeGroupDao extends BaseDao {
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		if (null != group) {
 			if (null != group.getProfessorId()) {
-				Object[] item = { "professor_id = :professor" };
+				Object[] item = { "professor_id =:professor" };
 				conditionMetaList.add(item);
 				paramMap.put("professor", group.getProfessorId());
 			}

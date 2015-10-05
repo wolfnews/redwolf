@@ -96,12 +96,12 @@ String authUser = (String)request.getAttribute("user");
 					                    }  
 					                ],  
 					                series: [  
-					                    {  
-					                        'name': 'PV',  
-					                        'type': 'line',  
-					                        'data': pv,
-					                        'smooth':true
-					                    },
+// 					                    {  
+// 					                        'name': 'PV',  
+// 					                        'type': 'line',  
+// 					                        'data': pv,
+// 					                        'smooth':true
+// 					                    },
 					                    {  
 					                        'name': 'UV',  
 					                        'type': 'line',  
@@ -112,6 +112,32 @@ String authUser = (String)request.getAttribute("user");
 					            };  
 					            echart.setOption(option);  
 					            echart.hideLoading();  
+						        var lastData = 11;
+						        var axisData;
+	// 					        clearInterval(timeTicket);
+						        timeTicket = setInterval(function (){
+						            lastData += Math.random() * ((Math.round(Math.random() * 10) % 2) == 0 ? 1 : -1);
+						            lastData = lastData.toFixed(1) - 0;
+						            axisData = (new Date()).toLocaleTimeString().replace(/^\D*/,'');
+						            
+						            // 动态数据接口 addData
+						            echart.addData([
+// 						                [
+// 						                    0,        // 系列索引
+// 						                    Math.round(Math.random() * 1000), // 新增数据
+// 						                    true,     // 新增数据是否从队列头部插入
+// 						                    false     // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
+// 						                ],
+						                [
+						                    0,        // 系列索引
+						                    Math.round(Math.random() * 1000), // 新增数据
+						                    false,    // 新增数据是否从队列头部插入
+						                    false,
+// 						                    false,    // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
+// 						                    axisData  // 坐标轴标签
+						                ]
+						            ]);
+						        }, 1000);
 					        }  
 					    );
 					});

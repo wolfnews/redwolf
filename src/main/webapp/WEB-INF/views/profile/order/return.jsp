@@ -10,42 +10,34 @@ String authUser = (String)request.getAttribute("user");
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta charset="utf-8" />
-		<title>牛股会-个人中心</title>
+		<title>牛股会-支付结果</title>
 		<meta name="description" content="overview &amp; stats" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 		<link rel="stylesheet" href="<%=basePath%>static/ace/assets/css/bootstrap.css" />
 		<link rel="stylesheet" href="<%=basePath%>static/ace/assets/css/font-awesome.css" />
-		<link rel="stylesheet" href="<%=basePath%>static/ace/assets/css/ui.jqgrid.css" />
 		<link rel="stylesheet" href="<%=basePath%>static/ace/assets/css/ace-fonts.css" />
+		<link rel="stylesheet" href="<%=basePath%>static/css/alipay.css" />
 		<link rel="stylesheet" href="<%=basePath%>static/ace/assets/css/ace.css" class="ace-main-stylesheet" id="main-ace-style" />
 		<script src="<%=basePath%>static/ace/assets/js/jquery.js"></script>
 		<script src="<%=basePath%>static/ace/assets/js/ace-extra.js"></script>
-		<script src="<%=basePath%>static/ace/assets/js/bootbox.js"></script>
 		<script src="<%=basePath%>static/ace/assets/js/bootstrap.js"></script>
 		<script src="<%=basePath%>static/ace/assets/js/ace/ace.js"></script>
-		<script	src="<%=basePath%>static/ace/assets/js/jqGrid/jquery.jqGrid.src.js"></script>
-		<script	src="<%=basePath%>static/ace/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
-		<script src="<%=basePath%>static/console/base.js"></script>
-		<script src="<%=basePath%>static/console/profile/payOrder.js"></script>
 	</head>
 	<body class="no-skin">
-		<jsp:include page="header.jsp"></jsp:include>
+		<jsp:include page="../header.jsp"></jsp:include>
 		<div class="main-container" id="main-container">
 			<script type="text/javascript">
 				var base='<%=basePath%>';
 				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
-				var type='${type}';
 				$(document).ready(function(){
-					if("unfinish" == type){
-						$('#current_label').text("已完成订单");
-					}else if("finish" == type){
-						$('#current_label').text("未完成订单");
+					var success = ${success};
+					if(success){
+						$('#pay_result_div').text('<label><b>支付成功!</b></label>');
 					}else{
-						$('#current_label').text("全部订单");
+						$('#pay_result_div').text('<label><b>支付异常!</b></label>');
 					}
-				})
+				});
 			</script>
-			<div id="sidebar" class="sidebar responsive"></div>
 			<div class="main-content">
 				<div class="main-content-inner">
 					<div class="breadcrumbs" id="breadcrumbs">
@@ -56,27 +48,31 @@ String authUser = (String)request.getAttribute("user");
 							<li>
 								<strong>当前位置：</strong>
 								<i class="ace-icon fa fa-home home-icon"></i>
-								<a href="index.html"><strong>个人中心</strong></a>
+								<a href="../profile/index.html"><strong>个人中心</strong></a>
 							</li>
-							<li class="active bold">
-								<i class="ace-icon fa fa-user"></i>
-								<span id="current_label"></span>
+							<li class="active">
+								<i class="ace-icon fa fa-cash"></i>
+								<span><strong>支付结果</strong></span>
 							</li>
 						</ul>
 					</div>
 					<div class="page-content">
 						<div class="row">
 							<div class="col-xs-12">
-								<div>
-									<table id="profile_order_list"></table>
-									<div id="profile_order_page"></div>
+								<div class="hr hr12 dotted"></div>
+								<div class="space-10"></div>
+								<div class="col-sm-10 col-sm-offset-1 well">
+									<div class="text-center" id="waiting_return_div">
+										<div id="pay_result_div"></div>
+										<i class="ace-icon fa fa-spinner fa-spin red bigger-275"></i>
+										<span class="bigger-175">订单处理中...</span>
+									</div>
 								</div>
-							</div><!-- /.col -->
-						</div><!-- /.row -->
-					</div><!-- /.page-content -->
+							</div>
+						</div>
+					</div>
 				</div>
-				<jsp:include page="../foot.jsp"></jsp:include>
-			</div><!-- /.main-content -->
-		</div><!-- /.main-container -->
+			</div>
+		</div>
 	</body>
 </html>

@@ -22,7 +22,9 @@ String authUser = (String)request.getAttribute("user");
 		<script src="<%=basePath%>static/ace/assets/js/jquery.js"></script>
 		<script src="<%=basePath%>static/ace/assets/js/bootstrap.js"></script>
 		<script src="<%=basePath%>static/ace/assets/js/ace/ace.js"></script>
+		<script src="<%=basePath%>static/ace/assets/js/bootbox.js"></script>
 		<script src="<%=basePath%>static/ace/jquery.twbsPagination.js"></script>
+		<script src="<%=basePath%>static/console/base.js"></script>
 		<script src="<%=basePath%>static/console/site/professor.js"></script>
 		<script type="text/javascript" src="<%=basePath%>static/js/nav.js"></script>
 		<script type="text/javascript" src="<%=basePath%>static/js/index.js"></script>

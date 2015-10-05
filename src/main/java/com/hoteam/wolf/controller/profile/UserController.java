@@ -133,6 +133,16 @@ public class UserController {
 		}
 	}
 
+	@RequestMapping("/isLogin")
+	@ResponseBody
+	public Result isLogin(HttpSession session){
+		Long userId = (Long) session.getAttribute(Constants.USER_TOKEN.toString());
+		if(null == userId){
+			return new Result(true, "not login");
+		}else{
+			return new Result(true, "login");
+		}
+	}
 	private void transferResult(Result result) {
 		String message = "";
 		switch (ResultMessage.valueOf(result.getMessage())) {

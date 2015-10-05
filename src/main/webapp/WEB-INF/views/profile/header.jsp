@@ -17,7 +17,7 @@ if(null == account){
 			<a href="<%=basePath%>index.html" class="navbar-brand"> 
 				<small>
 					<i class="fa fa-cloud"></i>
-					<strong>欢迎来到牛股会个人中心</strong>
+					牛股会个人中心
 				</small>
 			</a>
 		</div>
@@ -116,7 +116,7 @@ if(null == account){
 						<li class="dropdown-content">
 							<ul class="dropdown-menu dropdown-navbar">
 								<li>
-									<a href="<%=basePath%>profile/payOrder.html?type=all">
+									<a href="<%=basePath%>profile/order.html?type=all">
 										<div class="clearfix">
 											<span class="pull-left">
 												<i class="btn btn-xs no-hover btn-danger fa fa-credit-card"></i>
@@ -126,7 +126,7 @@ if(null == account){
 									</a>
 								</li>
 								<li>
-									<a href="<%=basePath%>profile/payOrder.html?type=unfinish">
+									<a href="<%=basePath%>profile/order.html?type=unfinish">
 										<div class="clearfix">
 											<span class="pull-left">
 												<i class="btn btn-xs no-hover btn-danger fa fa-credit-card"></i>
@@ -136,7 +136,7 @@ if(null == account){
 									</a>
 								</li>
 								<li>
-									<a href="<%=basePath%>profile/payOrder.html?type=finish">
+									<a href="<%=basePath%>profile/order.html?type=finish">
 										<div class="clearfix">
 											<span class="pull-left">
 												<i class="btn btn-xs no-hover btn-danger fa fa-credit-card"></i>

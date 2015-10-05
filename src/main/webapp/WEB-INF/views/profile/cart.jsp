@@ -67,7 +67,7 @@ String authUser = (String)request.getAttribute("user");
 							<i class='ace-icon fa fa-shopping-cart bigger-128'></i>
 							<strong> 再逛逛 </strong></button>
 							<button class="btn btn-danger" id="goto_settle_btn">
-							<i class='ace-icon fa fa-shopping-cart bigger-128'></i>
+							<i class='ace-icon fa fa-credit-card bigger-128'></i>
 							<strong> 去结算 </strong></button>
 						</div>
 					</div>

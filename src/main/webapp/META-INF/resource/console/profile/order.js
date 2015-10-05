@@ -14,16 +14,16 @@ jQuery(function($) {
 		}
     })
 	jQuery(grid_selector).jqGrid({
-		url : base+'profile/recharge/pagination?type='+type,
+		url : base+'profile/order/list?type='+type,
 		datatype : "json",
 		height : '100%',
 		autowidth: true,
-		colNames : ['订单编号','订单描述', '金额金额（￥、元）', '订单状态','支付方式','订单日期','快捷操作'],
+		colNames : ['订单编号','订单描述', '金额金额（￥、元）', '订单状态','订单日期','快捷操作'],
 		colModel : [ 
 			{name : 'sn',index : 'sn',width : 15},
-			{name : 'content',index : 'content',width : 25},
-			{name : 'money',index : 'money',width : 10},
-			{name : 'paid',index : 'paid',width : 10,
+			{name : 'name',index : 'name',width : 25},
+			{name : 'total',index : 'total',width : 10},
+			{name : 'paid',index : 'paid',width : 10, 
 				formatter : function(cellvalue, options,rowObject) {
 					if(cellvalue){
 						return '<b>已完成</b>';
@@ -32,23 +32,11 @@ jQuery(function($) {
 					}
 				}
 			},
-			{name : 'category',index : 'category',width : 10,
-				formatter:function(cellvalue, options,rowObject){
-					switch (cellvalue) {
-					case 'ALIPAY':
-						return '<b>支付宝</b>';
-					case 'TENPAY':
-						return '<b>财付通</b>';
-					default:
-						return '<b>未知方式</b>';
-					}
-				}},
 			{name : 'gmtCreate',index : 'gmtCreate',width : 10},
-			{name : 'paid',	index : 'paid',	width : 120,fixed : true,sortable:false,
-				formatter : function(cellvalue, options,rowObject) {
-					return "<button class=\"btn btn-xs btn-danger\" onclick=\"toPay('"
-							+rowObject.sn+ "','"+rowObject.money+ "','"+rowObject.content+ "','"+rowObject.category+ "')\"><b>支付</b></button>&nbsp;&nbsp;&nbsp;"
-							+"<button class=\"btn btn-xs btn-danger\" onclick=\"removeOrder('"+rowObject.id+ "')\"><b>删除</b></button>";
+			{name : 'state',	index : 'state',	width : 120,fixed : true,align:'center',
+				formatter : function(cell, options,row) {
+					return "<label class=\"btn btn-xs btn-danger\" onclick=\"toSettle('"+row.id+ "')\"><i class=\"ace-icon fa fa-credit-card\"></i></label>&nbsp;&nbsp;&nbsp;"
+							+"<label class=\"btn btn-xs btn-danger\" tip='删除订单' onclick=\"removeOrder('"+row.id+ "')\"><i class=\"ace-icon fa fa-trash\"></i></label>";
 				}
 		    }
 		],
@@ -115,22 +103,20 @@ jQuery(function($) {
 		});
 	}
 });
-function toPay(sn,amount,content,way){
-	location.href=base+'alipay/index.html?sn='+sn+"&amount="+amount+"&content="+content+"&way="+way;
+function toSettle(id){
+	location.href=base+'profile/order/detail/'+id+'.html';
 }
 
 function removeOrder(id){
-	url = base+"profile/recharge/delOrder";
-	data = {oid:id};
-	bootbox.confirm("<b>你确定要取消此次充值?</b>", function(result) {
+	url = base+"profile/order/remove/"+id;
+	data = {};
+	bootbox.confirm("你确定要取消此订单？", function(result) {
 		if(result) {
 			$.post(url,data,function(response){
 				if(response.success){
-					showMessage("操作成功！",function(){
-						$(grid_selector).trigger("reloadGrid");
-					});
+					$(grid_selector).trigger("reloadGrid");
 				}else{
-					showMessage("操作成功！");
+					showMessage(response.message);
 				}
 			});
 		}

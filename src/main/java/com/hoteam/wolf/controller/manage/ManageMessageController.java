@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hoteam.wolf.common.GridBean;
 import com.hoteam.wolf.common.Result;
-import com.hoteam.wolf.domain.Message;
+import com.hoteam.wolf.domain.Comment;
 import com.hoteam.wolf.service.MessageService;
 
 @Controller
@@ -22,7 +22,7 @@ public class ManageMessageController {
 	@ResponseBody
 	public GridBean list(@RequestParam(value = "page", required = true) int page,
 			@RequestParam(value = "rows", required = true) int rows){
-		return this.messageService.list(new Message(), page, rows);
+		return this.messageService.list(new Comment(), page, rows);
 	}
 	
 	@RequestMapping("/remove/{id}")

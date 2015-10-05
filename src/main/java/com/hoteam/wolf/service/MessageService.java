@@ -1,7 +1,7 @@
 package com.hoteam.wolf.service;
 
 import com.hoteam.wolf.common.GridBean;
-import com.hoteam.wolf.domain.Message;
+import com.hoteam.wolf.domain.Comment;
 
 public interface MessageService {
 
@@ -9,13 +9,13 @@ public interface MessageService {
 	 * @param message
 	 * @return
 	 */
-	public boolean saveMessage(Message message);
+	public boolean saveMessage(Comment message);
 	
 	/**获取消息详细情况
 	 * @param id
 	 * @return
 	 */
-	public Message load(Long id);
+	public Comment load(Long id);
 	
 	/**删除消息
 	 * @param id
@@ -28,5 +28,5 @@ public interface MessageService {
 	 * @param pageSize 页面大小
 	 * @return
 	 */
-	public GridBean list(Message message,int pageNum,int pageSize);
+	public GridBean list(Comment message,int pageNum,int pageSize);
 }

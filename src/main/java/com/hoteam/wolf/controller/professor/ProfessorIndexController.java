@@ -16,7 +16,7 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.hoteam.wolf.common.Constants;
 import com.hoteam.wolf.common.vo.ProfessorStatBean;
 import com.hoteam.wolf.domain.Box;
-import com.hoteam.wolf.domain.Message;
+import com.hoteam.wolf.domain.Comment;
 import com.hoteam.wolf.domain.Professor;
 import com.hoteam.wolf.domain.SubscribeGroup;
 import com.hoteam.wolf.service.BoxService;
@@ -112,7 +112,7 @@ public class ProfessorIndexController {
 	@RequestMapping("/message.html")
 	public ModelAndView message(HttpSession session,String category){
 		Long user = (Long)session.getAttribute(Constants.PROFESSOR_TOKEN.name());
-		Message message = new Message();
+		Comment message = new Comment();
 		if("send".equalsIgnoreCase(category)){
 			message.setSenderId(user);
 		}else if("receive".equalsIgnoreCase(category)){
