@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -27,7 +28,7 @@ public class ResponseHandler {
 	private String key;
 
 	/** 应答的参数 */
-	private SortedMap parameters;
+	private SortedMap<String, String> parameters;
 
 	/** debug信息 */
 	private String debugInfo;
@@ -49,13 +50,13 @@ public class ResponseHandler {
 		this.response = response;
 
 		this.key = "";
-		this.parameters = new TreeMap();
+		this.parameters = new TreeMap<String, String>();
 		this.debugInfo = "";
 
 		this.uriEncoding = "";
 
-		Map m = this.request.getParameterMap();
-		Iterator it = m.keySet().iterator();
+		Map<?, ?> m = this.request.getParameterMap();
+		Iterator<?> it = m.keySet().iterator();
 		while (it.hasNext()) {
 			String k = (String) it.next();
 			String v = ((String[]) m.get(k))[0];
@@ -111,7 +112,7 @@ public class ResponseHandler {
 	 * 
 	 * @return SortedMap
 	 */
-	public SortedMap getAllParameters() {
+	public SortedMap<String, String> getAllParameters() {
 		return this.parameters;
 	}
 
@@ -122,10 +123,10 @@ public class ResponseHandler {
 	 */
 	public boolean isTenpaySign() {
 		StringBuffer sb = new StringBuffer();
-		Set es = this.parameters.entrySet();
-		Iterator it = es.iterator();
+		Set<?> es = this.parameters.entrySet();
+		Iterator<?> it = es.iterator();
 		while (it.hasNext()) {
-			Map.Entry entry = (Map.Entry) it.next();
+			Entry<?, ?> entry = (Entry<?, ?>) it.next();
 			String k = (String) entry.getKey();
 			String v = (String) entry.getValue();
 			if (!"sign".equals(k) && null != v && !"".equals(v)) {
@@ -186,7 +187,7 @@ public class ResponseHandler {
 
 			// 编码转换
 			String enc = TenpayUtil.getCharacterEncoding(request, response);
-			Iterator it = this.parameters.keySet().iterator();
+			Iterator<String> it = this.parameters.keySet().iterator();
 			while (it.hasNext()) {
 				String k = (String) it.next();
 				String v = this.getParameter(k);

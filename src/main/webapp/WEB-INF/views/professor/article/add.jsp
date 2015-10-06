@@ -74,8 +74,7 @@ String authUser = (String)request.getAttribute("user");
 					<div class="page-content">
 						<div class="row">
 							<div class="col-xs-12">
-							<form class="form-horizontal" role="form">
-								<div class="form-group">
+								<form class="form-horizontal" role="form">
 									<div class="form-group">
 										<label class="col-sm-2 control-label no-padding-right" for="form-field-1-1"><strong>锦囊标题</strong> </label>
 										<div class="col-sm-9">
@@ -109,6 +108,7 @@ String authUser = (String)request.getAttribute("user");
 											<div class="wysiwyg-editor" id="professor_addnotice_charge_editor"></div>
 										</div>
 									</div>
+								</form>
 									<div class="clearfix form-actions">
 										<div class="col-md-offset-3 col-md-9">
 											<button class="btn btn-info" type="button" onclick="addNotice()">
@@ -123,8 +123,6 @@ String authUser = (String)request.getAttribute("user");
 											</button>
 										</div>
 									</div>
-								</div>
-							</form>
 							</div>
 						</div>
 					</div>

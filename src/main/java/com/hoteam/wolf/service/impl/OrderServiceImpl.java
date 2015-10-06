@@ -14,6 +14,7 @@ import com.hoteam.wolf.common.EntityResult;
 import com.hoteam.wolf.common.GridBean;
 import com.hoteam.wolf.common.Result;
 import com.hoteam.wolf.common.enums.ItemCategory;
+import com.hoteam.wolf.common.enums.OrderStatus;
 import com.hoteam.wolf.common.vo.OrderBean;
 import com.hoteam.wolf.dao.CartDao;
 import com.hoteam.wolf.dao.ItemDao;
@@ -82,79 +83,81 @@ public class OrderServiceImpl implements OrderService {
 		if (null == order) {
 			return new Result(false, "订单不存在");
 		}
+		if (!order.getState().equals(OrderStatus.PAID.name())) {
+			return new Result(false, "当前订单不满足处理条件");
+		}
 		try {
 			Long user = order.getUserId();
 			List<OrderItem> items = orderItemDao.loadByOrder(order.getId());
 			if (null == items || items.isEmpty()) {
 				logger.warn("订单下没有商品");
 				return new Result(true, "订单下没有商品");
-			} else {
-				for (OrderItem orderItem : items) {// 目前的处理逻辑是按照当前的商品价值进行处理。
-					// 存在的问题：如果用户在下单和支付完成期间，商品的实际价值发生变化，如充值卡优惠额度增大，
-					// 服务卡实际时间变长，那么将会按照当前的实际商品价值进行处理，而不是下单时的商品价值。该
-					// 处理逻辑后续再进行修改
-					// TODO
-					Item item = itemDao.load(orderItem.getItemId());
-					if (null == item) {
-						logger.warn("商品ID【" + orderItem.getItemId() + "】" + orderItem.getName() + "不存在");
+			}
+			for (OrderItem orderItem : items) {// 目前的处理逻辑是按照当前的商品价值进行处理。
+				// 存在的问题：如果用户在下单和支付完成期间，商品的实际价值发生变化，如充值卡优惠额度增大，
+				// 服务卡实际时间变长，那么将会按照当前的实际商品价值进行处理，而不是下单时的商品价值。该
+				// 处理逻辑后续再进行修改
+				// TODO
+				Item item = itemDao.load(orderItem.getItemId());
+				if (null == item) {
+					logger.warn("商品ID【" + orderItem.getItemId() + "】" + orderItem.getName() + "不存在");
+					throw new Exception("商品ID【" + orderItem.getItemId() + "】" + orderItem.getName() + "不存在");
+				}
+				if (ItemCategory.CREDITCARD.name().equalsIgnoreCase(item.getCategory())) {
+					UserAccount userAccount = this.userAccountDao.load(user);
+					long finalCoins = userAccount.getCoin() + item.getValue();
+					userAccount.setCoin(finalCoins);
+					userAccountDao.update(userAccount);
+					logger.info("用户充值完毕");
+				} else if (ItemCategory.SERVICEBAG.name().equalsIgnoreCase(item.getCategory())) {
+					SubscribeGroup group = new SubscribeGroup();
+					group.setProfessorId(item.getExtend());
+					List<SubscribeGroup> groups = subscribeGroupDao.queryForList(group);
+					if (null == groups || groups.isEmpty()) {
+						logger.warn("讲师没有订阅分组");
 						continue;
 					}
-					if (ItemCategory.CREDITCARD.name().equalsIgnoreCase(item.getCategory())) {
-						UserAccount userAccount = this.userAccountDao.load(user);
-						long finalCoins = userAccount.getCoin() + item.getValue();
-						userAccount.setCoin(finalCoins);
-						userAccountDao.update(userAccount);
-						logger.info("用户充值完毕");
-					} else if (ItemCategory.SERVICEBAG.name().equalsIgnoreCase(item.getCategory())) {
-						SubscribeGroup group = new SubscribeGroup();
-						group.setProfessorId(item.getExtend());
-						List<SubscribeGroup> groups = subscribeGroupDao.queryForList(group);
-						if (null == groups || groups.isEmpty()) {
-							logger.warn("讲师没有订阅分组");
-							continue;
+					Long groupId = groups.get(0).getId();
+					boolean userSubsExist = this.userSubscribeDao.userSubsExist(groupId, item.getExtend(), user);
+					if (userSubsExist) {// 当前用户曾经订阅过该讲师
+						logger.info("当前用户曾订阅过该讲师");
+						UserSubscribe userSubscribe = this.userSubscribeDao.load(item.getExtend(), user, groupId);
+						Date expireTime = userSubscribe.getExpireTime();
+						if (null == expireTime || userSubscribe.isExpired()) {// 没有超时时间或者已经超时的，起始时间从当前时间开始计算
+							expireTime = new Date();
 						}
-						Long groupId = groups.get(0).getId();
-						boolean userSubsExist = this.userSubscribeDao.userSubsExist(groupId, item.getExtend(), user);
-						if (userSubsExist) {// 当前用户曾经订阅过该讲师
-							logger.info("当前用户曾订阅过该讲师");
-							UserSubscribe userSubscribe = this.userSubscribeDao.load(item.getExtend(), user, groupId);
-							Date expireTime = userSubscribe.getExpireTime();
-							if (null == expireTime || userSubscribe.isExpired()) {// 没有超时时间或者已经超时的，起始时间从当前时间开始计算
-								expireTime = new Date();
-							}
-							Calendar calendar = Calendar.getInstance();
-							calendar.setTime(expireTime);
-							calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) + item.getValue());
-							userSubscribe.setExpireTime(calendar.getTime());
-							if (userSubscribe.isExpired()) {
-								userSubscribe.setExpired(false);
-							}
-							this.userSubscribeDao.update(userSubscribe);
-						} else {
-							logger.info("the user fisrt subs the professor");
-							Calendar calendar = Calendar.getInstance();
-							calendar.setTime(new Date());
-							calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) + item.getValue());
-							UserSubscribe userSubscribe = new UserSubscribe(false, calendar.getTime(), user,
-									item.getExtend(), groupId);
-							this.userSubscribeDao.save(userSubscribe);
+						Calendar calendar = Calendar.getInstance();
+						calendar.setTime(expireTime);
+						calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) + item.getValue());
+						userSubscribe.setExpireTime(calendar.getTime());
+						if (userSubscribe.isExpired()) {
+							userSubscribe.setExpired(false);
 						}
-						SubscribeRecord subscribeRecord = new SubscribeRecord(user, item.getExtend(), item.getValue());
-						this.subscribeRecordDao.save(subscribeRecord);
-
+						this.userSubscribeDao.update(userSubscribe);
 					} else {
-						logger.warn("未知商品类型！暂时不处理！");
-						continue;
+						logger.info("the user fisrt subs the professor");
+						Calendar calendar = Calendar.getInstance();
+						calendar.setTime(new Date());
+						calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) + item.getValue());
+						UserSubscribe userSubscribe = new UserSubscribe(false, calendar.getTime(), user,
+								item.getExtend(), groupId);
+						this.userSubscribeDao.save(userSubscribe);
 					}
+					SubscribeRecord subscribeRecord = new SubscribeRecord(user, item.getExtend(), item.getValue());
+					this.subscribeRecordDao.save(subscribeRecord);
+
+				} else {
+					logger.warn("未知商品类型！暂时不处理！");
+					continue;
 				}
 			}
+			order.setState(OrderStatus.DONE.name());
+			this.orderDao.update(order);
+			return new Result(true, "处理成功！");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("process order ["+order.getSn()+"] exception:",e);
+			return new Result(false, "处理异常！");
 		}
-
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override

@@ -1,9 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+String action = request.getParameter("action");
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-String action = request.getParameter("action");
+String base = (String)session.getAttribute("base");
+if(null == base || base.isEmpty()){
+	session.setAttribute("base", basePath);
+}
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,18 +17,10 @@ String action = request.getParameter("action");
 		<title>牛股会个人平台-系统登录</title>
 		<meta name="description" content="overview &amp; stats" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-		<link rel="stylesheet" href="<%=basePath%>static/ace/assets/css/bootstrap.css" />
-		<link rel="stylesheet" href="<%=basePath%>static/ace/assets/css/font-awesome.css" />
-		<link rel="stylesheet" href="<%=basePath%>static/ace/assets/css/ace-fonts.css" />
-		<link rel="stylesheet" href="<%=basePath%>static/ace/assets/css/ace.css"/>
-		<script src="<%=basePath%>static/ace/assets/js/jquery.js"></script>
-		<script src="<%=basePath%>static/ace/assets/js/bootbox.js"></script>
-		<script src="<%=basePath%>static/ace/assets/js/bootstrap.js"></script>
-		<script src="<%=basePath%>static/ace/assets/js/ace/ace.js"></script>
-		<script src="<%=basePath%>static/console/base.js"></script>
-		<script src="<%=basePath%>static/console/profile/login.js"></script>
+		<jsp:include page="../prof_base.jsp"></jsp:include>
+		<script src="${base}static/console/profile/login.js"></script>
 		<script type="text/javascript">
-			var base='<%=basePath%>';
+			var base='${base}';
 			var action='<%=action%>';
 			jQuery(function($) {
 				if('register'==action){

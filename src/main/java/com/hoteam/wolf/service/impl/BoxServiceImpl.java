@@ -3,6 +3,8 @@ package com.hoteam.wolf.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +22,9 @@ import com.hoteam.wolf.dao.ProfessorDao;
 import com.hoteam.wolf.dao.UserSubscribeDao;
 import com.hoteam.wolf.domain.Box;
 import com.hoteam.wolf.domain.BoxVerifyRecord;
+import com.hoteam.wolf.domain.Professor;
 import com.hoteam.wolf.domain.UserSubscribe;
+import com.hoteam.wolf.message.MessageSender;
 import com.hoteam.wolf.service.BoxService;
 
 @Service("boxService")
@@ -35,12 +39,30 @@ public class BoxServiceImpl implements BoxService {
 	private BoxVerifyRecordDao boxVerifyRecordDao;
 	@Autowired
 	private ProfessorDao professorDao;
-
+	@Autowired
+	private MessageSender messageSender;
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
-	public Result addBox(Box box) throws Exception {
+	public Result addBox(Box box, HttpServletRequest request) throws Exception {
 		try {
+			Professor professor = this.professorDao.load(box.getAuthor());
+			if(professor.isNeedVerify()){
+				box.setStatus(BoxStatus.NEW_CREATED.name());
+			}else{
+				box.setStatus(BoxStatus.NORMAL.name());
+			}
 			this.boxDao.save(box);
+			if(!professor.isNeedVerify()){
+				String path = request.getContextPath();
+				String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+				StringBuffer messageBuffer = new StringBuffer();
+				messageBuffer.append("【").append(professor.getUsername())
+				.append("】刚刚发表了一个宝盒！点击<a target=\"parent\" href=\"")
+				.append(basePath).append("box/detail.html?id=").append(box.getId())
+				.append("\">这里</a>快速查看");
+				messageSender.pushMessage(messageBuffer.toString());
+				logger.info(messageBuffer.toString());
+			}
 			return new Result(true, "add box success");
 		} catch (Exception e) {
 			logger.error("add box exception:", e);
@@ -63,18 +85,30 @@ public class BoxServiceImpl implements BoxService {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
-	public Result verifyBox(Long boxId, String manager, boolean passed, String reason) throws Exception {
+	public Result verifyBox(Long boxId, String manager, boolean passed, String reason,HttpServletRequest request) throws Exception {
 		try {
 			Box box = this.boxDao.load(boxId);
 			String result = "";
 			if (passed) {
 				result = "审核通过";
-				box.setStatus(BoxStatus.NORMAL.toString());
+				box.setStatus(BoxStatus.NORMAL.name());
 			} else {
 				result = "审核拒绝";
-				box.setStatus(BoxStatus.REFUSED.toString());
+				box.setStatus(BoxStatus.REFUSED.name());
 			}
 			this.boxDao.update(box);
+			if(passed){
+				Professor professor = this.professorDao.load(box.getAuthor());
+				String path = request.getContextPath();
+				String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+				StringBuffer messageBuffer = new StringBuffer();
+				messageBuffer.append("【").append(professor.getUsername())
+				.append("】刚刚发表了一个宝盒！点击<a target=\"parent\" href=\"")
+				.append(basePath).append("box/detail.html?id=").append(box.getId())
+				.append("\">【这里】</a>快速查看");
+				messageSender.pushMessage(messageBuffer.toString());
+				logger.info(messageBuffer.toString());
+			}
 			BoxVerifyRecord record = new BoxVerifyRecord(boxId, manager, result, reason);
 			this.boxVerifyRecordDao.save(record);
 			return new Result(true, "verify box success");

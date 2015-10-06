@@ -1,10 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-String authUser = (String)request.getAttribute("user");
-%>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -13,25 +8,18 @@ String authUser = (String)request.getAttribute("user");
 		<title>牛股会-订单结算</title>
 		<meta name="description" content="overview &amp; stats" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-		<link rel="stylesheet" href="<%=basePath%>static/ace/assets/css/bootstrap.css" />
-		<link rel="stylesheet" href="<%=basePath%>static/ace/assets/css/font-awesome.css" />
-		<link rel="stylesheet" href="<%=basePath%>static/ace/assets/css/ace-fonts.css" />
-		<link rel="stylesheet" href="<%=basePath%>static/ace/assets/css/ui.jqgrid.css" />
-		<link rel="stylesheet" href="<%=basePath%>static/css/alipay.css" />
-		<link rel="stylesheet" href="<%=basePath%>static/ace/assets/css/ace.css" class="ace-main-stylesheet" id="main-ace-style" />
-		<script src="<%=basePath%>static/ace/assets/js/jquery.js"></script>
-		<script src="<%=basePath%>static/ace/assets/js/ace-extra.js"></script>
-		<script src="<%=basePath%>static/ace/assets/js/bootstrap.js"></script>
-		<script src="<%=basePath%>static/ace/assets/js/ace/ace.js"></script>
-		<script	src="<%=basePath%>static/ace/assets/js/jqGrid/jquery.jqGrid.src.js"></script>
-		<script	src="<%=basePath%>static/ace/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
-		<script src="<%=basePath%>static/console/profile/settle.js"></script>
+		<link rel="stylesheet" href="${base}static/ace/assets/css/ui.jqgrid.css" />
+		<link rel="stylesheet" href="${base}static/css/alipay.css" />
+		<jsp:include page="../../prof_base.jsp"></jsp:include>
+		<script	src="${base}static/ace/assets/js/jqGrid/jquery.jqGrid.src.js"></script>
+		<script	src="${base}static/ace/assets/js/jqGrid/i18n/grid.locale-cn.js"></script>
+		<script src="${base}static/console/profile/settle.js"></script>
 	</head>
 	<body class="no-skin">
 		<jsp:include page="../header.jsp"></jsp:include>
 		<div class="main-container" id="main-container">
 			<script type="text/javascript">
-				var base='<%=basePath%>';
+				var base='${base}';
 				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
 				var continues = '${continues}';
 				var reason = '${reason}';
@@ -48,7 +36,7 @@ String authUser = (String)request.getAttribute("user");
 							<li>
 								<strong>当前位置：</strong>
 								<i class="ace-icon fa fa-home home-icon"></i>
-								<a href="<%=basePath %>profile/index.html"><strong>个人中心</strong></a>
+								<a href="${base}profile/index.html"><strong>个人中心</strong></a>
 							</li>
 							<li class="active">
 								<i class="ace-icon fa fa-cash"></i>
@@ -99,7 +87,7 @@ String authUser = (String)request.getAttribute("user");
 							</div>
 							<div class="col-xs-12">
 								<div class="row"  id="step-2-div" style="display: block;">
-									<form id="user_pay_form" action="<%=basePath%>profile/order/pay.html" method="get">
+									<form id="user_pay_form" action="${base}profile/order/pay.html" method="get">
 									<div class="col-sm-10 col-sm-offset-1">
 										<div id="head">
 											<div class="hr hr12 dotted"></div>
@@ -107,6 +95,7 @@ String authUser = (String)request.getAttribute("user");
 										<div class="form-group">
 											<label class="col-sm-2 control-label no-padding-right" for="form-input-readonly"><b>订单编号：</b> </label>
 											<div class="col-sm-9">
+												<input type="hidden" name="id" value="${order.id }">
 												<input readonly="readonly" type="text" name="sn" class="col-xs-10 col-sm-5" id="order_sn" value="${order.sn }" />
 											</div>
 											<br><br>
@@ -140,10 +129,10 @@ String authUser = (String)request.getAttribute("user");
 											<label class="red" style="font-size: 17px"><strong>请选择支付方式 :</strong></label>
 											<input id="pay_category" name="pay_category" type="radio" value="TENPAY" class="ace" checked="checked" />
 											<span class="lbl"> <b>&nbsp;</b></span>
-											<img alt="财付通" src="<%=basePath%>static/images/tenpay.png">
+											<img alt="财付通" src="${base}static/images/tenpay.png">
 <!-- 											<input id="pay_category" name="pay_category" type="radio" value="ALIPAY" class="ace" /> -->
 <!-- 											<span class="lbl"> <b>&nbsp;</b></span> -->
-<%-- 											<img alt="支付宝" src="<%=basePath%>static/images/alipay.png"> --%>
+<%-- 											<img alt="支付宝" src="${base}static/images/alipay.png"> --%>
 										</div>
 									</div>
 									</form>

@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Iterator;
-import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -33,7 +33,7 @@ public class RequestHandler {
 	private String key;
 
 	/** 请求的参数 */
-	private SortedMap parameters;
+	private SortedMap<String,String> parameters;
 
 	/** debug信息 */
 	private String debugInfo;
@@ -54,7 +54,7 @@ public class RequestHandler {
 
 		this.gateUrl = "https://gw.tenpay.com/gateway/pay.htm";
 		this.key = "";
-		this.parameters = new TreeMap();
+		this.parameters = new TreeMap<String,String>();
 		this.debugInfo = "";
 	}
 
@@ -126,7 +126,7 @@ public class RequestHandler {
 	 * 
 	 * @return SortedMap
 	 */
-	public SortedMap getAllParameters() {
+	public SortedMap<String,String> getAllParameters() {
 		return this.parameters;
 	}
 
@@ -149,10 +149,11 @@ public class RequestHandler {
 
 		StringBuffer sb = new StringBuffer();
 		String enc = TenpayUtil.getCharacterEncoding(this.request, this.response);
-		Set es = this.parameters.entrySet();
-		Iterator it = es.iterator();
+		enc="gb2312";
+		Set<Entry<String,String>> es = this.parameters.entrySet();
+		Iterator<Entry<String, String>> it = es.iterator();
 		while (it.hasNext()) {
-			Map.Entry entry = (Map.Entry) it.next();
+			Entry<String,String> entry = (Entry<String, String>) it.next();
 			String k = (String) entry.getKey();
 			String v = (String) entry.getValue();
 			if(k.equalsIgnoreCase("spbill_create_ip")){
@@ -178,10 +179,10 @@ public class RequestHandler {
 	 */
 	protected void createSign() {
 		StringBuffer sb = new StringBuffer();
-		Set es = this.parameters.entrySet();
-		Iterator it = es.iterator();
+		Set<Entry<String,String>> es = this.parameters.entrySet();
+		Iterator<Entry<String, String>> it = es.iterator();
 		while (it.hasNext()) {
-			Map.Entry entry = (Map.Entry) it.next();
+			Entry<String, String> entry = (Entry<String, String>) it.next();
 			String k = (String) entry.getKey();
 			String v = (String) entry.getValue();
 			if (null != v && !"".equals(v) && !"sign".equals(k) && !"key".equals(k)) {
@@ -191,13 +192,11 @@ public class RequestHandler {
 		sb.append("key=" + this.getKey());
 
 		String enc = TenpayUtil.getCharacterEncoding(this.request, this.response);
+		enc="gb2312";
 		String sign = MD5Util.MD5Encode(sb.toString(), enc).toLowerCase();
-
+		logger.warn("charset:"+enc);
+		logger.warn("sign="+sign);
 		this.setParameter("sign", sign);
-
-		// debug信息
-		this.setDebugInfo(sb.toString() + " => sign:" + sign);
-
 	}
 
 	/**

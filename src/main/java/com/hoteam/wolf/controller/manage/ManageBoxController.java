@@ -2,6 +2,7 @@ package com.hoteam.wolf.controller.manage;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -52,10 +53,11 @@ public class ManageBoxController {
 
 	@RequestMapping("/verify")
 	@ResponseBody
-	public Result verify(Long boxId, boolean passed, String reason, HttpSession session) {
+	public Result verify(Long boxId, boolean passed, String reason, HttpServletRequest request) {
 		try {
+			HttpSession session = request.getSession();
 			String manager = (String) session.getAttribute(Constants.MANAGER_NAME.toString());
-			return this.boxService.verifyBox(boxId, manager, passed, reason);
+			return this.boxService.verifyBox(boxId, manager, passed, reason,request);
 		} catch (Exception e) {
 			logger.error("verify box exception:", e);
 			return new Result(false, e.getMessage());

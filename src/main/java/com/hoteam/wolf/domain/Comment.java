@@ -7,9 +7,8 @@ import com.hoteam.wolf.jdbc.annotations.PK;
 import com.hoteam.wolf.jdbc.annotations.Table;
 import com.hoteam.wolf.utils.DateSerializer;
 
-@Table("message")
+@Table("comment")
 public class Comment {
-	//TODO 将数据表改成comment
 	@PK
 	private Long id;
 	@JsonSerialize(using = DateSerializer.class)

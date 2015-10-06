@@ -2,6 +2,7 @@ package com.hoteam.wolf.controller.professor;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -16,7 +17,6 @@ import com.hoteam.wolf.common.Constants;
 import com.hoteam.wolf.common.EntityResult;
 import com.hoteam.wolf.common.GridBean;
 import com.hoteam.wolf.common.Result;
-import com.hoteam.wolf.common.enums.BoxStatus;
 import com.hoteam.wolf.domain.Box;
 import com.hoteam.wolf.service.BoxService;
 
@@ -30,14 +30,15 @@ public class ProfessorBoxController {
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	@ResponseBody
-	public Result addNotic(HttpSession session, String title, String keyword, String category, String freeContent,
+	public Result addBox(HttpServletRequest request, String title, String keyword, String category, String freeContent,
 			String chargeContent, Long group) {
+		HttpSession session = request.getSession();
 		Long professor = (Long) session.getAttribute(Constants.PROFESSOR_TOKEN.name());
 		String username = (String)session.getAttribute(Constants.PROFESSOR_NAME.name());
 		Box box = new Box(professor, group, title, keyword, freeContent, chargeContent, category,
-				BoxStatus.NEW_CREATED.toString(), 0, 0,username);
+				null, 0, 0,username);
 		try {
-			this.boxService.addBox(box);
+			this.boxService.addBox(box,request);
 			return new Result(true, "add box success");
 		} catch (Exception e) {
 			logger.error("add box error:" + e.getMessage());

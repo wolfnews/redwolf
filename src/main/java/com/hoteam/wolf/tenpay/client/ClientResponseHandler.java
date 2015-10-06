@@ -3,6 +3,7 @@ package com.hoteam.wolf.tenpay.client;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -32,7 +33,7 @@ public class ClientResponseHandler {
 	private String content;
 
 	/** 应答的参数 */
-	private SortedMap parameters;
+	private SortedMap<String, String> parameters;
 
 	/** debug信息 */
 	private String debugInfo;
@@ -45,7 +46,7 @@ public class ClientResponseHandler {
 
 	public ClientResponseHandler() {
 		this.content = "";
-		this.parameters = new TreeMap();
+		this.parameters = new TreeMap<String, String>();
 		this.debugInfo = "";
 		this.key = "";
 		this.charset = "GBK";
@@ -94,7 +95,7 @@ public class ClientResponseHandler {
 	 * 
 	 * @return SortedMap
 	 */
-	public SortedMap getAllParameters() {
+	public SortedMap<String, String> getAllParameters() {
 		return this.parameters;
 	}
 
@@ -131,10 +132,10 @@ public class ClientResponseHandler {
 	 */
 	public boolean isTenpaySign() {
 		StringBuffer sb = new StringBuffer();
-		Set es = this.parameters.entrySet();
-		Iterator it = es.iterator();
+		Set<?> es = this.parameters.entrySet();
+		Iterator<?> it = es.iterator();
 		while (it.hasNext()) {
-			Map.Entry entry = (Map.Entry) it.next();
+			Entry<?, ?> entry = (Entry<?, ?>) it.next();
 			String k = (String) entry.getKey();
 			String v = (String) entry.getValue();
 			if (!"sign".equals(k) && null != v && !"".equals(v)) {
@@ -197,10 +198,10 @@ public class ClientResponseHandler {
 		String xmlContent = this.getContent();
 
 		// 解析xml,得到map
-		Map m = XMLUtil.doXMLParse(xmlContent);
+		Map<?, ?> m = XMLUtil.doXMLParse(xmlContent);
 
 		// 设置参数
-		Iterator it = m.keySet().iterator();
+		Iterator<?> it = m.keySet().iterator();
 		while (it.hasNext()) {
 			String k = (String) it.next();
 			String v = (String) m.get(k);

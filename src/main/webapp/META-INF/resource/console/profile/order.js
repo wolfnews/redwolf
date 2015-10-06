@@ -23,12 +23,17 @@ jQuery(function($) {
 			{name : 'sn',index : 'sn',width : 15},
 			{name : 'name',index : 'name',width : 25},
 			{name : 'total',index : 'total',width : 10},
-			{name : 'paid',index : 'paid',width : 10, 
+			{name : 'state',index : 'state',width : 10, 
 				formatter : function(cellvalue, options,rowObject) {
-					if(cellvalue){
-						return '<b>已完成</b>';
-					}else{
-						return '<b>待支付</b>';
+					switch (cellvalue) {
+					case "CREATED":
+						return "<b>已提交</b>";
+					case "PAID":
+						return "<b>已支付</b>";
+					case "DONE":
+						return "<b>已完成</b>";
+					default:
+						return "<b>未支付</b>";
 					}
 				}
 			},

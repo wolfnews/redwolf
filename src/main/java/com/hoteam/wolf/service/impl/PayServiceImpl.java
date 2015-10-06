@@ -1,6 +1,7 @@
 package com.hoteam.wolf.service.impl;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,6 +25,7 @@ import com.hoteam.wolf.tenpay.util.TenpayUtil;
 
 /**
  * 处理支付流程服务接口
+ * 
  * @author dmw
  *
  */
@@ -43,18 +45,11 @@ public class PayServiceImpl implements PayService {
 		Order order = orderDao.load(orderId);
 		/* 商品价格（包含运费），以分为单位 */
 		int fee = order.getTotal().intValue() * 100;
-		// 获取提交的商品名称
-		String product_name = order.getName();
-		// 获取提交的备注信息
-		String remarkexplain = order.getDesp();
-		String desc = "商品：" + product_name + ",备注：" + remarkexplain;
+		String desc = order.getName();
 		// 获取提交的订单号
 		String out_trade_no = order.getSn();
-		// 支付方式
-		// 1表示即时到账，2表示中介担保
+		// 支付方式: 1表示即时到账，2表示中介担保
 		String trade_mode = "1";
-
-		String currTime = TenpayUtil.getCurrTime();
 		// 创建支付请求对象
 		RequestHandler reqHandler = new RequestHandler(request, response);
 		reqHandler.init();
@@ -77,31 +72,28 @@ public class PayServiceImpl implements PayService {
 		reqHandler.setParameter("subject", desc); // 商品名称(中介交易时必填)
 
 		// 系统可选参数
-		reqHandler.setParameter("sign_type", "MD5"); // 签名类型,默认：MD5
-		reqHandler.setParameter("service_version", "1.0"); // 版本号，默认为1.0
-		reqHandler.setParameter("input_charset", "GBK"); // 字符编码
-		reqHandler.setParameter("sign_key_index", "1"); // 密钥序号
+		// reqHandler.setParameter("sign_type", "MD5"); // 签名类型,默认：MD5
+		// reqHandler.setParameter("service_version", "1.0"); // 版本号，默认为1.0
+		// reqHandler.setParameter("input_charset", "GBK"); // 字符编码
+		// reqHandler.setParameter("sign_key_index", "1"); // 密钥序号
 
 		// 业务可选参数
-		reqHandler.setParameter("attach", ""); // 附加数据，原样返回
-		reqHandler.setParameter("product_fee", ""); // 商品费用，必须保证transport_fee +
-													// product_fee=total_fee
+		reqHandler.setParameter("product_fee", String.valueOf(fee)); // 商品费用，必须保证transport_fee
+																		// +
+		// product_fee=total_fee
 		reqHandler.setParameter("transport_fee", "0"); // 物流费用，必须保证transport_fee
 														// +
 														// product_fee=total_fee
-		reqHandler.setParameter("time_start", currTime); // 订单生成时间，格式为yyyymmddhhmmss
-		reqHandler.setParameter("time_expire", ""); // 订单失效时间，格式为yyyymmddhhmmss
-		reqHandler.setParameter("buyer_id", ""); // 买方财付通账号
-		reqHandler.setParameter("goods_tag", ""); // 商品标记
 		reqHandler.setParameter("trade_mode", trade_mode); // 交易模式，1即时到账(默认)，2中介担保，3后台选择（买家进支付中心列表选择）
-		reqHandler.setParameter("transport_desc", ""); // 物流说明
 		reqHandler.setParameter("trans_type", "1"); // 交易类型，1实物交易，2虚拟交易
-		reqHandler.setParameter("agentid", ""); // 平台ID
-		reqHandler.setParameter("agent_type", ""); // 代理模式，0无代理(默认)，1表示卡易售模式，2表示网店模式
-		reqHandler.setParameter("seller_id", ""); // 卖家商户号，为空则等同于partner
 		// 请求的url
 		try {
-			return reqHandler.getRequestURL();
+			for (String key : reqHandler.getAllParameters().keySet()) {
+				System.out.println(key + ":" + reqHandler.getParameter(key));
+			}
+			String url = reqHandler.getRequestURL();
+			logger.info(url);
+			return url;
 		} catch (UnsupportedEncodingException e) {
 			logger.error("generate request url exception：", e);
 			return null;
@@ -111,69 +103,73 @@ public class PayServiceImpl implements PayService {
 	@Override
 	public boolean processReturn(String payway, HttpServletRequest request, HttpServletResponse response) {
 		boolean success = false;
-		//---------------------------------------------------------
-		//财付通支付应答（处理回调）示例，商户按照此文档进行开发即可
-		//---------------------------------------------------------
-		//创建支付应答对象
+		// ---------------------------------------------------------
+		// 财付通支付应答（处理回调）示例，商户按照此文档进行开发即可
+		// ---------------------------------------------------------
+		// 创建支付应答对象
 		ResponseHandler resHandler = new ResponseHandler(request, response);
 		resHandler.setKey(payConfig.getKey());
-		logger.info("前台回调返回参数:"+resHandler.getAllParameters());
-		//判断签名
-		if(resHandler.isTenpaySign()) {
-		    //通知id
-//			String notify_id = resHandler.getParameter("notify_id");
-			//商户订单号
+		logger.info("前台回调返回参数:" + resHandler.getAllParameters());
+		// 判断签名
+		if (resHandler.isTenpaySign()) {
+			// 通知id
+			// String notify_id = resHandler.getParameter("notify_id");
+			// 商户订单号
 			String out_trade_no = resHandler.getParameter("out_trade_no");
-			//财付通订单号
-//			String transaction_id = resHandler.getParameter("transaction_id");
-			//金额,以分为单位
+			// 财付通订单号
+			// String transaction_id =
+			// resHandler.getParameter("transaction_id");
+			// 金额,以分为单位
 			String total_fee = resHandler.getParameter("total_fee");
-			//如果有使用折扣券，discount有值，total_fee+discount=原请求的total_fee
-//			String discount = resHandler.getParameter("discount");
-			//支付结果
+			// 如果有使用折扣券，discount有值，total_fee+discount=原请求的total_fee
+			// String discount = resHandler.getParameter("discount");
+			// 支付结果
 			String trade_state = resHandler.getParameter("trade_state");
-			//交易模式，1即时到账，2中介担保
+			// 交易模式，1即时到账，2中介担保
 			String trade_mode = resHandler.getParameter("trade_mode");
-			if("1".equals(trade_mode)){       //即时到账 
+			if ("1".equals(trade_mode)) { // 即时到账
 				logger.info("开始处理及时到账");
-				if( "0".equals(trade_state)){
-			        //------------------------------
-					//即时到账处理业务开始
-					//------------------------------
-					//注意交易单不要重复处理
+				if ("0".equals(trade_state)) {
+					// ------------------------------
+					// 即时到账处理业务开始
+					// ------------------------------
+					// 注意交易单不要重复处理
 					Order order = this.orderDao.load(out_trade_no);
-					if(null == order){
-						logger.error("订单["+out_trade_no+"]不存在");
-					}else{
-						if((order.getTotal().intValue())*100 == Integer.valueOf(total_fee)){
-							//注意判断返回金额
-							//------------------------------
+					if (null == order) {
+						logger.error("订单[" + out_trade_no + "]不存在");
+					} else {
+						if ((order.getTotal().intValue()) * 100 == Integer.valueOf(total_fee)) {
+							// 注意判断返回金额
+							// ------------------------------
 							order.setState(OrderStatus.PAID.name());
+							order.setPayWay(payway);
+							order.setPayTime(new Date());
 							orderDao.update(order);
-							//即时到账处理业务完毕
-							//------------------------------
-							logger.info("即时到帐付款成功");
-							success = true;
-						}else{
-							logger.error("即时到账付款失败：金额不对账：系统："+order.getTotal().intValue()*100+"|返回："+total_fee);
+							// 即时到账处理业务完毕
+							// ------------------------------
+							Result result = this.processOrder(order.getSn(), total_fee);
+							logger.info("即时到帐付款结果：" + result.toString());
+							success = result.isSuccess();
+						} else {
+							logger.error("即时到账付款失败：金额不对账：系统：" + order.getTotal().intValue() * 100 + "|返回：" + total_fee);
 							success = false;
 						}
 					}
-				}else{
+				} else {
 					logger.error("即时到帐付款失败");
 					success = false;
 				}
-			}else if("2".equals(trade_mode)){    //中介担保
+			} else if ("2".equals(trade_mode)) { // 中介担保
 				logger.info("开始处理中介担保付款");
-				if( "0".equals(trade_state)){
-					//中介担保处理业务开始
+				if ("0".equals(trade_state)) {
+					// 中介担保处理业务开始
 
-					//注意交易单不要重复处理；注意判断返回金额
-					
-					//中介担保处理业务完毕
+					// 注意交易单不要重复处理；注意判断返回金额
+
+					// 中介担保处理业务完毕
 					logger.info("中介担保付款成功");
 					success = true;
-				}else{
+				} else {
 					logger.error("中介担保付款失败");
 					logger.error("trade_state=" + trade_state);
 					success = false;
@@ -229,11 +225,12 @@ public class PayServiceImpl implements PayService {
 				// 商户订单号
 				String out_trade_no = resHandler.getParameter("out_trade_no");
 				// 财付通订单号
-//				String transaction_id = resHandler.getParameter("transaction_id");
+				// String transaction_id =
+				// resHandler.getParameter("transaction_id");
 				// 金额,以分为单位
 				String total_fee = resHandler.getParameter("total_fee");
 				// 如果有使用折扣券，discount有值，total_fee+discount=原请求的total_fee
-//				String discount = resHandler.getParameter("discount");
+				// String discount = resHandler.getParameter("discount");
 				// 支付结果
 				String trade_state = resHandler.getParameter("trade_state");
 				// 交易模式，1即时到账，2中介担保
@@ -248,10 +245,10 @@ public class PayServiceImpl implements PayService {
 							// ------------------------------
 							// 处理数据库逻辑; 注意交易单不要重复处理; 注意判断返回金额
 							Result result = processOrder(out_trade_no, total_fee);
-							if(result.isSuccess()){
+							if (result.isSuccess()) {
 								logger.info("订单处理流程成功！");
-							}else{
-								logger.error("订单后续处理流程异常："+result.getMessage());
+							} else {
+								logger.error("订单后续处理流程异常：" + result.getMessage());
 							}
 							// 即时到账处理业务完毕
 							logger.info("即时到账支付成功");
@@ -342,29 +339,32 @@ public class PayServiceImpl implements PayService {
 		}
 		return ip.equals("0:0:0:0:0:0:0:1") ? "127.0.0.1" : ip;
 	}
-	
-	private Result processOrder(String sn,String fee){
+
+	private Result processOrder(String sn, String fee) {
 		Order order = this.orderDao.load(sn);
-		if(null == order){
-			logger.error("订单["+sn+"]不存在");
-			return new Result(false, "订单["+sn+"]不存在");
+		if (null == order) {
+			logger.error("订单[" + sn + "]不存在");
+			return new Result(false, "订单[" + sn + "]不存在");
 		}
-		int realTotal = order.getTotal().intValue()*100;
+		int realTotal = order.getTotal().intValue() * 100;
 		int returnFee = Integer.valueOf(fee);
-		if(realTotal == returnFee){//订单实际金额和第三方支付平台返回金额相等
+		if (realTotal == returnFee) {// 订单实际金额和第三方支付平台返回金额相等
 			logger.info("开始处理订单流程，给用户充值");
-			if(order.getState().equals(OrderStatus.PAID.name())){
+			if (order.getState().equals(OrderStatus.PAID.name())) {
 				Result result = orderService.process(order.getId());
-				logger.info("处理结果:"+result.toString());
+				logger.info("处理结果:" + result.toString());
 				return result;
-			}else{
-				logger.error("当前订单【"+sn+"】不满足充值条件");
-				return new Result(false, "当前订单【"+sn+"】不满足充值条件");
 			}
-		}else{
+			if (order.getState().equals(OrderStatus.DONE.name())) {
+				return new Result(true, "当前订单已经处理完成！");
+			} else {
+				logger.error("当前订单【" + sn + "】不满足充值条件");
+				return new Result(false, "当前订单【" + sn + "】不满足充值条件");
+			}
+		} else {
 			logger.error("订单金额不符");
 			return new Result(false, "订单金额不符");
 		}
-	
+
 	}
 }

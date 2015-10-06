@@ -73,8 +73,7 @@ String authUser = (String)request.getAttribute("user");
 					<div class="page-content">
 						<div class="row">
 							<div class="col-xs-12">
-							<form class="form-horizontal" role="form">
-								<div class="form-group">
+								<form class="form-horizontal" role="form">
 									<div class="form-group">
 										<label class="col-sm-2 control-label no-padding-right" for="form-field-1-1"><strong>宝盒标题</strong> </label>
 										<div class="col-sm-9">
@@ -116,7 +115,7 @@ String authUser = (String)request.getAttribute("user");
 										</div>
 									</div>
 									<div class="clearfix form-actions">
-										<div class="col-md-offset-5 col-md-9">
+										<div class="col-md-offset-5 col-md-7">
 											<button class="btn btn-info" type="button" onclick="addBox()">
 												<i class="ace-icon fa fa-check bigger-110"></i>
 												<strong>保存宝盒</strong>
@@ -129,8 +128,7 @@ String authUser = (String)request.getAttribute("user");
 											</button>
 										</div>
 									</div>
-								</div>
-							</form>
+								</form>
 							</div>
 						</div>
 					</div>

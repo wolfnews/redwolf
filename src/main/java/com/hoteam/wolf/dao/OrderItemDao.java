@@ -47,7 +47,7 @@ public class OrderItemDao extends BaseDao {
 	}
 
 	public List<OrderItem> loadByOrder(Long order) throws Exception{
-		String sql = "select order_item.id,item.name,order_item.price,order_item.amount from order_item inner join item on order_item.order_id=:order and order_item.item_id = item.id";
+		String sql = "select order_item.id,order_item.item_id as item_id,order_item.order_id as order_id,item.name,order_item.price,order_item.amount from order_item inner join item on order_item.order_id=:order and order_item.item_id = item.id";
 		Map<String,Object> param = new HashMap<String,Object>();
 		param.put("order", order);
 		List<Map<String,Object>> metaList = this.namedParameterJdbcTemplate.queryForList(sql, param);

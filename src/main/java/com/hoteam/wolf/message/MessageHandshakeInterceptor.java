@@ -16,21 +16,21 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.server.HandshakeInterceptor;
 
-import com.hoteam.wolf.domain.User;
+import com.hoteam.wolf.common.Constants;
 
 @Component
 public class MessageHandshakeInterceptor implements HandshakeInterceptor {
 
-	public boolean beforeHandshake(ServerHttpRequest request,
-			ServerHttpResponse response, WebSocketHandler wsHandler,
+	public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler,
 			Map<String, Object> attributes) throws Exception {
 		if (request instanceof ServletServerHttpRequest) {
 			ServletServerHttpRequest servletRequest = (ServletServerHttpRequest) request;
-			HttpSession session = servletRequest.getServletRequest()
-					.getSession(false);
+			HttpSession session = servletRequest.getServletRequest().getSession(false);
 			if (session != null) {
-				User user = (User) session.getAttribute("user");
-				attributes.put("user", user);
+				Long userId = (Long) session.getAttribute(Constants.USER_TOKEN.name());
+				if(null != userId){
+					attributes.put(Constants.USER_TOKEN.name(), userId);
+				}
 			}
 		}
 		return true;

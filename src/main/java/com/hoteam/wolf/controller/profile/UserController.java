@@ -90,8 +90,8 @@ public class UserController {
 			EntityResult result = this.userService.login(mobile, username, password);
 			if (result.isSuccess()) {
 				User user = (User) result.getData();
-				session.setAttribute(Constants.USER_TOKEN.toString(), user.getId());
-				session.setAttribute(Constants.USER_NAME.toString(), user.getUsername());
+				session.setAttribute(Constants.USER_TOKEN.name(), user.getId());
+				session.setAttribute(Constants.USER_NAME.name(), user.getUsername());
 				return new Result(true, "登录成功！");
 			} else {
 				return new Result(false, result.getMessage());

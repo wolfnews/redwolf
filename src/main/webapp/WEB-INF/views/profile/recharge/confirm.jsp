@@ -1,10 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-String authUser = (String)request.getAttribute("user");
-%>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -13,23 +8,14 @@ String authUser = (String)request.getAttribute("user");
 		<title>牛股会-个人中心</title>
 		<meta name="description" content="overview &amp; stats" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-		<link rel="stylesheet" href="<%=basePath%>static/ace/assets/css/bootstrap.css" />
-		<link rel="stylesheet" href="<%=basePath%>static/ace/assets/css/font-awesome.css" />
-		<link rel="stylesheet" href="<%=basePath%>static/ace/assets/css/ace-fonts.css" />
-		<link rel="stylesheet" href="<%=basePath%>static/css/alipay.css" />
-		<link rel="stylesheet" href="<%=basePath%>static/ace/assets/css/ace.css" class="ace-main-stylesheet" id="main-ace-style" />
-		<script src="<%=basePath%>static/ace/assets/js/jquery.js"></script>
-		<script src="<%=basePath%>static/ace/assets/js/ace-extra.js"></script>
-		<script src="<%=basePath%>static/ace/assets/js/bootbox.js"></script>
-		<script src="<%=basePath%>static/ace/assets/js/bootstrap.js"></script>
-		<script src="<%=basePath%>static/ace/assets/js/ace/ace.js"></script>
-		<script src="<%=basePath%>static/console/base.js"></script>
+		<link rel="stylesheet" href="${base}static/css/alipay.css" />
+		<jsp:include page="../../prof_base.jsp"></jsp:include>
 	</head>
 	<body class="no-skin">
 		<jsp:include page="../header.jsp"></jsp:include>
 		<div class="main-container" id="main-container">
 			<script type="text/javascript">
-				var base='<%=basePath%>';
+				var base='${base}';
 				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
 			</script>
 			<div id="sidebar" class="sidebar responsive"></div>
@@ -100,7 +86,7 @@ String authUser = (String)request.getAttribute("user");
 							</div>
 							<div class="col-xs-12">
 								<div class="row"  id="step-2-div" style="display: block;">
-									<form id="user_pay_form" action="<%=basePath%>alipay/pay.html" method="get">
+									<form id="user_pay_form" action="${base}alipay/pay.html" method="get">
 									<div class="col-sm-10 col-sm-offset-1">
 										<div id="head">
 											<div class="hr hr12 dotted"></div>

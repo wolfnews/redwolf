@@ -6,6 +6,10 @@ String account = (String)session.getAttribute("USER_NAME");
 if(null == account){
 	account= "";
 }
+String base = (String)session.getAttribute("base");
+if(null == base || base.isEmpty()){
+	session.setAttribute("base", basePath);
+}
 %>
 <div id="navbar" class="navbar navbar-skin-3">
 	<div class="navbar-container" id="navbar-container">
@@ -14,7 +18,7 @@ if(null == account){
 			<span class="sr-only"></span>
 		</button>
 		<div class="navbar-header pull-left">
-			<a href="<%=basePath%>index.html" class="navbar-brand"> 
+			<a href="${base}index.html" class="navbar-brand"> 
 				<small>
 					<i class="fa fa-cloud"></i>
 					牛股会个人中心
@@ -32,7 +36,7 @@ if(null == account){
 						<li class="dropdown-content">
 							<ul class="dropdown-menu dropdown-navbar">
 								<li>
-									<a href="<%=basePath%>profile/box.html?type=all">
+									<a href="${base}profile/box.html?type=all">
 										<div class="clearfix">
 											<span class="pull-left">
 												<i class="btn btn-xs no-hover btn-danger fa fa-inbox"></i>
@@ -42,7 +46,7 @@ if(null == account){
 									</a>
 								</li>
 								<li>
-									<a href="<%=basePath%>profile/box.html?type=subs">
+									<a href="${base}profile/box.html?type=subs">
 										<div class="clearfix">
 											<span class="pull-left">
 												<i class="btn btn-xs no-hover  btn-danger fa fa-inbox"></i>
@@ -52,7 +56,7 @@ if(null == account){
 									</a>
 								</li>
 								<li>
-									<a href="<%=basePath%>profile/box.html?type=rss">
+									<a href="${base}profile/box.html?type=rss">
 										<div class="clearfix">
 											<span class="pull-left">
 												<i class="btn btn-xs no-hover  btn-danger fa fa-inbox"></i>
@@ -74,7 +78,7 @@ if(null == account){
 						<li class="dropdown-content">
 							<ul class="dropdown-menu dropdown-navbar">
 								<li>
-									<a href="<%=basePath%>profile/professor.html?type=all">
+									<a href="${base}profile/professor.html?type=all">
 										<div class="clearfix">
 											<span class="pull-left">
 												<i class="btn btn-xs no-hover btn-danger fa fa-users"></i>
@@ -84,7 +88,7 @@ if(null == account){
 									</a>
 								</li>
 								<li>
-									<a href="<%=basePath%>profile/professor.html?type=subs">
+									<a href="${base}profile/professor.html?type=subs">
 										<div class="clearfix">
 											<span class="pull-left">
 												<i class="btn btn-xs no-hover btn-danger fa fa-users"></i>
@@ -94,7 +98,7 @@ if(null == account){
 									</a>
 								</li>
 								<li>
-									<a href="<%=basePath%>profile/professor.html?type=rss">
+									<a href="${base}profile/professor.html?type=rss">
 										<div class="clearfix">
 											<span class="pull-left">
 												<i class="btn btn-xs no-hover btn-danger fa fa-users"></i>
@@ -116,7 +120,7 @@ if(null == account){
 						<li class="dropdown-content">
 							<ul class="dropdown-menu dropdown-navbar">
 								<li>
-									<a href="<%=basePath%>profile/order.html?type=all">
+									<a href="${base}profile/order.html?type=all">
 										<div class="clearfix">
 											<span class="pull-left">
 												<i class="btn btn-xs no-hover btn-danger fa fa-credit-card"></i>
@@ -126,7 +130,7 @@ if(null == account){
 									</a>
 								</li>
 								<li>
-									<a href="<%=basePath%>profile/order.html?type=unfinish">
+									<a href="${base}profile/order.html?type=unfinish">
 										<div class="clearfix">
 											<span class="pull-left">
 												<i class="btn btn-xs no-hover btn-danger fa fa-credit-card"></i>
@@ -136,7 +140,7 @@ if(null == account){
 									</a>
 								</li>
 								<li>
-									<a href="<%=basePath%>profile/order.html?type=finish">
+									<a href="${base}profile/order.html?type=finish">
 										<div class="clearfix">
 											<span class="pull-left">
 												<i class="btn btn-xs no-hover btn-danger fa fa-credit-card"></i>
@@ -158,7 +162,7 @@ if(null == account){
 						<li class="dropdown-content">
 							<ul class="dropdown-menu dropdown-navbar">
 								<li>
-									<a href="<%=basePath%>profile/message.html?category=send">
+									<a href="${base}profile/message.html?category=send">
 										<div class="clearfix">
 											<span class="pull-left">
 												<i class="btn btn-xs no-hover btn-danger fa fa-credit-card"></i>
@@ -168,7 +172,7 @@ if(null == account){
 									</a>
 								</li>
 								<li>
-									<a href="<%=basePath%>profile/message.html?category=receive">
+									<a href="${base}profile/message.html?category=receive">
 										<div class="clearfix">
 											<span class="pull-left">
 												<i class="btn btn-xs no-hover btn-danger fa fa-credit-card"></i>
@@ -182,7 +186,7 @@ if(null == account){
 					</ul>
 				</li>	
 				<li>
-					<a style="background: #AB1A08" href="<%=basePath%>profile/subRecord.html">
+					<a style="background: #AB1A08" href="${base}profile/subRecord.html">
 						<i class="ace-icon fa fa-envelope"></i>
 						<span class="white"><b>订阅记录</b></span>
 					</a>
@@ -196,7 +200,7 @@ if(null == account){
 						<li class="dropdown-content">
 							<ul class="dropdown-menu dropdown-navbar">
 								<li>
-									<a href="<%=basePath%>profile/index.html">
+									<a href="${base}profile/index.html">
 										<div class="clearfix">
 											<span class="pull-left">
 												<i class="ace-icon fa fa-power-home"></i>
@@ -206,7 +210,7 @@ if(null == account){
 									</a>
 								</li>
 								<li>
-									<a href="<%=basePath%>profile/user/logout.html">
+									<a href="${base}profile/user/logout.html">
 										<div class="clearfix">
 											<span class="pull-left">
 												<i class="ace-icon fa fa-power-off"></i>

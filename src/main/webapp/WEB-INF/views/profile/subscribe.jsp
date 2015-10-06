@@ -1,10 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-String authUser = (String)request.getAttribute("user");
-%>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -13,24 +8,16 @@ String authUser = (String)request.getAttribute("user");
 		<title>牛股会-个人中心</title>
 		<meta name="description" content="overview &amp; stats" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-		<link rel="stylesheet" href="<%=basePath%>static/ace/assets/css/bootstrap.css" />
-		<link rel="stylesheet" href="<%=basePath%>static/ace/assets/css/font-awesome.css" />
-		<link rel="stylesheet" href="<%=basePath%>static/ace/assets/css/ace-fonts.css" />
-		<link rel="stylesheet" href="<%=basePath%>static/ace/assets/css/ace.css" class="ace-main-stylesheet" id="main-ace-style" />
-		<script src="<%=basePath%>static/ace/assets/js/jquery.js"></script>
-		<script src="<%=basePath%>static/ace/assets/js/ace/elements.spinner.js"></script>
-		<script src="<%=basePath%>static/ace/assets/js/fuelux/fuelux.spinner.js"></script>
-		<script src="<%=basePath%>static/ace/assets/js/ace-extra.js"></script>
-		<script src="<%=basePath%>static/ace/assets/js/bootbox.js"></script>
-		<script src="<%=basePath%>static/ace/assets/js/bootstrap.js"></script>
-		<script src="<%=basePath%>static/ace/assets/js/ace/ace.js"></script>
-		<script src="<%=basePath%>static/console/base.js"></script>
+		<jsp:include page="../prof_base.jsp"></jsp:include>
+		<script src="${base}static/ace/assets/js/ace/elements.spinner.js"></script>
+		<script src="${base}static/ace/assets/js/fuelux/fuelux.spinner.js"></script>
+		<script src="${base}static/ace/assets/js/ace-extra.js"></script>
 	</head>
 	<body class="no-skin">
 		<jsp:include page="header.jsp"></jsp:include>
 		<div class="main-container" id="main-container">
 			<script type="text/javascript">
-				var base='<%=basePath%>';
+				var base='${base}';
 				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
 			</script>
 			<div id="sidebar" class="sidebar responsive"></div>
@@ -90,7 +77,7 @@ String authUser = (String)request.getAttribute("user");
 										<div class="col-xs-12 col-sm-3 center">
 											<div>
 												<span class="profile-picture">
-													<img id="avatar" class="editable img-responsive" alt="${professor.username }" src="<%=basePath %>static/ace/assets/avatars/profile-pic.jpg" />
+													<img id="avatar" class="editable img-responsive" alt="${professor.username }" src="${base}static/ace/assets/avatars/profile-pic.jpg" />
 												</span>
 												<div class="space-4"></div>
 												<div class="width-80 label label-danger label-xlg arrowed-in arrowed-in-right">
@@ -164,12 +151,12 @@ String authUser = (String)request.getAttribute("user");
 											<div class="col-xs-12">
 												<div class="well well">
 													<div style="text-align: justify;">
-														<span style="font-size: 17.5px; line-height: 29.1666679382324px;">
+														<span style="font-size: 14px; line-height: 29.1666679382324px;">
 														&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span>
-														<font face="Verdana"><b style="font-size: 17.5px; line-height: 29.1666679382324px;">
+														<font face="Verdana"><b style="font-size: 14px; line-height: 29.1666679382324px;">
 														<font color="#f83a22">温馨提示：股市有风险，投资需谨慎！</font></b>
-														<font color="#f83a22" style="font-size: 17.5px; line-height: 29.1666679382324px;">
-														牛股会讲师在平台中发表的宝盒仅代表其个人观点，不代表牛股会平台对股市的观点。广大牛股会会友在阅读讲师发表的宝盒时，不要盲从，理性判断，理性投资。
+														<font color="#f83a22" style="font-size: 14px; line-height: 29.1666679382324px;">
+														<b>牛股会讲师在平台中发表的宝盒仅代表其个人观点，不代表牛股会平台对股市的观点。广大牛股会会友在阅读讲师发表的宝盒时，不要盲从，理性判断，理性投资。</b>
 														<br/><span>&nbsp; &nbsp; &nbsp; </span>
 														<b>特别提示：您在投资过程中因参考牛股会平台讲师的观点而造成的任何经济损失都属于个人行为，和牛股会平台无关！请在订阅讲师时慎重考虑！</b>
 														</font></font>

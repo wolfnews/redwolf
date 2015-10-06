@@ -18,7 +18,7 @@ import org.springframework.web.socket.server.support.DefaultHandshakeHandler;
 public class MessageConfig extends WebMvcConfigurerAdapter implements WebSocketConfigurer {
 
 	@Resource
-	private MessageHandler messageWebSocketHandler;
+	private MessageHandler messageHandler;
 	@Resource
 	private MessageHandshakeInterceptor messageHandshakeInterceptor;
 
@@ -31,14 +31,14 @@ public class MessageConfig extends WebMvcConfigurerAdapter implements WebSocketC
 	public ServletServerContainerFactoryBean createWebSocketContainer() {
 		ServletServerContainerFactoryBean container = new ServletServerContainerFactoryBean();
 		container.setMaxTextMessageBufferSize(8192);
-		container.setMaxBinaryMessageBufferSize(8192);
+		container.setMaxBinaryMessageBufferSize(5 * 1024 * 1024);
 		return container;
 	}
 
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-		registry.addHandler(messageWebSocketHandler, "/messagingService").addInterceptors(messageHandshakeInterceptor)
+		registry.addHandler(messageHandler, "/messageService").addInterceptors(messageHandshakeInterceptor)
 				.setHandshakeHandler(handshakeHandler());
-		registry.addHandler(messageWebSocketHandler, "/sockjs/messagingService")
+		registry.addHandler(messageHandler, "/sockjs/messageService")
 				.addInterceptors(messageHandshakeInterceptor).setHandshakeHandler(handshakeHandler()).withSockJS();
 	}
 }

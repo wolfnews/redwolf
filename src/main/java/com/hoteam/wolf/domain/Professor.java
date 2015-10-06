@@ -23,6 +23,7 @@ public class Professor {
 	private String occupation;
 	private String summary;
 	private int level;
+	private boolean needVerify;
 
 	/**
 	 * 持久化前预处理
@@ -127,8 +128,16 @@ public class Professor {
 		this.truename = truename;
 	}
 
+	public boolean isNeedVerify() {
+		return needVerify;
+	}
+
+	public void setNeedVerify(boolean needVerify) {
+		this.needVerify = needVerify;
+	}
+
 	public Professor(String username, String password, String mobile, String iconPath, String occupation,
-			String summary, int level) {
+			String summary, int level,boolean needVerify) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -137,6 +146,7 @@ public class Professor {
 		this.occupation = occupation;
 		this.summary = summary;
 		this.level = level;
+		this.needVerify = needVerify;
 	}
 
 	public Professor() {
@@ -147,8 +157,10 @@ public class Professor {
 	@Override
 	public String toString() {
 		return "Professor [id=" + id + ", gmtCreate=" + gmtCreate + ", gmtModify=" + gmtModify + ", username="
-				+ username + ", password=" + password + ", mobile=" + mobile + ", iconPath=" + iconPath
-				+ ", occupation=" + occupation + ", summary=" + summary + ", level=" + level + "]";
+				+ username + ", password=" + password + ", truename=" + truename + ", mobile=" + mobile + ", iconPath="
+				+ iconPath + ", occupation=" + occupation + ", summary=" + summary + ", level=" + level
+				+ ", needVerify=" + needVerify + "]";
 	}
+
 
 }

@@ -21,18 +21,23 @@ jQuery(function($) {
 		colNames : ['订单编号','订单描述', '金额金额（￥、元）', '订单状态','支付方式','订单日期','操作'],
 		colModel : [ 
 			{name : 'sn',index : 'sn',width : 15},
-			{name : 'content',index : 'content',width : 25},
-			{name : 'money',index : 'money',width : 10},
-			{name : 'paid',index : 'paid',width : 10,
+			{name : 'desp',index : 'desp',width : 25},
+			{name : 'total',index : 'total',width : 10},
+			{name : 'state',index : 'state',width : 10, 
 				formatter : function(cellvalue, options,rowObject) {
-					if(cellvalue){
-						return '<b>已完成</b>';
-					}else{
-						return '<b>待支付</b>';
+					switch (cellvalue) {
+					case "CREATED":
+						return "<b>已提交</b>";
+					case "PAID":
+						return "<b>已支付</b>";
+					case "DONE":
+						return "<b>已完成</b>";
+					default:
+						return "<b>未支付</b>";
 					}
 				}
 			},
-			{name : 'category',index : 'category',width : 10,
+			{name : 'payWay',index : 'payWay',width : 10,
 				formatter:function(cellvalue, options,rowObject){
 					switch (cellvalue) {
 					case 'ALIPAY':
