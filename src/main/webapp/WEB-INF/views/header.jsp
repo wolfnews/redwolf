@@ -7,7 +7,7 @@ if(null == account){
 	account= "";
 }
 %>
-<div id="navbar" class="navbar navbar-skin-3">
+<div id="navbar" class="navbar navbar-skin-3" style="background-color: #e5e5e5">
 	<div class="navbar-container" id="navbar-container">
 		<button type="button" class="navbar-toggle menu-toggler pull-left"
 			id="menu-toggler" data-target="#sidebar">

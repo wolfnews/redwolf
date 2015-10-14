@@ -14,13 +14,13 @@ if(null == base || base.isEmpty()){
 <!-- 	</div> -->
 	<div class="nav">
 		<ul>
-			<li class="nav-item"><a href="${base}index.html" target="_parent">首页</a></li>
-			<li class="nav-item"><a href="${base}news.html" target="_parent">牛股快讯</a></li>
-			<li class="nav-item"><a href="${base}box.html" target="_parent">牛股宝盒</a></li>
-			<li class="nav-item"><a href="${base}professor.html" target="_parent">牛股讲师</a></li>
-			<li class="nav-item"><a href="${base}mall.html" target="_parent">牛股商城</a></li>
-			<li class="nav-item"><a href="${base}profile/index.html" target="_parent">会员中心</a></li>
-			<li class="nav-item"><a href="${base}register.html" target="_parent">会员注册</a></li>
+			<li class="nav-item"><a href="${base}index.html" target="_parent"><b>首页</b></a></li>
+			<li class="nav-item"><a href="${base}news.html" target="_parent"><b>牛股快讯</b></a></li>
+			<li class="nav-item"><a href="${base}box.html" target="_parent"><b>牛股宝盒</b></a></li>
+			<li class="nav-item"><a href="${base}professor.html" target="_parent"><b>牛股讲师</b></a></li>
+			<li class="nav-item"><a href="${base}mall.html" target="_parent"><b>牛股商城</b></a></li>
+			<li class="nav-item"><a href="${base}profile/index.html" target="_parent"><b>会员中心</b></a></li>
+			<li class="nav-item"><a href="${base}register.html" target="_parent"><b>会员注册</b></a></li>
 		</ul>
 		<div class="move-bg"></div>
 	</div>
