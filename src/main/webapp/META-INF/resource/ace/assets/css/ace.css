@@ -7965,10 +7965,10 @@ fieldset[disabled] .btn-white.btn-grey.active {
 }
 .dropdown-navbar {
   padding: 0;
-  width: 240px;
+  width: 80px;
   -webkit-box-shadow: 0 2px 4px rgba(30, 30, 100, 0.25);
   box-shadow: 0 2px 4px rgba(30, 30, 100, 0.25);
-  border-color: #bcd4e5;
+  border-color: #f2bcae;
 }
 .dropdown-navbar > li {
   padding: 0 8px;

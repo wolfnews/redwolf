@@ -29,7 +29,7 @@ function inflateView(items){
 	var html ="";
 	for(var i=0;i<items.length;i++){
 		var item = items[i];
-		 html += "<div class='col-xs-4 pricing-box'>"+
+		 html += "<div class='col-xs-4 pricing-box' style='font-family:tahoma,Arial,\"Microsoft YaHei\",SimSun;font-size:16px'>"+
 					"<div class='widget-box widget-color-orange'>"+
 						"<div class='widget-header'>"+
 							"<h5 class='widget-title sm lighter'><strong>"+item.name+"</strong></h5>"+

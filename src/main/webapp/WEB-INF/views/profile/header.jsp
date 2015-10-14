@@ -18,7 +18,7 @@ if(null == base || base.isEmpty()){
 			<span class="sr-only"></span>
 		</button>
 		<div class="navbar-header pull-left">
-			<a href="${base}index.html" class="navbar-brand"> 
+			<a href="${base}profile/index.html" class="navbar-brand"> 
 				<small>
 					<i class="fa fa-cloud"></i>
 					牛股会个人中心
@@ -39,7 +39,7 @@ if(null == base || base.isEmpty()){
 									<a href="${base}profile/box.html?type=all">
 										<div class="clearfix">
 											<span class="pull-left">
-												<i class="btn btn-xs no-hover btn-danger fa fa-inbox"></i>
+												<i class="btn btn-xs no-hover btn-round btn-danger fa fa-inbox"></i>
 												<b>所有宝盒</b>
 											</span>
 										</div>
@@ -49,7 +49,7 @@ if(null == base || base.isEmpty()){
 									<a href="${base}profile/box.html?type=subs">
 										<div class="clearfix">
 											<span class="pull-left">
-												<i class="btn btn-xs no-hover  btn-danger fa fa-inbox"></i>
+												<i class="btn btn-xs no-hover  btn-round btn-danger fa fa-inbox"></i>
 												<b>已订阅宝盒</b>
 											</span>
 										</div>
@@ -59,7 +59,7 @@ if(null == base || base.isEmpty()){
 									<a href="${base}profile/box.html?type=rss">
 										<div class="clearfix">
 											<span class="pull-left">
-												<i class="btn btn-xs no-hover  btn-danger fa fa-inbox"></i>
+												<i class="btn btn-xs no-hover  btn-round btn-danger fa fa-inbox"></i>
 												<b>已关注宝盒</b>
 											</span>
 										</div>
@@ -81,7 +81,7 @@ if(null == base || base.isEmpty()){
 									<a href="${base}profile/professor.html?type=all">
 										<div class="clearfix">
 											<span class="pull-left">
-												<i class="btn btn-xs no-hover btn-danger fa fa-users"></i>
+												<i class="btn btn-xs no-hover btn-round btn-danger fa fa-users"></i>
 												<b>所有讲师</b>
 											</span>
 										</div>
@@ -91,7 +91,7 @@ if(null == base || base.isEmpty()){
 									<a href="${base}profile/professor.html?type=subs">
 										<div class="clearfix">
 											<span class="pull-left">
-												<i class="btn btn-xs no-hover btn-danger fa fa-users"></i>
+												<i class="btn btn-xs no-hover btn-round btn-danger fa fa-users"></i>
 												<b>已订阅讲师</b>
 											</span>
 										</div>
@@ -101,7 +101,7 @@ if(null == base || base.isEmpty()){
 									<a href="${base}profile/professor.html?type=rss">
 										<div class="clearfix">
 											<span class="pull-left">
-												<i class="btn btn-xs no-hover btn-danger fa fa-users"></i>
+												<i class="btn btn-xs no-hover btn-round btn-danger fa fa-users"></i>
 												<b>已关注讲师</b>
 											</span>
 										</div>
@@ -120,30 +120,20 @@ if(null == base || base.isEmpty()){
 						<li class="dropdown-content">
 							<ul class="dropdown-menu dropdown-navbar">
 								<li>
-									<a href="${base}profile/order.html?type=all">
+									<a href="${base}profile/order.html">
 										<div class="clearfix">
 											<span class="pull-left">
-												<i class="btn btn-xs no-hover btn-danger fa fa-credit-card"></i>
+												<i class="btn btn-xs btn-round no-hover btn-danger fa fa-credit-card"></i>
 												<b>所有订单</b>
 											</span>
 										</div>
 									</a>
 								</li>
 								<li>
-									<a href="${base}profile/order.html?type=unfinish">
+									<a href="${base}profile/order.html?type=done">
 										<div class="clearfix">
 											<span class="pull-left">
-												<i class="btn btn-xs no-hover btn-danger fa fa-credit-card"></i>
-												<b>未完成订单</b>
-											</span>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="${base}profile/order.html?type=finish">
-										<div class="clearfix">
-											<span class="pull-left">
-												<i class="btn btn-xs no-hover btn-danger fa fa-credit-card"></i>
+												<i class="btn btn-xs no-hover btn-round btn-danger fa fa-credit-card"></i>
 												<b>已完成订单</b>
 											</span>
 										</div>
@@ -155,7 +145,7 @@ if(null == base || base.isEmpty()){
 				</li>	
 				<li >
 					<a style="background: #AB1A08" data-toggle="dropdown" class="dropdown-toggle" href="#">
-						<i class="ace-icon fa fa-credit-card"></i>
+						<i class="ace-icon fa fa-comment"></i>
 						<span class="white"><b>我的留言</b></span>
 					</a>
 					<ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
@@ -165,7 +155,7 @@ if(null == base || base.isEmpty()){
 									<a href="${base}profile/message.html?category=send">
 										<div class="clearfix">
 											<span class="pull-left">
-												<i class="btn btn-xs no-hover btn-danger fa fa-credit-card"></i>
+												<i class="btn btn-xs no-hover btn-round btn-danger fa fa-comment"></i>
 												<b>我发出的</b>
 											</span>
 										</div>
@@ -175,7 +165,7 @@ if(null == base || base.isEmpty()){
 									<a href="${base}profile/message.html?category=receive">
 										<div class="clearfix">
 											<span class="pull-left">
-												<i class="btn btn-xs no-hover btn-danger fa fa-credit-card"></i>
+												<i class="btn btn-xs no-hover btn-round btn-danger fa fa-comment"></i>
 												<b>我收到的</b>
 											</span>
 										</div>
@@ -200,7 +190,7 @@ if(null == base || base.isEmpty()){
 						<li class="dropdown-content">
 							<ul class="dropdown-menu dropdown-navbar">
 								<li>
-									<a href="${base}profile/index.html">
+									<a href="${base}index.html">
 										<div class="clearfix">
 											<span class="pull-left">
 												<i class="ace-icon fa fa-power-home"></i>

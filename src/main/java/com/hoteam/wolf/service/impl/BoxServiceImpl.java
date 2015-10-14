@@ -59,7 +59,7 @@ public class BoxServiceImpl implements BoxService {
 				messageBuffer.append("【").append(professor.getUsername())
 				.append("】刚刚发表了一个宝盒！点击<a target=\"parent\" href=\"")
 				.append(basePath).append("box/detail.html?id=").append(box.getId())
-				.append("\">这里</a>快速查看");
+				.append("\">【这里】</a>快速查看");
 				messageSender.pushMessage(messageBuffer.toString());
 				logger.info(messageBuffer.toString());
 			}
@@ -189,8 +189,8 @@ public class BoxServiceImpl implements BoxService {
 		for (Box entity : entitys) {
 			entity.setPrivateContent(null);
 			String content = entity.getPublicContent();
-			if(content.length()>200){
-				entity.setPublicContent(content.substring(0, 200));
+			if(content.length()>1000){
+				entity.setPublicContent(content.substring(0, 1000));
 			}
 			boxBeans.add(entity);
 		}

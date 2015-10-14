@@ -17,7 +17,6 @@
 				var base='${base}';
 				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
 			</script>
-			<div id="sidebar" class="sidebar responsive"></div>
 			<div class="main-content">
 				<div class="main-content-inner">
 					<div class="breadcrumbs" id="breadcrumbs">
@@ -57,28 +56,31 @@
 					</div>
 					<div class="page-content">
 						<div class="row">
-							<div class="col-xs-12">
-							<br>
-								<div class="col-xs-6">
-								<span class="red h4 strong" id="box_title"></span>
+							<div class="col-xs-10 col-xs-offset-1">
+								<div class="row">
+									<br>
+									<div class="col-xs-6">
+									<span class="red h4 strong" id="box_title"></span>
+									</div>
+									<div class="col-xs-2"></div>
+									<div class="col-xs-4">
+										<span id="box_author" class="red h4 strong"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+										<span id="box_date" class="red h4 strong"></span>
+									</div>
 								</div>
-								<div class="col-xs-2"></div>
-								<div class="col-xs-4">
-									<span id="box_author" class="red h4 strong"></span>&nbsp;&nbsp;|&nbsp;&nbsp;
-									<span id="box_date" class="red h4 strong"></span>
+								<hr>
+								<div class="row">
+									<div class="col-xs-12" id="box_public"></div>
+									<div class="col-xs-12" id="box_private"></div>
 								</div>
-							</div>
-							<div class="col-xs-12">
-								<div class="hr"></div>
-								<div class="col-xs-11" id="box_public"></div>
-								<div class="col-xs-11" id="box_private"></div>
-								<div class="col-xs-11"><hr></div>
-								<div class="col-xs-11 text-center"><span style="color: rgb(128, 130, 133); font-family: 宋体, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 21px;">风险提示：以上内容仅供参考，不作为投资决策依据，投资者据此操作，风险自担。股市有风险，投资需谨慎。</span></div>
+								<hr>
+								<div class="col-xs-12 text-center"><span style="color: rgb(128, 130, 133); font-family: 宋体, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 21px;">风险提示：以上内容仅供参考，不作为投资决策依据，投资者据此操作，风险自担。股市有风险，投资需谨慎。</span></div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+		<jsp:include page="../foot.jsp"></jsp:include>
 	</body>
 </html>

@@ -20,7 +20,6 @@
 				var base='${base}';
 				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
 			</script>
-			<div id="sidebar" class="sidebar responsive"></div>
 			<div class="main-content">
 				<div class="main-content-inner">
 					<div class="breadcrumbs" id="breadcrumbs">
@@ -189,7 +188,7 @@
 													<label><strong>订阅时长：</strong></label>
 													<input type="text" class="input" id="subscribe_time" />&nbsp;&nbsp;<b>天</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 													<label><strong>消耗积分：</strong></label><span id="cost_grade"></span>
-													<button id="subscribe_btn" onclick="subsProf()" class="btn btn-danger disabled"><strong>订阅</strong></button>
+													<button id="subscribe_btn" onclick="subsProf()" class="btn btn-danger btn-sm btn-round disabled"><strong>订阅</strong></button>
 												</div>
 												<script type="text/javascript">
 													function subsProf(){

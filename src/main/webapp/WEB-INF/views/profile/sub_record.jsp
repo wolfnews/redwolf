@@ -21,7 +21,6 @@
 				var base='${base}';
 				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
 			</script>
-			<div id="sidebar" class="sidebar responsive"></div>
 			<div class="main-content">
 				<div class="main-content-inner">
 					<div class="breadcrumbs" id="breadcrumbs">

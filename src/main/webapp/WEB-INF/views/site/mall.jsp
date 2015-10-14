@@ -35,7 +35,7 @@
 							</li>
 						</ul>
 						<div class="nav-search">
-							<button class="btn btn-danger" id="my_carts">
+							<button class="btn btn-danger btn-sm btn-round" id="my_carts">
 								<i class='ace-icon fa fa-shopping-cart bigger-128'></i>
 								我的购物车
 							</button>

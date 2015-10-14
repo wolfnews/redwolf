@@ -17,14 +17,15 @@ jQuery(function($) {
 				for(var i=0;i<boxes.length;i++){
 					var box = boxes[i];
 					html = "<div class=\"profile-activity clearfix\">"+
-								"<div class=\"col-sm-10\">"+
-								"<span class=\"bigger-110 left\" style=\"width=20%\"><strong>"+box.authorName+"&nbsp;:&nbsp;</strong></span>"+
-								"<span class=\"bigger-110 left\" style=\"width=60%\"><strong>"+box.title+"</strong></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
-								"<i class=\"ace-icon fa fa-clock-o bigger-110\">"+box.gmtCreate+"</i>"+
-								"<span>&nbsp;&nbsp;|&nbsp;&nbsp;浏览："+box.browseNum+"次</span>"+
-								"</div><div class=\"col-sm-2 text-center\">"+
-								"<button class=\"btn btn-sm btn-danger\" onclick=\"box_detail("+box.id+")\">查看宝盒</button>"
+								"<div>"+
+									"<span style='font-family:tahoma,Arial,\"Microsoft YaHei\",SimSun;font-size:16px'><strong>【"+box.authorName+"】："+box.title+"</strong></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+									"<i class=\"ace-icon fa fa-clock-o bigger-110\">"+box.gmtCreate+"</i>"+
+									"<span>&nbsp;&nbsp;&nbsp;&nbsp;浏览："+box.browseNum+"次</span>"+
 								"</div><hr>"+
+								"<div>"+
+									"<span style='font-family:tahoma,Arial,\"Microsoft YaHei\",SimSun;font-size:14px'>"+box.publicContent+"</span>"+
+									"<div class=\"text-right\"><button class=\"btn btn-danger btn-sm btn-round\" onclick=\"box_detail("+box.id+")\">查看宝盒</button></div>"+
+								"</div>"+
 							"</div>";
 					$(grid_list).append(html);
 				}

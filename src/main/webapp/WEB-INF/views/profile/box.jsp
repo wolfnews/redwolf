@@ -52,12 +52,12 @@
 													 var box = boxs[i];
 													 html = "<div class=\"profile-activity clearfix\">"+
 																"<div>"+
-																	"<span><strong>【"+box.authorName+"】："+box.title+"</strong></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+																	"<span style='font-family:tahoma,Arial,\"Microsoft YaHei\",SimSun;font-size:16px'><strong>【"+box.authorName+"】："+box.title+"</strong></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
 																	"<i class=\"ace-icon fa fa-clock-o bigger-110\">"+box.gmtCreate+"</i>"+
 																"</div><hr>"+
 																"<div>"+
-																	"<span>"+box.publicContent+"</span>"+
-																	"<div class=\"text-right\"><button class=\"btn btn-danger\" onclick=\"boxDetail("+box.id+")\">查看宝盒</button></div>"+
+																	"<span style='font-family:tahoma,Arial,\"Microsoft YaHei\",SimSun;font-size:14px'>"+box.publicContent+"</span>"+
+																	"<div class=\"text-right\"><button class=\"btn btn-danger btn-sm btn-round\" onclick=\"boxDetail("+box.id+")\">查看宝盒</button></div>"+
 																"</div>"+
 															"</div>";
 													 $('#profile_lastest_box').append(html);

@@ -55,7 +55,7 @@
 																"</div><hr>"+
 																"<div>"+
 																	"<span>"+message.content+"</span>"+
-																	"<div class=\"text-right\"><button class=\"btn btn-danger\" onclick=\"replyMessage("+message.id+",'"+message.senderId+"','"+message.sender+"')\">回复</button></div>"+
+																	"<div class=\"text-right\"><button class=\"btn btn-danger btn-sm btn-round\" onclick=\"replyMessage("+message.id+",'"+message.senderId+"','"+message.sender+"')\">回复</button></div>"+
 																"</div>"+
 															"</div>";
 													 $('#profile_message_div').append(html);

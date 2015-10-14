@@ -136,18 +136,6 @@ jQuery(function($) {
 		$(this).prev().focus();
 	});
 });
-function showMessage(message,callbackFn){
-	bootbox.dialog({
-		message: '<b>'+message+'</b>', 
-		buttons: {
-			"success" : {
-				"label" : "OK",
-				"className" : "btn-sm btn-primary",
-				callback: callbackFn
-			}
-		}
-	});
-}
 function addActivity(){
 	name = $('#activity_name').val();
 	category = $('#activity_category').val();

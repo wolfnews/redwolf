@@ -48,13 +48,15 @@ public class ProfileOrderController {
 	public GridBean list(
 			@RequestParam(value = "page", required = true) int page,
 			@RequestParam(value = "rows", required = true) int rows, 
-			@RequestParam(value = "state",required = false) String state,
+			@RequestParam(value = "category",required = false) String category,
 			HttpSession session) {
 		try {
 			Long userId = (Long) session.getAttribute(Constants.USER_TOKEN.toString());
 			Order order = new Order();
 			order.setUserId(userId);
-			order.setState(state);
+			if(null != category&& category.equals("done")){
+				order.setState(OrderStatus.DONE.name());
+			}
 			return orderService.list(order, page, rows);
 		} catch (Exception e) {
 			logger.error(e.getMessage());

@@ -97,8 +97,8 @@
 													"</div>"+
 													"<div class=\"widget-body\">"+
 														"<div class=\"widget-main\">"+
-															"<h5><strong>当前职业："+professor.occupation+"</strong></h5>"+
-															"<h5><strong>锦囊总数："+professor.boxCount+" 篇</strong></h5>"+
+															"<h5><strong>讲师职业："+professor.occupation+"</strong></h5>"+
+															"<h5><strong>宝盒总数："+professor.boxCount+" 篇</strong></h5>"+
 															"<h5><strong>用户订阅："+professor.subCount+" 人</strong></h5>"+
 															"<h5><strong>用户关注："+professor.rssCount+" 人</strong></h5>"+
 															"<hr />"+subsHtml+

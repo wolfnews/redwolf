@@ -22,7 +22,8 @@ public class User {
 	private String email;
 	private int level;
 	private boolean identified;
-
+	@JsonSerialize(using = DateSerializer.class)
+	private Date lastLogin;
 	/**
 	 * 持久化前预处理
 	 */
@@ -116,6 +117,14 @@ public class User {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Date getLastLogin() {
+		return lastLogin;
+	}
+
+	public void setLastLogin(Date lastLogin) {
+		this.lastLogin = lastLogin;
 	}
 
 	public User(String username, String password, String mobile, String iconPath, String email, int level,

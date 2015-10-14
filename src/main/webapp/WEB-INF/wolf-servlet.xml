@@ -52,6 +52,7 @@
 			<mvc:mapping path="/profile/**" />
 			<mvc:mapping path="/alipay/**" />
 			<mvc:mapping path="/cart/**" />
+			<mvc:mapping path="/pay/**" />
 			<bean class="com.hoteam.wolf.interceptor.ProfileInterceptor">
 				<property name="ignoreUrls">
 					<list>

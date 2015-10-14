@@ -34,13 +34,13 @@
 									 var box = boxs[i];
 									 html = "<div class=\"profile-activity clearfix\">"+
 												"<div>"+
-													"<span><strong>【"+box.authorName+"】："+box.title+"</strong></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+													"<span style='font-family:tahoma,Arial,\"Microsoft YaHei\",SimSun;font-size:16px'><strong>【"+box.authorName+"】："+box.title+"</strong></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
 													"<i class=\"ace-icon fa fa-clock-o bigger-110\">"+box.gmtCreate+"</i>"+
 												"</div><hr>"+
 												"<div>"+
-													"<span>"+box.publicContent+"...</span>"+
+													"<span style='font-family:tahoma,Arial,\"Microsoft YaHei\",SimSun;font-size:14px'>"+box.publicContent+"...</span>"+
 												"</div>"+
-												"<div class=\"text-right\"><button class=\"btn btn-danger\" onclick=\"boxDetail("+box.id+")\">查看宝盒</button></div>"+
+												"<div class=\"text-right\"><button class=\"btn btn-danger btn-sm btn-round\" onclick=\"boxDetail("+box.id+")\">查看宝盒</button></div>"+
 											"</div>";
 									 $('#profile_lastest_box').append(html);
 								}
@@ -83,22 +83,22 @@
 											<div class="hr hr12 dotted"></div>
 											<!-- #section:custom/extra.grid -->
 											<div class="clearfix">
-												<div class="grid3">
+												<div class="grid2">
 													<span class="bigger-175 blue">${profile.level }</span>
 													<br />
-													<strong>当前等级</strong>
+													<strong>我的等级</strong>
 												</div>
-												<div class="grid3">
+												<div class="grid2">
 													<span class="bigger-175 blue">${profile.coin }</span>
 													<br />
-													<strong>牛币余额</strong>
+													<strong>我的牛币</strong>
 												</div>
 												<!-- 充值链接 -->
-												<div class="grid3">
-													<span class="btn btn-app btn-sm btn-danger no-hover" onclick="toRecharge()">
-														<span class="line-height-1 smaller-90"> <strong>充值</strong> </span>
-													</span>
-												</div>
+<!-- 												<div class="grid3"> -->
+<!-- 													<span class="btn btn-app btn-sm btn-danger no-hover" onclick="toRecharge()"> -->
+<!-- 														<span class="line-height-1 smaller-90"> <strong>充值</strong> </span> -->
+<!-- 													</span> -->
+<!-- 												</div> -->
 												
 												<script type="text/javascript">
 												function toRecharge(){
@@ -111,7 +111,10 @@
 													location.href='professor.html?type=subs';
 												}
 												function toMyOrder(){
-													location.href='payOrder.html?type=all';
+													location.href='order.html?type=all';
+												}
+												function toMessage(){
+													location.href='${base}profile/message.html?category=receive';
 												}
 												</script>
 											</div>
@@ -122,11 +125,11 @@
 										<!-- #统计信息展示 -->
 											<div class="left">
 												<!-- 查看重置订单信息 -->
-												<span class="btn btn-app btn-sm btn-danger no-hover" onclick="toMyOrder()">
-													<span class="line-height-1 bigger-170 white"> ${profile.subAccount } </span>
-													<br />
-													<span class="line-height-1 smaller-90"><strong>我的订单</strong></span>
-												</span>
+<!-- 												<span class="btn btn-app btn-sm btn-danger no-hover" onclick="toMyOrder()"> -->
+<%-- 													<span class="line-height-1 bigger-170 white"> ${profile.subAccount } </span> --%>
+<!-- 													<br /> -->
+<!-- 													<span class="line-height-1 smaller-90"><strong>我的订单</strong></span> -->
+<!-- 												</span> -->
 												<!-- 查看订阅的讲师信息 -->
 												<span class="btn btn-app btn-sm btn-danger no-hover" onclick="toMySub()">
 													<span class="line-height-1 bigger-170 white"> ${profile.subAccount } </span>
@@ -140,7 +143,7 @@
 													<span class="line-height-1 smaller-90"> <strong>我的关注</strong> </span>
 												</span>
 												<!-- 查看自己的留言信息 -->
-												<span class="btn btn-app btn-sm btn-primary no-hover">
+												<span class="btn btn-app btn-sm btn-primary no-hover" onclick="toMessage()">
 													<i class="ace-icon fa fa-envelope light-white"></i>
 													<span class="label label-inverse arrowed-in" id="profile_message_num"></span>
 													<span class="line-height-1 smaller-90"> <strong>我的留言</strong> </span>
@@ -182,13 +185,13 @@
 																		 var box = boxs[i];
 																		 html = "<div class=\"profile-activity clearfix\">"+
 																			"<div>"+
-																				"<span><strong>【"+box.authorName+"】："+box.title+"</strong></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+																				"<span style='font-family:tahoma,Arial,\"Microsoft YaHei\",SimSun;font-size:16px'><strong>【"+box.authorName+"】："+box.title+"</strong></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
 																				"<i class=\"ace-icon fa fa-clock-o bigger-110\">"+box.gmtCreate+"</i>"+
 																			"</div><hr>"+
 																			"<div>"+
-																				"<span>"+box.publicContent+"...</span>"+
+																				"<span style='font-family:tahoma,Arial,\"Microsoft YaHei\",SimSun;font-size:14px'>"+box.publicContent+"...</span>"+
 																			"</div>"+
-																			"<div class=\"text-right\"><button class=\"btn btn-danger\" onclick=\"boxDetail("+box.id+")\">查看宝盒</button></div>"+
+																			"<div class=\"text-right\"><button class=\"btn btn-danger btn-sm btn-round\" onclick=\"boxDetail("+box.id+")\">查看宝盒</button></div>"+
 																		"</div>";
 																		 $('#profile_lastest_box').append(html);
 																	}

@@ -125,6 +125,23 @@ public class UserServiceImpl implements UserService {
 		if (null == user) {
 			return new EntityResult(false, "用户名或密码错误！", null);
 		} else if (user.isIdentified()) {
+			if(null == user.getLastLogin()){
+				//第一次登录,牛币加1
+				UserAccount userAccount = this.userAccountDao.load(user.getId());
+				userAccount.setCoin(userAccount.getCoin()+1);
+				this.userAccountDao.update(userAccount);
+			}else{
+				Calendar last = Calendar.getInstance();
+				last.setTime(user.getLastLogin());
+				Calendar current = Calendar.getInstance();
+				if(last.get(Calendar.DAY_OF_YEAR) != current.get(Calendar.DAY_OF_YEAR)){
+					UserAccount userAccount = this.userAccountDao.load(user.getId());
+					userAccount.setCoin(userAccount.getCoin()+1);
+					this.userAccountDao.update(userAccount);
+				}
+			}
+			user.setLastLogin(new Date());
+			this.userDao.update(user);
 			return new EntityResult(true, "SUCCESS", user);
 		} else {
 			return new EntityResult(false, "用户未注册确认，请查看注册邮箱中的确认邮件并确认！", null);

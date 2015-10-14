@@ -128,8 +128,8 @@ public class BoxDao extends BaseDao {
 			for (Map<String, Object> meta : metaList) {
 				Box entity = (Box) SQLUtils.coverMapToBean(meta, Box.class);
 				entity.setPrivateContent(null);
-				if (entity.getPublicContent().length() > 200) {
-					entity.setPublicContent(entity.getPublicContent().substring(0, 200));
+				if (entity.getPublicContent().length() > 1000) {
+					entity.setPublicContent(entity.getPublicContent().substring(0, 1000));
 				}
 				list.add(entity);
 			}

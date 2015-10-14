@@ -14,7 +14,7 @@ jQuery(function($) {
 		}
     })
 	jQuery(grid_selector).jqGrid({
-		url : base+'profile/order/list?type='+type,
+		url : base+'profile/order/list?category='+type,
 		datatype : "json",
 		height : '100%',
 		autowidth: true,
@@ -22,26 +22,33 @@ jQuery(function($) {
 		colModel : [ 
 			{name : 'sn',index : 'sn',width : 15},
 			{name : 'name',index : 'name',width : 25},
-			{name : 'total',index : 'total',width : 10},
+			{name : 'total',index : 'total',width : 10,
+				formatter:function(cellvalue, options,rowObject){
+					return cellvalue+".00";
+				}
+			},
 			{name : 'state',index : 'state',width : 10, 
 				formatter : function(cellvalue, options,rowObject) {
 					switch (cellvalue) {
 					case "CREATED":
-						return "<b>已提交</b>";
+						return "<b>等待支付</b>";
 					case "PAID":
-						return "<b>已支付</b>";
+						return "<b>支付完成</b>";
 					case "DONE":
-						return "<b>已完成</b>";
+						return "<b>订单完成</b>";
 					default:
-						return "<b>未支付</b>";
+						return "<b>等待支付</b>";
 					}
 				}
 			},
 			{name : 'gmtCreate',index : 'gmtCreate',width : 10},
-			{name : 'state',	index : 'state',	width : 120,fixed : true,align:'center',
+			{name : 'state',	index : 'state',	width : 140,fixed : true,align:'right',
 				formatter : function(cell, options,row) {
-					return "<label class=\"btn btn-xs btn-danger\" onclick=\"toSettle('"+row.id+ "')\"><i class=\"ace-icon fa fa-credit-card\"></i></label>&nbsp;&nbsp;&nbsp;"
-							+"<label class=\"btn btn-xs btn-danger\" tip='删除订单' onclick=\"removeOrder('"+row.id+ "')\"><i class=\"ace-icon fa fa-trash\"></i></label>";
+					var paidBtn="";
+					if("PAID" != cell &"DONE" != cell){
+						paidBtn = "<label class=\"btn btn-xs btn-danger btn-round\" onclick=\"toSettle('"+row.id+ "')\"><i class=\"ace-icon fa fa-credit-card\"/>支付</label>&nbsp;&nbsp;&nbsp;";
+					}
+					return paidBtn +"<label class=\"btn btn-xs btn-danger btn-round\" onclick=\"removeOrder('"+row.id+ "')\"><i class=\"ace-icon fa fa-trash\"/>删除</label>";
 				}
 		    }
 		],

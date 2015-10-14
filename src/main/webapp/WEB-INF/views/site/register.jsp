@@ -19,65 +19,65 @@
 		<div class="main-container" id="main-container">
 			<div class="main-content">
 				<div class="main-content-inner">
+					<div class="breadcrumbs" id="breadcrumbs">
+					</div>
 					<div class="page-content">
 						<div class="row">
-							<div class="col-xs-1"></div>
-							<div class="col-xs-10">
+							<div class="col-xs-2"></div>
+							<div class="col-xs-8">
 								<h3 class="header red lighter bigger">
 									<i class="ace-icon fa fa-pencil-square-o red"></i>
 									<strong>请填写个人信息</strong>
 								</h3>
 							</div>
-							<div class="col-xs-1"></div>
+							<div class="col-xs-2"></div>
 						</div>
 						<div class="row">
 							<div class="col-xs-12">
 								<form class="form-horizontal" role="form">
-									<div class="col-xs-1"></div>
-									<div class="col-xs-5">
+									<div class="col-xs-2"></div>
+									<div class="col-xs-8">
 										<div class="form-group">
-											<label class="col-sm-2 control-label no-padding-right" for="form-field-1-1"><strong>用户昵称</strong> </label>
-											<div class="col-sm-7">
+											<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">用户昵称</label>
+											<div class="col-sm-6">
 												<input type="text" id="profile_username" maxlength="30" placeholder="请输入用户名称（3-30个字符）..." class="form-control" />
 											</div>
 											<label class="col-sm-3 control-label red no-padding-left" id="username_error"></label>
 										</div>
 										<div class="form-group">
-											<label class="col-sm-2 control-label no-padding-right" for="form-field-1-1"><strong>登录密码</strong> </label>
-											<div class="col-sm-7">
+											<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">登录密码 </label>
+											<div class="col-sm-6">
 												<input type="password" id="profile_password" placeholder="请输入登录密码 （6-30个字符）..." class="form-control" />
 											</div>
 											<label class="col-sm-3 control-label red no-padding-left" id="password_error"></label>
 										</div>
 										<div class="form-group">
-											<label class="col-sm-2 control-label no-padding-right" for="form-field-1-1"><strong>短信验证码</strong> </label>
-											<div class="col-sm-4">
-												<input type="text" id="profile_code" placeholder="请输入短信验证码..." class="form-control" />
-											</div>
-											<div class="col-sm-3">
-												<label class="btn btn-sm btn-danger control" onclick="javascript:sendCode()"><b>获取验证码</b></label>
-											</div>
-											<label class="col-sm-3 control-label red no-padding-left" id="code_error"></label>
-										</div>
-									</div>
-									<div class="col-xs-5">
-										<div class="form-group">
-											<label class="col-sm-2 control-label no-padding-right" for="form-field-1-1"><strong>手机号码</strong> </label>
-											<div class="col-sm-7">
-												<input type="text" id="profile_mobile" placeholder="请输入手机号码..." class="form-control" />
-											</div>
-											<label class="col-sm-3 control-label red no-padding-left" id="mobile_error"></label>
-										</div>
-										<div class="form-group">
-											<label class="col-sm-2 control-label no-padding-right" for="form-field-1-1"><strong>密码确认</strong> </label>
-											<div class="col-sm-7">
+											<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">密码确认</label>
+											<div class="col-sm-6">
 												<input type="password" id="profile_repassword" placeholder="请再次输入登录密码（6-30个字符）..." class="form-control" />
 											</div>
 											<label class="col-sm-3 control-label red no-padding-left" id="repassword_error"></label>
 										</div>
 										<div class="form-group">
-											<label class="col-sm-2 control-label no-padding-right" for="form-field-1-1"><strong>个人邮箱</strong> </label>
-											<div class="col-sm-7">
+											<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">手机号码</label>
+											<div class="col-sm-6">
+												<input type="text" id="profile_mobile" placeholder="请输入手机号码..." class="form-control" />
+											</div>
+											<label class="col-sm-3 control-label red no-padding-left" id="mobile_error"></label>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">短信验证码</label>
+											<div class="col-sm-4">
+												<input type="text" id="profile_code" placeholder="请输入短信验证码..." class="form-control" />
+											</div>
+											<div class="col-sm-2">
+												<label class="btn btn-sm btn-danger btn-round control" onclick="javascript:sendCode()">获取验证码</label>
+											</div>
+											<label class="col-sm-3 control-label red no-padding-left" id="code_error"></label>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">个人邮箱</label>
+											<div class="col-sm-6">
 												<input type="text" id="profile_email" placeholder="请输入个人邮箱地址..." class="form-control" />
 											</div>
 											<label class="col-sm-3 control-label red no-padding-left" id="email_error"></label>
@@ -87,23 +87,22 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-xs-1"></div>
-							<div class="col-xs-10">
+							<div class="col-xs-2"></div>
+							<div class="col-xs-8">
 								<div class="clearfix form-actions">
-									<div class="col-md-offset-5 col-md-7">
-										<button class="btn" type="reset">
+									<div style="text-align: center;">
+										<button class="btn btn-sm btn-round" type="reset">
 											<i class="ace-icon fa fa-undo bigger-110"></i>
 											<strong>重新填写</strong>
 										</button>
-										&nbsp; &nbsp; &nbsp;
-										<button class="btn btn-danger" onclick="register()">
+										<button class="btn btn-danger btn-sm btn-round" onclick="register()">
 											<i class="ace-icon fa fa-check bigger-110"></i>
 											<strong>提交注册</strong>
 										</button>
 									</div>
 								</div>
 							</div>
-							<div class="col-xs-1"></div>
+							<div class="col-xs-2"></div>
 						</div>
 					</div>
 				</div>

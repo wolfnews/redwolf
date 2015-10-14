@@ -18,11 +18,11 @@ jQuery(function($) {
 					var newObj = news[i];
 					html = "<div class=\"profile-activity clearfix\">"+
 								"<div class=\"col-sm-9\">"+
-								"<span class=\"bigger-110 left\" style=\"width=60%\"><strong>"+newObj.title+"</strong></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+								"<span class=\"bigger-110 left\" style=\"font-family:tahoma,Arial,Microsoft YaHei,SimSun;font-size:16px;width=60%\"><strong>"+newObj.title+"</strong></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
 								"<i class=\"ace-icon fa fa-clock-o bigger-110\">"+newObj.gmtCreate+"</i>"+
 								"<span>&nbsp;&nbsp;|&nbsp;&nbsp;浏览次数："+newObj.browseTimes+"</span>"+
 								"</div><div class=\"col-sm-3\">"+
-								"<button class=\"btn btn-sm btn-danger\" onclick=\"news_detail("+newObj.id+")\">查看详细</button>"
+								"<button class=\"btn btn-sm btn-danger btn-round\" onclick=\"news_detail("+newObj.id+")\">查看详细</button>"
 								"</div><hr>"+
 							"</div>";
 					$(grid_list).append(html);
