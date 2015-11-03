@@ -14,18 +14,21 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import com.hoteam.wolf.common.EntityResult;
 import com.hoteam.wolf.common.GridBean;
 import com.hoteam.wolf.common.Result;
 import com.hoteam.wolf.common.config.SystemConfig;
 import com.hoteam.wolf.common.enums.ActivityCategory;
+import com.hoteam.wolf.common.enums.DeviceType;
 import com.hoteam.wolf.common.vo.ProfessorBean;
 import com.hoteam.wolf.common.vo.ProfessorStatBean;
 import com.hoteam.wolf.common.vo.UserGroupBean;
 import com.hoteam.wolf.common.vo.UserProfile;
 import com.hoteam.wolf.dao.ActivityDao;
 import com.hoteam.wolf.dao.ProfessorDao;
+import com.hoteam.wolf.dao.PushUserDao;
 import com.hoteam.wolf.dao.RechargeRecordDao;
 import com.hoteam.wolf.dao.SubscribeGroupDao;
 import com.hoteam.wolf.dao.SubscribeRecordDao;
@@ -35,6 +38,7 @@ import com.hoteam.wolf.dao.UserRssDao;
 import com.hoteam.wolf.dao.UserSubscribeDao;
 import com.hoteam.wolf.domain.Activity;
 import com.hoteam.wolf.domain.Professor;
+import com.hoteam.wolf.domain.PushUser;
 import com.hoteam.wolf.domain.RechargeRecord;
 import com.hoteam.wolf.domain.SubscribeGroup;
 import com.hoteam.wolf.domain.SubscribeRecord;
@@ -42,6 +46,7 @@ import com.hoteam.wolf.domain.User;
 import com.hoteam.wolf.domain.UserAccount;
 import com.hoteam.wolf.domain.UserRss;
 import com.hoteam.wolf.domain.UserSubscribe;
+import com.hoteam.wolf.jdbc.SQLUtils;
 import com.hoteam.wolf.service.ProfessorService;
 import com.hoteam.wolf.service.UserService;
 import com.hoteam.wolf.utils.DESUtil;
@@ -75,6 +80,8 @@ public class UserServiceImpl implements UserService {
 	private SubscribeRecordDao subscribeRecordDao;
 	@Autowired
 	private ProfessorService professorService;
+	@Autowired
+	private PushUserDao pushUserDao;
 
 	@Override
 	public EntityResult addUser(User user) throws Exception {
@@ -125,18 +132,18 @@ public class UserServiceImpl implements UserService {
 		if (null == user) {
 			return new EntityResult(false, "用户名或密码错误！", null);
 		} else if (user.isIdentified()) {
-			if(null == user.getLastLogin()){
-				//第一次登录,牛币加1
+			if (null == user.getLastLogin()) {
+				// 第一次登录,牛币加1
 				UserAccount userAccount = this.userAccountDao.load(user.getId());
-				userAccount.setCoin(userAccount.getCoin()+1);
+				userAccount.setCoin(userAccount.getCoin() + 1);
 				this.userAccountDao.update(userAccount);
-			}else{
+			} else {
 				Calendar last = Calendar.getInstance();
 				last.setTime(user.getLastLogin());
 				Calendar current = Calendar.getInstance();
-				if(last.get(Calendar.DAY_OF_YEAR) != current.get(Calendar.DAY_OF_YEAR)){
+				if (last.get(Calendar.DAY_OF_YEAR) != current.get(Calendar.DAY_OF_YEAR)) {
 					UserAccount userAccount = this.userAccountDao.load(user.getId());
-					userAccount.setCoin(userAccount.getCoin()+1);
+					userAccount.setCoin(userAccount.getCoin() + 1);
 					this.userAccountDao.update(userAccount);
 				}
 			}
@@ -260,7 +267,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User load(String username,String password) throws Exception {
+	public User load(String username, String password) throws Exception {
 		return this.userDao.load(username, password);
 	}
 
@@ -273,11 +280,11 @@ public class UserServiceImpl implements UserService {
 			UserAccount account = userAccountDao.load(userId);
 			Activity activity = this.activityDao.loadByCateogry(ActivityCategory.RECHARGE);
 			long grade = 1l;
-			Long activityId = null;
+			// Long activityId = null;
 			if (null != activity) {
 				logger.info("find register acvtivity");
 				grade = activity.getRate().multiply(new BigDecimal(money)).longValue();
-				activityId = activity.getId();
+				// activityId = activity.getId();
 			} else {
 				grade = money;
 			}
@@ -301,10 +308,9 @@ public class UserServiceImpl implements UserService {
 			UserAccount account = this.userAccountDao.load(user.getId());
 			Map<String, Object> param = new HashMap<String, Object>();
 			param.put("user", userId);
-			Long rssAccount = this.userDao.baseCountQuery("select count(1) from user_rss where user_id = :user",
+			Long rssAccount = this.userDao.baseCountQuery("select count(1) from user_rss where user_id = :user", param);
+			Long subAccount = this.userDao.baseCountQuery("select count(1) from user_subscribe where  user_id = :user",
 					param);
-			Long subAccount = this.userDao.baseCountQuery(
-					"select count(1) from user_subscribe where  user_id = :user", param);
 			if (null == rssAccount) {
 				rssAccount = 0l;
 			}
@@ -347,8 +353,8 @@ public class UserServiceImpl implements UserService {
 			StringBuffer stringBuffer = new StringBuffer("<html>");
 			stringBuffer.append("<body>")
 					.append("<h1> 欢迎注册牛股汇账号，请点击下面链接进行注册确认，如浏览器不支持自动跳转，请把下面链接复制粘贴到浏览器的地址栏直接访问即可</h1>")
-					.append("<a href=\"").append(address).append("\">").append(address).append("</a>")
-					.append("</body>").append("</html>");
+					.append("<a href=\"").append(address).append("\">").append(address).append("</a>").append("</body>")
+					.append("</html>");
 			return mailClient.sendEmail(target, "牛股汇注册确认邮件", stringBuffer.toString());
 		} catch (Exception e) {
 			logger.error("Send Email Exception:", e);
@@ -406,14 +412,16 @@ public class UserServiceImpl implements UserService {
 		try {
 			List<Professor> professors = this.professorDao.loadAll();
 			professorBeans = this.assembleProfessor(professorIds, professors);
-			for(ProfessorBean professorBean:professorBeans){
+			for (ProfessorBean professorBean : professorBeans) {
 				SubscribeGroup group = new SubscribeGroup();
 				group.setProfessorId(professorBean.getId());
 				List<SubscribeGroup> groups = this.subscribeGroupDao.queryForList(group);
 				List<UserGroupBean> userGroupBeans = new ArrayList<UserGroupBean>();
-				for(SubscribeGroup subscribeGroup:groups){
-					UserSubscribe userSubscribe = userSubscribeDao.load(professorBean.getId(), userId, subscribeGroup.getId());
-					UserGroupBean userGroupBean = new UserGroupBean(userId, subscribeGroup.getId(), subscribeGroup.getName(), userSubscribe.getExpireTime());
+				for (SubscribeGroup subscribeGroup : groups) {
+					UserSubscribe userSubscribe = userSubscribeDao.load(professorBean.getId(), userId,
+							subscribeGroup.getId());
+					UserGroupBean userGroupBean = new UserGroupBean(userId, subscribeGroup.getId(),
+							subscribeGroup.getName(), userSubscribe.getExpireTime());
 					userGroupBeans.add(userGroupBean);
 				}
 				professorBean.setGroups(userGroupBeans);
@@ -424,7 +432,8 @@ public class UserServiceImpl implements UserService {
 		return professorBeans;
 	}
 
-	private List<ProfessorBean> assembleProfessor(List<Long> professorIds, List<Professor> professors) throws Exception {
+	private List<ProfessorBean> assembleProfessor(List<Long> professorIds, List<Professor> professors)
+			throws Exception {
 		List<ProfessorBean> professorBeans = new ArrayList<ProfessorBean>();
 		for (Professor professor : professors) {
 			if (professorIds.contains(professor.getId())) {
@@ -462,6 +471,7 @@ public class UserServiceImpl implements UserService {
 			}
 		}
 	}
+
 	private boolean sendPasswordEmail(String target, String username, String password) {
 		try {
 			StringBuffer stringBuffer = new StringBuffer("<html>");
@@ -478,33 +488,71 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public Result exist(String category, String content) {
-		Map<String,Object> param = new HashMap<String,Object>();
+		Map<String, Object> param = new HashMap<String, Object>();
 		String sql = "select count(1) from user where ";
-		Long count =null;
+		Long count = null;
 		try {
-			if("mobile".endsWith(category)){
+			if ("mobile".endsWith(category)) {
 				param.put("mobile", content);
 				sql += "mobile=:mobile";
 				count = this.userDao.baseCountQuery(sql, param);
-			}else if("username".equals(category)){
+			} else if ("username".equals(category)) {
 				param.clear();
 				param.put("username", content);
 				sql += "username=:username";
 				count = this.userDao.baseCountQuery(sql, param);
-			}else if("email".equals(category)){
+			} else if ("email".equals(category)) {
 				param.clear();
 				param.put("email", content);
 				sql += "email=:email";
 				count = this.userDao.baseCountQuery(sql, param);
 			}
 		} catch (Exception e) {
-			logger.error("user info exist exception:",e);
-			count =  null;
+			logger.error("user info exist exception:", e);
+			count = null;
 		}
-		if(null != count && count >0){
+		if (null != count && count > 0) {
 			return new Result(true, "exist");
-		}else{
+		} else {
 			return new Result(false, "not exist");
 		}
+	}
+
+	@Override
+	public Result mobileLogin(String username, String password, String channelId, String clientId, String type) {
+		String loginSQL = "select * from user where username=:username or mobile=:mobile and password=:password";
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("username", username);
+		paramMap.put("mobile", username);
+		paramMap.put("password", password);
+		List<Map<String, Object>> userDataMap = this.userDao.getNamedParameterJdbcTemplate().queryForList(loginSQL,
+				paramMap);
+		if (null == userDataMap || userDataMap.isEmpty()) {
+			return new Result(false, "用户名或者密码错误！");
+		}
+		User user = null;
+		try {
+			user = (User) SQLUtils.coverMapToBean(userDataMap.get(0), User.class);
+		} catch (Exception e1) {
+			return new Result(false, "用户名或密码错误！");
+		}
+		// User user = this.userDao.load(username, password);
+		PushUser pushUser = this.pushUserDao.load(user.getId(), DeviceType.valueOf(type));
+		if (null == pushUser) {
+			pushUser = new PushUser(user.getId(), channelId, clientId, type);
+			try {
+				pushUserDao.save(pushUser);
+			} catch (Exception e) {
+				logger.error("save user[" + user.getUsername() + "] esn exception:", e);
+			}
+		} else {
+			if(StringUtils.isEmpty(clientId)||StringUtils.isEmpty(channelId)||pushUser.getClientId().equalsIgnoreCase(clientId)){
+			}else{
+				pushUser.setClientId(clientId);
+				pushUser.setChannelId(channelId);
+				pushUserDao.update(pushUser);
+			}
+		}
+		return new Result(true, user.getId().toString());
 	}
 }

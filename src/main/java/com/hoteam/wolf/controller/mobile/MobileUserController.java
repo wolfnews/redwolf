@@ -56,14 +56,14 @@ public class MobileUserController {
 
 	@RequestMapping("/audit")
 	@ResponseBody
-	public EntityResult audit(String username, String password) {
+	public EntityResult audit(String username, String password, String channelId, String client,String type) {
 		try {
-			User user = this.userService.load(username, password);
-			if (null == user) {
-				return new EntityResult(false, "用户名或密码错误！",null);
+			Result result = this.userService.mobileLogin(username, password, channelId, client,type);
+			if (result.isSuccess()) {
+				UserProfile profile = this.userService.profile(Long.valueOf(result.getMessage()));
+				return new EntityResult(true, result.getMessage(), profile.getCoin());
 			} else {
-				UserProfile profile = this.userService.profile(user.getId());
-				return new EntityResult(true, user.getId().toString(),profile.getCoin());
+				return new EntityResult(false, "用户名或密码错误！", null);
 			}
 		} catch (Exception e) {
 			logger.error("user " + username + "login exception:", e);

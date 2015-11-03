@@ -44,7 +44,7 @@ public class OrderDao extends BaseDao {
 		Map<String, Object> paramMap = new HashMap<String, Object>(1);
 		paramMap.put("id", id);
 		try {
-			return (Order) this.baseQueryForEntity(Order.class, Conditions.loadConditiion, paramMap);
+			return (Order) this.baseQueryForEntity(Order.class, Conditions.loadCondition, paramMap);
 		} catch (Exception e) {
 			logger.error("Load order by id exception:", e);
 			return null;

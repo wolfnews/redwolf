@@ -48,7 +48,7 @@ public class ProfessorDao extends BaseDao {
 		paramMap.put("username", username);
 		paramMap.put("password", password);
 		try {
-			return (Professor) this.baseQueryForEntity(Professor.class, Conditions.loginConditiion, paramMap);
+			return (Professor) this.baseQueryForEntity(Professor.class, Conditions.loginCondition, paramMap);
 		} catch (Exception e) {
 			logger.error("load professor exception:", e);
 			return null;
@@ -59,7 +59,7 @@ public class ProfessorDao extends BaseDao {
 		Map<String, Object> paramMap = new HashMap<String, Object>(1);
 		paramMap.put("id", id);
 		try {
-			return (Professor) this.baseQueryForEntity(Professor.class, Conditions.loadConditiion, paramMap);
+			return (Professor) this.baseQueryForEntity(Professor.class, Conditions.loadCondition, paramMap);
 		} catch (Exception e) {
 			throw e;
 		}

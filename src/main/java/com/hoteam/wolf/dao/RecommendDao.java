@@ -36,7 +36,7 @@ public class RecommendDao extends BaseDao {
 		Map<String, Object> paramMap = new HashMap<String, Object>(1);
 		paramMap.put("id", id);
 		try {
-			return (Recommend) this.baseQueryForEntity(Recommend.class, Conditions.loadConditiion, paramMap);
+			return (Recommend) this.baseQueryForEntity(Recommend.class, Conditions.loadCondition, paramMap);
 		} catch (Exception e) {
 			logger.error("Load UserRecommend by id exception:", e);
 			return null;

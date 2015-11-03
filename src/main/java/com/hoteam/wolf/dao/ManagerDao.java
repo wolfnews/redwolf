@@ -44,7 +44,7 @@ public class ManagerDao extends BaseDao {
 		Map<String, Object> paramMap = new HashMap<String, Object>(1);
 		paramMap.put("id", id);
 		try {
-			return (Manager) this.baseQueryForEntity(Manager.class, Conditions.loadConditiion, paramMap);
+			return (Manager) this.baseQueryForEntity(Manager.class, Conditions.loadCondition, paramMap);
 		} catch (Exception e) {
 			logger.error("Load Manager by id exception:", e);
 			return null;
@@ -56,7 +56,7 @@ public class ManagerDao extends BaseDao {
 		paramMap.put("username", username);
 		paramMap.put("password", password);
 		try {
-			return (Manager) this.baseQueryForEntity(Manager.class, Conditions.loginConditiion, paramMap);
+			return (Manager) this.baseQueryForEntity(Manager.class, Conditions.loginCondition, paramMap);
 		} catch (Exception e) {
 			throw e;
 		}

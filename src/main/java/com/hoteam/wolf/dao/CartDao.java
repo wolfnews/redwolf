@@ -44,7 +44,7 @@ public class CartDao extends BaseDao {
 		Map<String, Object> paramMap = new HashMap<String, Object>(1);
 		paramMap.put("id", id);
 		try {
-			return (Carts) this.baseQueryForEntity(Carts.class, Conditions.loadConditiion, paramMap);
+			return (Carts) this.baseQueryForEntity(Carts.class, Conditions.loadCondition, paramMap);
 		} catch (Exception e) {
 			logger.error("Load cart by id exception:", e);
 			return null;

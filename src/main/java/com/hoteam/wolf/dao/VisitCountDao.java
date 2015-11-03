@@ -47,7 +47,7 @@ public class VisitCountDao extends BaseDao {
 		Map<String, Object> paramMap = new HashMap<String, Object>(1);
 		paramMap.put("id", id);
 		try {
-			return (VisitCount) this.baseQueryForEntity(VisitCount.class, Conditions.loadConditiion, paramMap);
+			return (VisitCount) this.baseQueryForEntity(VisitCount.class, Conditions.loadCondition, paramMap);
 		} catch (Exception e) {
 			logger.error("Load VisitCount by id exception:", e);
 			return null;

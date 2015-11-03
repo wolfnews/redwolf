@@ -38,7 +38,7 @@ public class MessageDao extends BaseDao {
 		Map<String, Object> paramMap = new HashMap<String, Object>(1);
 		paramMap.put("id", id);
 		try {
-			return (Comment) this.baseQueryForEntity(Comment.class, Conditions.loadConditiion, paramMap);
+			return (Comment) this.baseQueryForEntity(Comment.class, Conditions.loadCondition, paramMap);
 		} catch (Exception e) {
 			logger.error("Load Message by id exception:", e);
 			return null;

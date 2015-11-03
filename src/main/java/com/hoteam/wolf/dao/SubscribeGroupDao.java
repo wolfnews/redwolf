@@ -51,7 +51,7 @@ public class SubscribeGroupDao extends BaseDao {
 		Map<String, Object> paramMap = new HashMap<String, Object>(1);
 		paramMap.put("id", id);
 		try {
-			return (SubscribeGroup) this.baseQueryForEntity(SubscribeGroup.class, Conditions.loadConditiion, paramMap);
+			return (SubscribeGroup) this.baseQueryForEntity(SubscribeGroup.class, Conditions.loadCondition, paramMap);
 		} catch (Exception e) {
 			logger.error("Load SubscribeGroup by id exception:", e);
 			return null;

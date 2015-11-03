@@ -41,7 +41,7 @@ public class BoxCommentDao extends BaseDao {
 		paramMap.put("username", username);
 		paramMap.put("password", password);
 		try {
-			return (BoxComment) this.baseQueryForEntity(BoxComment.class, Conditions.loadConditiion, paramMap);
+			return (BoxComment) this.baseQueryForEntity(BoxComment.class, Conditions.loadCondition, paramMap);
 		} catch (Exception e) {
 			logger.error("Load BoxComment by id exception:", e);
 			return null;

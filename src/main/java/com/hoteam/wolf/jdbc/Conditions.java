@@ -8,10 +8,11 @@ import java.util.Set;
  *
  */
 public class Conditions {
-	public static ConditionDef loginMConditiion = new ConditionDef(new Object[][] {{"MOBILE = :mobile" }});
-	public static ConditionDef loginConditiion = new ConditionDef(new Object[][] { { "USERNAME = :username" },{"PASSWORD = :password" }});
-	public static ConditionDef loadConditiion = new ConditionDef(new Object[][] { { "ID = :id" } });
-	public static ConditionDef loadByNameConditiion = new ConditionDef(new Object[][] { { "NAME = :name" } });
+	public static ConditionDef loginMCondition = new ConditionDef(new Object[][] {{"MOBILE = :mobile" }});
+	public static ConditionDef loginCondition = new ConditionDef(new Object[][] { { "USERNAME = :username" },{"PASSWORD = :password" }});
+	public static ConditionDef loadCondition = new ConditionDef(new Object[][] { { "ID = :id" } });
+	public static ConditionDef loadByNameCondition = new ConditionDef(new Object[][] { { "NAME = :name" } });
+	public static ConditionDef loadByUserCondition = new ConditionDef(new Object[][]{{"USER_ID = :user"}});
 	
 	public static ConditionDef simpleCondition(String pref,String paramName){
 		return new ConditionDef(new Object[][]{{pref+" = :"+paramName}});

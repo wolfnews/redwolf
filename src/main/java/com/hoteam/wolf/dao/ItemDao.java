@@ -44,7 +44,7 @@ public class ItemDao extends BaseDao {
 		Map<String, Object> paramMap = new HashMap<String, Object>(1);
 		paramMap.put("id", id);
 		try {
-			return (Item) this.baseQueryForEntity(Item.class, Conditions.loadConditiion, paramMap);
+			return (Item) this.baseQueryForEntity(Item.class, Conditions.loadCondition, paramMap);
 		} catch (Exception e) {
 			logger.error("Load item by id exception:", e);
 			return null;

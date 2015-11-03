@@ -48,7 +48,7 @@ public class UserDao extends BaseDao {
 		Map<String, Object> paramMap = new HashMap<String, Object>(1);
 		paramMap.put("id", id);
 		try {
-			return (User) this.baseQueryForEntity(User.class, Conditions.loadConditiion, paramMap);
+			return (User) this.baseQueryForEntity(User.class, Conditions.loadCondition, paramMap);
 		} catch (Exception e) {
 			logger.error("Load User by id exception:", e);
 			return null;
@@ -78,7 +78,7 @@ public class UserDao extends BaseDao {
 		Map<String, Object> paramMap = new HashMap<String, Object>(1);
 		paramMap.put("mobile", mobile);
 		try {
-			return (User) this.baseQueryForEntity(User.class, Conditions.loginMConditiion, paramMap);
+			return (User) this.baseQueryForEntity(User.class, Conditions.loginMCondition, paramMap);
 		} catch (Exception e) {
 			logger.error("Load user by mobile exception:", e);
 			return null;
@@ -113,7 +113,7 @@ public class UserDao extends BaseDao {
 		paramMap.put("username", username);
 		paramMap.put("password", password);
 		try {
-			return (User) this.baseQueryForEntity(User.class, Conditions.loginConditiion, paramMap);
+			return (User) this.baseQueryForEntity(User.class, Conditions.loginCondition, paramMap);
 		} catch (Exception e) {
 			logger.error("Load user by id exception:", e);
 			return null;

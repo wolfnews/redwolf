@@ -37,7 +37,7 @@ public class ConsumeRecordDao extends BaseDao {
 		Map<String, Object> paramMap = new HashMap<String, Object>(1);
 		paramMap.put("id", id);
 		try {
-			return (ConsumeRecord) this.baseQueryForEntity(ConsumeRecord.class, Conditions.loadConditiion, paramMap);
+			return (ConsumeRecord) this.baseQueryForEntity(ConsumeRecord.class, Conditions.loadCondition, paramMap);
 		} catch (Exception e) {
 			logger.error("Load ConsumeRecord by id exception:", e);
 			return null;

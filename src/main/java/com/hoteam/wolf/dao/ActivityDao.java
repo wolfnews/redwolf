@@ -45,7 +45,7 @@ public class ActivityDao extends BaseDao {
 		Map<String, Object> paramMap = new HashMap<String, Object>(1);
 		paramMap.put("id", id);
 		try {
-			return (Activity) this.baseQueryForEntity(Activity.class, Conditions.loadConditiion, paramMap);
+			return (Activity) this.baseQueryForEntity(Activity.class, Conditions.loadCondition, paramMap);
 		} catch (Exception e) {
 			logger.error("Load Activity by id exception:", e);
 			return null;

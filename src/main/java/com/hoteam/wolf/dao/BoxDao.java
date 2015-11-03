@@ -52,7 +52,7 @@ public class BoxDao extends BaseDao {
 		Map<String, Object> paramMap = new HashMap<String, Object>(1);
 		paramMap.put("id", id);
 		try {
-			return (Box) this.baseQueryForEntity(Box.class, Conditions.loadConditiion, paramMap);
+			return (Box) this.baseQueryForEntity(Box.class, Conditions.loadCondition, paramMap);
 		} catch (Exception e) {
 			logger.error("Load Box by id exception:", e);
 			return null;

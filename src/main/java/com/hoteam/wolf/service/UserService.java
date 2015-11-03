@@ -146,4 +146,13 @@ public interface UserService {
 	 * @return
 	 */
 	public Result exist(String category,String content);
+	
+	/**用户移动端登录
+	 * @param username 用户名称
+	 * @param password 登录密码
+	 * @param esn      移动端esn
+	 * @param clientId 客户端ID
+	 * @return
+	 */
+	public Result mobileLogin(String username,String password,String esn,String client,String type);
 }

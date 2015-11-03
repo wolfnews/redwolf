@@ -82,7 +82,7 @@ String authUser = (String)request.getAttribute("user");
 					                    show: true  
 					                },  
 					                legend: {  
-					                    data: ['PV访问量','UV访问量']  
+					                    data: ['UV访问量']  
 					                },  
 					                xAxis: [  
 					                    {  
@@ -96,12 +96,6 @@ String authUser = (String)request.getAttribute("user");
 					                    }  
 					                ],  
 					                series: [  
-					                    {  
-					                        'name': 'PV',  
-					                        'type': 'line',  
-					                        'data': pv,
-					                        'smooth':true
-					                    },
 					                    {  
 					                        'name': 'UV',  
 					                        'type': 'line',  

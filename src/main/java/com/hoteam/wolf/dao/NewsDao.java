@@ -44,7 +44,7 @@ public class NewsDao extends BaseDao {
 		Map<String, Object> paramMap = new HashMap<String, Object>(1);
 		paramMap.put("id", id);
 		try {
-			return (News) this.baseQueryForEntity(News.class, Conditions.loadConditiion, paramMap);
+			return (News) this.baseQueryForEntity(News.class, Conditions.loadCondition, paramMap);
 		} catch (Exception e) {
 			logger.error("Load news by id exception:", e);
 			return null;

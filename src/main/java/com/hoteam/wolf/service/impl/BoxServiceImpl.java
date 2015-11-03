@@ -16,15 +16,19 @@ import com.hoteam.wolf.common.GridBean;
 import com.hoteam.wolf.common.Result;
 import com.hoteam.wolf.common.enums.BoxCategory;
 import com.hoteam.wolf.common.enums.BoxStatus;
+import com.hoteam.wolf.common.enums.DeviceType;
 import com.hoteam.wolf.dao.BoxDao;
 import com.hoteam.wolf.dao.BoxVerifyRecordDao;
 import com.hoteam.wolf.dao.ProfessorDao;
+import com.hoteam.wolf.dao.PushUserDao;
 import com.hoteam.wolf.dao.UserSubscribeDao;
 import com.hoteam.wolf.domain.Box;
 import com.hoteam.wolf.domain.BoxVerifyRecord;
 import com.hoteam.wolf.domain.Professor;
 import com.hoteam.wolf.domain.UserSubscribe;
 import com.hoteam.wolf.message.MessageSender;
+import com.hoteam.wolf.push.model.PushMessage;
+import com.hoteam.wolf.push.service.PushService;
 import com.hoteam.wolf.service.BoxService;
 
 @Service("boxService")
@@ -40,28 +44,36 @@ public class BoxServiceImpl implements BoxService {
 	@Autowired
 	private ProfessorDao professorDao;
 	@Autowired
+	private PushUserDao pushUserDao;
+	@Autowired
 	private MessageSender messageSender;
+	@Autowired
+	private PushService pushService;
+
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Result addBox(Box box, HttpServletRequest request) throws Exception {
 		try {
 			Professor professor = this.professorDao.load(box.getAuthor());
-			if(professor.isNeedVerify()){
+			if (professor.isNeedVerify()) {
 				box.setStatus(BoxStatus.NEW_CREATED.name());
-			}else{
+			} else {
 				box.setStatus(BoxStatus.NORMAL.name());
 			}
 			this.boxDao.save(box);
-			if(!professor.isNeedVerify()){
+			if (!professor.isNeedVerify()) {
 				String path = request.getContextPath();
-				String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+				String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+						+ path + "/";
 				StringBuffer messageBuffer = new StringBuffer();
 				messageBuffer.append("【").append(professor.getUsername())
-				.append("】刚刚发表了一个宝盒！点击<a target=\"parent\" href=\"")
-				.append(basePath).append("box/detail.html?id=").append(box.getId())
-				.append("\">【这里】</a>快速查看");
+						.append("】刚刚发表了一个宝盒！点击<a target=\"parent\" href=\"").append(basePath)
+						.append("box/detail.html?id=").append(box.getId()).append("\">【这里】</a>快速查看");
 				messageSender.pushMessage(messageBuffer.toString());
 				logger.info(messageBuffer.toString());
+				PushMessage message = new PushMessage("【" + professor.getUsername() + "】刚刚发表了一个宝盒！详情请点击查看！");
+				List<String> clients = this.pushUserDao.loadByProfessor(professor.getId(), DeviceType.android);
+				this.pushService.pushMessageToAndroid(message, clients);
 			}
 			return new Result(true, "add box success");
 		} catch (Exception e) {
@@ -85,7 +97,8 @@ public class BoxServiceImpl implements BoxService {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
-	public Result verifyBox(Long boxId, String manager, boolean passed, String reason,HttpServletRequest request) throws Exception {
+	public Result verifyBox(Long boxId, String manager, boolean passed, String reason, HttpServletRequest request)
+			throws Exception {
 		try {
 			Box box = this.boxDao.load(boxId);
 			String result = "";
@@ -97,17 +110,20 @@ public class BoxServiceImpl implements BoxService {
 				box.setStatus(BoxStatus.REFUSED.name());
 			}
 			this.boxDao.update(box);
-			if(passed){
+			if (passed) {
 				Professor professor = this.professorDao.load(box.getAuthor());
 				String path = request.getContextPath();
-				String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+				String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+						+ path + "/";
 				StringBuffer messageBuffer = new StringBuffer();
 				messageBuffer.append("【").append(professor.getUsername())
-				.append("】刚刚发表了一个宝盒！点击<a target=\"parent\" href=\"")
-				.append(basePath).append("box/detail.html?id=").append(box.getId())
-				.append("\">【这里】</a>快速查看");
+						.append("】刚刚发表了一个宝盒！点击<a target=\"parent\" href=\"").append(basePath)
+						.append("box/detail.html?id=").append(box.getId()).append("\">【这里】</a>快速查看");
 				messageSender.pushMessage(messageBuffer.toString());
 				logger.info(messageBuffer.toString());
+				PushMessage message = new PushMessage("【" + professor.getUsername() + "】刚刚发表了一个宝盒！详情请点击查看！");
+				List<String> clients = this.pushUserDao.loadByProfessor(professor.getId(), DeviceType.android);
+				this.pushService.pushMessageToAndroid(message, clients);
 			}
 			BoxVerifyRecord record = new BoxVerifyRecord(boxId, manager, result, reason);
 			this.boxVerifyRecordDao.save(record);
@@ -152,20 +168,21 @@ public class BoxServiceImpl implements BoxService {
 	@Override
 	public EntityResult detail(Long userId, Long boxId) throws Exception {
 		Box box = this.boxDao.load(boxId);
-		if(null == box){
+		if (null == box) {
 			return new EntityResult(false, "盒子不存在");
 		}
-		box.setBrowseNum(box.getBrowseNum()+1);
+		box.setBrowseNum(box.getBrowseNum() + 1);
 		this.boxDao.update(box);
 		boolean readable = false;
 		switch (BoxCategory.valueOf(box.getCategory())) {
 		case CHARGE:
-			if(null == userId){
+			if (null == userId) {
 				break;
 			}
 			UserSubscribe userSubscribe = this.userSubscribeDao.load(box.getAuthor(), userId, box.getGroupId());
 			if (null == userSubscribe || userSubscribe.isExpired()) {
 				logger.warn("user do not subscribe this charge box or subscribe time is out!");
+				box.setPrivateContent("");
 			} else {
 				readable = true;
 			}
@@ -180,20 +197,31 @@ public class BoxServiceImpl implements BoxService {
 			return new EntityResult(true, "SUCCESS", box);
 		} else {
 			box.setPrivateContent("");
-			return new EntityResult(true, "NSOSO", box);//NO_SUBS_OR_SUBS_OUT
+			return new EntityResult(true, "NSOSO", box);// NO_SUBS_OR_SUBS_OUT
 		}
 	}
 
-	public List<Box> assembleNoitceBeans(List<Box> entitys) throws Exception{
+	public List<Box> assembleNoitceBeans(List<Box> entitys) throws Exception {
 		List<Box> boxBeans = new ArrayList<Box>();
 		for (Box entity : entitys) {
 			entity.setPrivateContent(null);
 			String content = entity.getPublicContent();
-			if(content.length()>1000){
+			if (content.length() > 1000) {
 				entity.setPublicContent(content.substring(0, 1000));
 			}
 			boxBeans.add(entity);
 		}
 		return boxBeans;
+	}
+
+	@Override
+	public Result favor(Long id) {
+		Box box = this.boxDao.load(id);
+		if (null == box) {
+			return new Result(false, "宝盒不存在");
+		}
+		box.setFavorNum(box.getFavorNum() + 1);
+		boxDao.update(box);
+		return new Result(true, "点赞成功！");
 	}
 }

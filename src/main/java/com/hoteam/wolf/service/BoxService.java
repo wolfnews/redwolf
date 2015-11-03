@@ -18,6 +18,12 @@ public interface BoxService {
 
 	public EntityResult load(Long boxId)throws Exception;
 	
+	/**宝盒点赞
+	 * @param box
+	 * @return
+	 */
+	public Result favor(Long box);
+	
 	public EntityResult detail(Long userId,Long boxId)throws Exception; 
 	
 	public Result addBox(Box box, HttpServletRequest request)throws Exception;

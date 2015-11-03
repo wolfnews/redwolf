@@ -1,7 +1,5 @@
 package com.hoteam.wolf.common.config;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -64,11 +62,5 @@ public class PayConfig {
 	public String toString() {
 		return "PayConfig [spname=" + spname + ", partner=" + partner + ", key=" + key + ", notifyUrl=" + notifyUrl
 				+ ", returnUrl=" + returnUrl + "]";
-	}
-
-	@PostConstruct
-	public void test(){
-		System.out.println("商户名称："+this.getSpname());
-		System.out.println(this.toString());
 	}
 }

@@ -118,8 +118,8 @@ jQuery(function($) {
 });
 
 function removeMessage(id){
-	url = base+"manage/message/remove";
-	data = {boxId:id};
+	url = base+"manage/message/remove/"+id;
+	data = {};
 	bootbox.confirm("<b>你确定要删除此消息?</b>", function(result) {
 		if(result) {
 			$.post(url,data,function(response){

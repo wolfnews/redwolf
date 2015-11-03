@@ -6,11 +6,13 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hoteam.wolf.common.EntityResult;
 import com.hoteam.wolf.common.GridBean;
+import com.hoteam.wolf.common.Result;
 import com.hoteam.wolf.common.enums.BoxStatus;
 import com.hoteam.wolf.domain.Box;
 import com.hoteam.wolf.service.BoxService;
@@ -20,7 +22,7 @@ import com.hoteam.wolf.service.UserBoxService;
 @RequestMapping("/mobile/box")
 public class MobileBoxController {
 
-	private static final int PAGE_ROWS = 50;
+	private static final int PAGE_ROWS = 20;
 	private static Logger logger = Logger.getLogger(MobileBoxController.class);
 
 	@Autowired
@@ -68,5 +70,10 @@ public class MobileBoxController {
 			logger.error("mobile load box error:", e);
 			return new EntityResult(false, "加载失败！", null);
 		}
+	}
+	@RequestMapping("/favor/{id}")
+	@ResponseBody
+	public Result favor(@PathVariable Long id){
+		return this.boxService.favor(id);
 	}
 }

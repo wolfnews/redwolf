@@ -48,7 +48,7 @@ public class RechargeRecordDao extends BaseDao {
 		Map<String, Object> paramMap = new HashMap<String, Object>(1);
 		paramMap.put("id", id);
 		try {
-			return (RechargeRecord) this.baseQueryForEntity(RechargeRecord.class, Conditions.loadConditiion, paramMap);
+			return (RechargeRecord) this.baseQueryForEntity(RechargeRecord.class, Conditions.loadCondition, paramMap);
 		} catch (Exception e) {
 			return null;
 		}
