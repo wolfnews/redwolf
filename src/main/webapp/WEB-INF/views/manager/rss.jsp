@@ -23,8 +23,7 @@ String authUser = (String)request.getAttribute("user");
 		<script src="<%=basePath%>static/ace/assets/js/bootstrap.js"></script>
 		<script src="<%=basePath%>static/ace/assets/js/ace/ace.js"></script>
 		<script	src="<%=basePath%>static/ace/assets/js/jqGrid/jquery.jqGrid.src.js"></script>
-		<script	src="<%=basePath%>static/ace/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
-		<script src="<%=basePath%>static/console/base.js"></script>
+		<script	src="<%=basePath%>static/ace/assets/js/jqGrid/i18n/grid.locale-cn.js"></script>
 		<script src="<%=basePath%>static/console/manager/rss.js"></script>
 	</head>
 	<body class="no-skin">

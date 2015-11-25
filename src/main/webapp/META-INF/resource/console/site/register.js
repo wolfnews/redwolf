@@ -7,13 +7,25 @@ function isEmail (s){
 	var reg =/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
 	return reg.exec(s);
 }
+function changeCode(){
+	var imgSrc = $("#reg_v_code");
+    var src = "/code"
+    imgSrc.attr("src", chgUrl(src));
+}
+function chgUrl(url){
+	var timestamp = (new Date()).valueOf();
+	return url + "?timestamp=" + timestamp;
+}
 function sendCode(){
 	mobile=$('#profile_mobile').val().trim();
+	code = $('#reg_v_code').val().trim();
 	if(null == mobile || "" == mobile){
 		showMessage("请输入手机号码！");
+	}else if(null == code || "" == code){
+		showMessage("请输入网站验证码")
 	}else{
 		if(isMobile(mobile)){
-			url = base+"sms/send/"+mobile;
+			url = base+"sms/send/"+mobile+"/"+code;
 			data = {};
 			$.post(url,data,function(response){
 				if(response.success){
@@ -23,7 +35,9 @@ function sendCode(){
 				}
 			});
 		}else{
-			showMessage("请输入正确格式手机号码！");
+			showMessage("请输入正确格式手机号码！",function(){
+				$('#profile_mobile').val("");
+			});
 		}
 	}
 }

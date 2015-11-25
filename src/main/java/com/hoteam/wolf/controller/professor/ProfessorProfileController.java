@@ -3,6 +3,7 @@ package com.hoteam.wolf.controller.professor;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -15,10 +16,14 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.hoteam.wolf.common.Constants;
 import com.hoteam.wolf.common.EntityResult;
 import com.hoteam.wolf.common.Result;
+import com.hoteam.wolf.common.config.SystemConfig;
+import com.hoteam.wolf.common.enums.CookiePath;
 import com.hoteam.wolf.domain.Box;
 import com.hoteam.wolf.domain.Professor;
 import com.hoteam.wolf.service.BoxService;
 import com.hoteam.wolf.service.ProfessorService;
+import com.hoteam.wolf.utils.CookieUtil;
+import com.hoteam.wolf.utils.DESUtil;
 
 @Controller
 @RequestMapping("/professor/profile")
@@ -29,10 +34,12 @@ public class ProfessorProfileController {
 	private ProfessorService professorService;
 	@Autowired
 	private BoxService boxService;
+	@Autowired
+	private SystemConfig systemConfig;
 
 	@RequestMapping("/login")
 	@ResponseBody
-	public Result login(String username, String password, HttpSession session) {
+	public Result login(String username, String password, HttpSession session,HttpServletResponse response) {
 		try {
 			Professor professor = this.professorService.login(username, password);
 			if (null == professor) {
@@ -40,6 +47,8 @@ public class ProfessorProfileController {
 			} else {
 				session.setAttribute(Constants.PROFESSOR_TOKEN.name(), professor.getId());
 				session.setAttribute(Constants.PROFESSOR_NAME.name(), professor.getUsername());
+				String cookieValue = DESUtil.encrypt(username+":"+password, systemConfig.getAuthKey());
+				CookieUtil.saveCookie(CookiePath.PROFESSOR_COOKIE_PATH.name(), cookieValue, response);
 				return new Result(true, "登录成功！");
 			}
 		} catch (Exception e) {

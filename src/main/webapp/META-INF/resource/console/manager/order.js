@@ -26,14 +26,12 @@ jQuery(function($) {
 			{name : 'state',index : 'state',width : 10, 
 				formatter : function(cellvalue, options,rowObject) {
 					switch (cellvalue) {
-					case "CREATED":
-						return "<b>已提交</b>";
 					case "PAID":
 						return "<b>已支付</b>";
 					case "DONE":
 						return "<b>已完成</b>";
 					default:
-						return "<b>未支付</b>";
+						return "未支付";
 					}
 				}
 			},
@@ -45,7 +43,7 @@ jQuery(function($) {
 					case 'TENPAY':
 						return '<b>财付通</b>';
 					default:
-						return '<b>未知方式</b>';
+						return '';
 					}
 				}},
 			{name : 'gmtCreate',index : 'gmtCreate',width : 10},

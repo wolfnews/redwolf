@@ -38,7 +38,7 @@ jQuery(function($) {
                 {name : 'gmtCreate',index : 'gmtCreate',width : 15},
                 {name : '',     index : '',     width : 60,fixed : true,sortable:false,
                     formatter : function(cellvalue, options,rowObject) {
-                        return "<button class=\"btn btn-xs btn-danger\" onclick=\"showBox('"+rowObject.id+ "')\"><b>详细</b></button> &nbsp;";
+                        return "<button class=\"btn btn-xs btn-danger btn-round\" onclick=\"showBox('"+rowObject.id+ "')\"><b>详细</b></button> &nbsp;";
 	                }
 	            }
 	        ],

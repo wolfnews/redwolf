@@ -204,6 +204,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Result rssProfessor(Long userId, Long professorId) throws Exception {
 		try {
+			boolean exist = this.userRssDao.exist(userId, professorId);
+			if(exist){
+				return new Result(true, "success");
+			}
 			UserRss userRss = new UserRss(userId, professorId);
 			this.userRssDao.save(userRss);
 			logger.info("user[" + userId + "] rss professor[" + professorId + "]success!");

@@ -118,6 +118,25 @@ public class IndexController {
 		return new ModelAndView("site/register");
 	}
 	
+	@RequestMapping("400.html")
+	public ModelAndView error() {
+		return new ModelAndView("/400");
+	}
+	
+	@RequestMapping("/404.html")
+	public ModelAndView npe() {
+		return new ModelAndView("/404");
+	}
+	
+	@RequestMapping("/500.html")
+	public ModelAndView servererror() {
+		return new ModelAndView("/500");
+	}
+	
+	@RequestMapping("/505.html")
+	public ModelAndView exception() {
+		return new ModelAndView("/505");
+	}
 	@RequestMapping("/mall.html")
 	public ModelAndView mall(){
 		ModelAndView mav = new ModelAndView("site/mall");

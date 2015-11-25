@@ -86,6 +86,7 @@ public class ManageProfessorController {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping("/loadAll")
 	@ResponseBody
 	public EntityResult loadAll(){

@@ -61,11 +61,11 @@ public class MobileBoxController {
 		}
 	}
 
-	@RequestMapping("/detail")
+	@RequestMapping("/detail/{box}/{user}")
 	@ResponseBody
-	public EntityResult detail(Long id) {
+	public EntityResult detail(@PathVariable Long box,@PathVariable Long user) {
 		try {
-			return this.boxService.detail(id, id);
+			return this.boxService.detail(user, box);
 		} catch (Exception e) {
 			logger.error("mobile load box error:", e);
 			return new EntityResult(false, "加载失败！", null);

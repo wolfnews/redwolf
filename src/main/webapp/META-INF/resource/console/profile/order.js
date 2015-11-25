@@ -42,13 +42,13 @@ jQuery(function($) {
 				}
 			},
 			{name : 'gmtCreate',index : 'gmtCreate',width : 10},
-			{name : 'state',	index : 'state',	width : 140,fixed : true,align:'right',
+			{name : 'state',	index : 'state',	width : 60,fixed : true,align:'center',
 				formatter : function(cell, options,row) {
 					var paidBtn="";
 					if("PAID" != cell &"DONE" != cell){
 						paidBtn = "<label class=\"btn btn-xs btn-danger btn-round\" onclick=\"toSettle('"+row.id+ "')\"><i class=\"ace-icon fa fa-credit-card\"/>支付</label>&nbsp;&nbsp;&nbsp;";
 					}
-					return paidBtn +"<label class=\"btn btn-xs btn-danger btn-round\" onclick=\"removeOrder('"+row.id+ "')\"><i class=\"ace-icon fa fa-trash\"/>删除</label>";
+					return paidBtn;
 				}
 		    }
 		],

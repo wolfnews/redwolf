@@ -66,6 +66,19 @@
 											<label class="col-sm-3 control-label red no-padding-left" id="mobile_error"></label>
 										</div>
 										<div class="form-group">
+											<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">网站验证码</label>
+											<div class="col-sm-2">
+												<input type="text" id="reg_v_code" placeholder="请输入右侧验证码..." class="form-control" />
+											</div>
+											<div class="col-sm-2">
+												<img alt="验证码" id="reg_v_code_img" src="/code">
+											</div>
+											<div class="col-sm-1">
+												<label class="btn btn-sm btn-danger btn-round control" onclick="javascript:changeCode()">换一个</label>
+											</div>
+											<label class="col-sm-3 control-label red no-padding-left" id="code_error"></label>
+										</div>
+										<div class="form-group">
 											<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">短信验证码</label>
 											<div class="col-sm-4">
 												<input type="text" id="profile_code" placeholder="请输入短信验证码..." class="form-control" />

@@ -58,7 +58,7 @@ String authUser = (String)request.getAttribute("user");
 						<div class="row">
 							<div class="col-xs-12">
 								<div class="well well-sm">
-									<button class="btn btn-sm btn-danger" onclick="jump2addBox()"> 
+									<button class="btn btn-sm btn-danger btn-round" onclick="jump2addBox()"> 
 										<i class="ace-icon fa fa-pencil-square-o bigger-125"></i>
 										<b>制作宝盒</b>
 									</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

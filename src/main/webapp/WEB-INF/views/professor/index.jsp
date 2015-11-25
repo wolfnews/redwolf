@@ -29,21 +29,9 @@ String authUser = (String)request.getAttribute("user");
 			<script type="text/javascript">
 				var base='<%=basePath%>';
 				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
-				$(document).ready(function(){
-					$('#professor_lastest_notice').empty();
-					notices = ${notices};
-					for(var i=0;i<notices.length;i++){
-						 var notice = notices[i];
-						 html = "<div class=\"profile-activity clearfix\">"+
-									"<div>"+
-										"<i class=\"ace-icon fa fa-briefcase bigger-110\"></i>&nbsp;"+
-										"<span><strong>锦囊标题：</strong>"+notice.title+"</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
-										"<strong>发表时间：</strong><i class=\"ace-icon fa fa-clock-o bigger-110\">"+notice.gmtCreate+"</i>"+
-									"</div>"+
-								"</div>";
-						 $('#professor_lastest_notice').append(html);
-					}
-				});
+				function gotoWriterNotice(){
+					location.href = base+'professor/box/add.html';
+				}
 			</script>
 			<jsp:include page="nav.jsp">
 				<jsp:param value="professor_dashboard" name="page_index"/>
@@ -101,7 +89,7 @@ String authUser = (String)request.getAttribute("user");
 												<span class="btn btn-app btn-sm btn-pink no-hover">
 													<span class="line-height-1 bigger-170"> ${accounts.userSubscribeAccount } </span>
 													<br />
-													<span class="line-height-1 smaller-90"> <strong>订阅人数</strong> </span>
+													<span class="line-height-1 smaller-90"> <strong>订阅次数</strong> </span>
 												</span>
 												<!-- 锦囊总数 -->
 												<span class="btn btn-app btn-sm btn-grey no-hover">
@@ -119,12 +107,10 @@ String authUser = (String)request.getAttribute("user");
 												<!-- 撰写锦囊连接 -->
 												<span class="btn btn-app btn-sm btn-primary no-hover" onclick="gotoWriterNotice()">
 													<i class="ace-icon fa fa-pencil-square-o"></i>
-													<span class="line-height-1 smaller-90"><strong>撰写锦囊</strong></span>
+													<span class="line-height-1 smaller-90"><strong>制作宝盒</strong></span>
 												</span>
 												<script type="text/javascript">
-													function gotoWriterNotice(){
-														location.href = base+'professor/notice/add.html';
-													}
+													
 												</script>
 											</div>
 											<div class="space-12"></div>
@@ -160,63 +146,6 @@ String authUser = (String)request.getAttribute("user");
 														<span >${professor.gmtCreate }</span>
 													</div>
 												</div>
-											</div>
-											<!-- /section:pages/profile.info -->
-											<div class="space-20"></div>
-											<div class="widget-box transparent">
-												<div class="widget-header widget-header-small">
-													<h4 class="widget-title blue smaller">
-														<i class="ace-icon fa fa-rss orange"></i>
-														<strong>近期锦囊</strong>
-													</h4>
-													<div class="widget-toolbar action-buttons">
-														<a href="javascript:void(0)" onclick="refresh()" data-action="reload">
-															<i class="ace-icon fa fa-refresh blue"></i>
-														</a>
-													</div>
-													<script type="text/javascript">
-														function refresh(){
-															$.get(base+'professor/profile/refresh',function(response){
-																if(response.success){
-																	$('#professor_lastest_notice').empty();
-																	notices = response.data;
-																	for(var i=0;i<notices.length;i++){
-																		 var notice = notices[i];
-																		 html = "<div class=\"profile-activity clearfix\">"+
-																					"<div>"+
-																						"<i class=\"ace-icon fa fa-briefcase bigger-110\"></i>&nbsp;"+
-																						"<span><strong>锦囊标题：</strong>"+notice.title+"</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
-																						"<strong>发表时间：</strong><i class=\"ace-icon fa fa-clock-o bigger-110\">"+notice.gmtCreate+"</i>"+
-																					"</div>"+
-																				"</div>";
-																		 $('#professor_lastest_notice').append(html);
-																	}
-																}
-															});
-														}
-													</script>
-												</div>
-												<div class="widget-body">
-													<div class="widget-main padding-8">
-														<!-- #section:pages/profile.feed -->
-														<div id="professor_lastest_notice" class="profile-feed">
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="hr hr2 hr-double"></div>
-											<div class="space-6"></div>
-											<div class="center">
-												<button type="button" class="btn btn-sm btn-primary btn-white btn-round" onclick="jump2AllNotice()">
-													<i class="ace-icon fa fa-rss bigger-150 middle orange2"></i>
-													<span class="bigger-110"><strong>查看所有锦囊</strong></span>
-													<i class="icon-on-right ace-icon fa fa-arrow-right"></i>
-												</button>
-												<script type="text/javascript">
-													function jump2AllNotice(){
-														location.href="notice.html"
-													}
-												</script>
 											</div>
 										</div>
 									</div>

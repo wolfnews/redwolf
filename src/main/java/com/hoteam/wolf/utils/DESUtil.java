@@ -101,19 +101,22 @@ public class DESUtil {
 
 		return cipher.doFinal(data);
 	}
-	
+	private static final String SYSTEM_KEY="DMWSQWHLS";
 	public static void main(String[] args) throws Exception {
-		String account  = DESUtil.encrypt("zhhwdmw@163.com", "WolfNews888");
-		String password  = DESUtil.encrypt("5213344", "WolfNews888");
-		String server  = DESUtil.encrypt("smtp.163.com", "WolfNews888");
-		String portal  = DESUtil.encrypt("smtp", "WolfNews888");
-		String port  = DESUtil.encrypt("465", "WolfNews888");
-		
-		System.out.println(account);
-		System.out.println(password);
-		System.out.println(server);
-		System.out.println(portal);
-		System.out.println(port);
-		
+//		String account  = DESUtil.encrypt("zhhwdmw@163.com", "WolfNews888");
+//		String password  = DESUtil.encrypt("5213344", "WolfNews888");
+//		String server  = DESUtil.encrypt("smtp.163.com", "WolfNews888");
+//		String portal  = DESUtil.encrypt("smtp", "WolfNews888");
+//		String port  = DESUtil.encrypt("465", "WolfNews888");
+//		
+//		System.out.println(account);
+//		System.out.println(password);
+//		System.out.println(server);
+//		System.out.println(portal);
+//		System.out.println(port);
+		System.out.println(DESUtil.encrypt("1267018001", SYSTEM_KEY));
+		System.out.println(DESUtil.encrypt("b749a0799fa7cb2b3798c9b64defd45b", SYSTEM_KEY));
+		System.out.println(DESUtil.decrypt("0rr3Aytlm+mfHLxDRXeumA==", SYSTEM_KEY));
+		System.out.println(DESUtil.decrypt("n0bK5H1SgLhLzXEavhYfZH1IXMMdTArpGT08NGZpHW/NBbQ5dIslTg==", SYSTEM_KEY));
 	}
 }

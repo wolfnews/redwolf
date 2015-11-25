@@ -50,6 +50,17 @@ public class UserRssDao extends BaseDao {
 		this.namedParameterJdbcTemplate.update("delete from user_rss where user_id =:user", param);
 	}
 
+	public boolean exist(Long user,Long professor){
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("user", user);
+		param.put("professor", professor);
+		Long count=0l;
+		try {
+			count = this.baseCountQuery("select count(1) from user_rss where user_id=:user and professor_id=:professor", param);
+		} catch (Exception e) {
+		}
+		return count>0;
+	}
 	public GridBean rssUser(Long professor, int pageNum, int pageSize) throws Exception {
 		Map<String, Object> paramMap = PagingUtils.initPage(pageNum, pageSize);
 		paramMap.put("professor", professor);
